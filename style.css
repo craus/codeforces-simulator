@@ -1,0 +1,70 @@
+#display-div {
+	width:	100%;
+	height:	99%;
+	margin: 0 0 0 0;
+	font-family: arial;
+	text-align: center;
+	overflow:hidden;
+  border-width:1;
+  border-color:brown;
+  border-style:solid;
+}
+
+.labels{
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+
+#buttons {	
+}
+
+button {
+	width: 200px;
+	height: 200px;
+	float: left;
+	font-size: 80px;
+	margin-left: 37px;
+	margin-top: 27px;
+}
+
+#string {
+  width:	510px;
+  height:	60px;
+  margin: 0px auto;
+	font-size: 36px;
+	text-align: center;
+	vertical-align: middle;
+	display: table-cell;
+}
+
+#level {
+	float: left;
+	margin-left: 37px;
+}
+
+#progress {
+	float: right;
+	margin-right: 37px;
+}
+
+.status-label {
+	margin-top: 30px;
+}
+
+meter {
+	width: 86%;
+	margin-top: 30px;
+}
+
+#circle {
+    width: 50px;
+    height: 50px;
+    -webkit-border-radius: 25px;
+    -moz-border-radius: 25px;
+    border-radius: 25px; 
+    background-color: #FF00FF;
+    position: absolute;
+    top:30px;
+		left:5px;
+}
