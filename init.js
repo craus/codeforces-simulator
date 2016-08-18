@@ -1,6 +1,4 @@
- 
-
-window.onload = function() {
+var init = function() {
   var time = new Date().getTime()
   console.log("time = " + time)
  
@@ -45,4 +43,9 @@ window.onload = function() {
   window.onkeydown = function(e) {
     console.log(e)
   }
+  
+  game.paint()
+  console.log("window.onload end")
 }
+
+$(document).ready(init);
