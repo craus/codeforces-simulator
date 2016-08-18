@@ -1,7 +1,13 @@
+
 debugInfo = 'No data debugged'
 debugData = {}
 debugCounter = 0
-
-function debug() {
-  debugInfo = arguments
+debug = {
+  paused: false,
+  log: function() {
+    debugInfo = arguments
+  },
+  pause: function() {
+    this.paused = !this.paused
+  }
 }

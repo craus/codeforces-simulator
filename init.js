@@ -36,8 +36,10 @@ var init = function() {
     }
     
     $('#debugInfo').text(JSON.stringify(debugInfo))
-    game.tick()
-    game.paint()
+    if (!debug.paused) {
+      game.tick()
+      game.paint()
+    }
   }, 100)
   
   window.onkeydown = function(e) {
@@ -45,7 +47,12 @@ var init = function() {
   }
   
   game.paint()
+  
+  $('[data-toggle="tooltip"]').tooltip(); 
+  
   console.log("window.onload end")
 }
 
 $(document).ready(init);
+
+

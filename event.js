@@ -10,6 +10,9 @@ function createEvent(params) {
           resource.value += amount.get() * cnt
         }
       })
+    },
+    getReward: function(resource) {
+      return params.reward.find(function(reward) { return reward[0] == resource })[1].get()
     }
   }, params)
 }

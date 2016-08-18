@@ -10,6 +10,9 @@ function createContestant(params) {
     if (Math.abs(x - Math.floor(x+eps)) < eps) return Math.floor(x+eps)
     return x.toPrecision(4) 
   }
+  setTitle = function(selector, title) {
+    $(selector).attr('title', title).tooltip('fixTitle')
+  }
   
   // Rules common things
     
@@ -322,7 +325,8 @@ function createContestant(params) {
     
   contestant = {
     paint: function() {
-      $("#codeLines").text(large(codeLines.get()))
+      $("#codeLines").text(large(Math.floor(codeLines.get())))
+      setTitle("#codeLinesPerSecond", "+"+secondTicked.getReward(codeLines)+" per second")
     },
     tick: function() {
       var currentTime = new Date().getTime()
