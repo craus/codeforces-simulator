@@ -322,9 +322,8 @@ function createContestant(params) {
   ])
     
   contestant = {
-
     paint: function() {
-      return
+      $("#codeLines").text(codeLines.get())
     },
     tick: function() {
       var currentTime = new Date().getTime()
