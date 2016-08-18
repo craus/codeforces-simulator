@@ -329,6 +329,10 @@ function createContestant(params) {
       var deltaTime = currentTime - savedata.realTime
       secondTicked.run(deltaTime / 1000)
       save(currentTime)
+    },
+    wipeSave: function() {
+      console.log("wipeSave")
+      wipeSave.run(1)
     }
   }
   return contestant
