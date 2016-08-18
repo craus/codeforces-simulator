@@ -19,11 +19,11 @@
 #buttons {	
 }
 
-button {
+xbutton {
 	width: 200px;
 	height: 200px;
 	float: left;
-	font-size: 80px;
+	font-size: 24px;
 	margin-left: 37px;
 	margin-top: 27px;
 }

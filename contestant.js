@@ -303,23 +303,22 @@ function createContestant(params) {
     return ((event.type == linear) ? buyEvent : unlinearBuyEvent)(event)
   })
   
-  var buyEvents = gameEvents.concat([
-    buyEvent({
-      name: "Advance Second",
-      cost: [],
-      reward: [[secondTicked, k(1)]],
-      type: linear,
-      alwaysTopButton: 'off'
-    }),     
-    buyEvent({
-      name: "Wipe Save",
-      cost: [],
-      reward: [[unpredictableEvent({effect: wipeSave}), k(1)]],
-      type: linear,
-      alwaysTopButton: 'off',
-      upButton: 'off'
-    })  
-  ])
+  var advanceSecond = buyEvent({
+    name: "Advance Second",
+    cost: [],
+    reward: [[secondTicked, k(1)]],
+    type: linear,
+    alwaysTopButton: 'off'
+  })
+  
+  var wipeSave = buyEvent({
+    name: "Wipe Save",
+    cost: [],
+    reward: [[unpredictableEvent({effect: wipeSave}), k(1)]],
+    type: linear,
+    alwaysTopButton: 'off',
+    upButton: 'off'
+  })
     
   contestant = {
     paint: function() {
