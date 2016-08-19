@@ -122,4 +122,21 @@ function next(a, x, d) {
   return a[(a.indexOf(x)+(d || 1)+a.length) % a.length]
 }
 
+function enable(el, on) {
+  el.prop('disabled', !on)
+}
+
+signPrefix = function(x) { 
+  if (x > 0) return "+";
+  return "";
+}
+large = function(x) {
+  if (x == 0) return 0
+  if (Math.abs(x) > 1e4*(1+eps) || Math.abs(x) < 1-eps) return x.toPrecision(4) 
+  if (Math.abs(x - Math.floor(x+eps)) < eps) return Math.floor(x+eps)
+  return x.toPrecision(4) 
+}
+setTitle = function(el, title) {
+  el.attr('title', title).tooltip('fixTitle')
+}
 

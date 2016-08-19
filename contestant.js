@@ -1,19 +1,5 @@
 function createContestant(params) {
   
-  var signPrefix = function(x) { 
-    if (x > 0) return "+";
-    return "";
-  }
-  large = function(x) {
-    if (x == 0) return 0
-    if (Math.abs(x) > 1e4*(1+eps) || Math.abs(x) < 1-eps) return x.toPrecision(4) 
-    if (Math.abs(x - Math.floor(x+eps)) < eps) return Math.floor(x+eps)
-    return x.toPrecision(4) 
-  }
-  setTitle = function(selector, title) {
-    $(selector).attr('title', title).tooltip('fixTitle')
-  }
-  
   // Rules common things
     
   var gameName = "contestant"
@@ -243,6 +229,7 @@ function createContestant(params) {
   var gameEvents = [
     {
       name: 'Solve problem',
+      id: 'solve',
       cost: [[codeLines, k(10)]],
       reward: problemSolved,
       type: linear
@@ -326,7 +313,8 @@ function createContestant(params) {
   contestant = {
     paint: function() {
       $("#codeLines").text(large(Math.floor(codeLines.get())))
-      setTitle("#codeLinesPerSecond", "+"+secondTicked.getReward(codeLines)+" per second")
+      setTitle($("#codeLinesPerSecond"), "+"+secondTicked.getReward(codeLines)+" per second")
+      gameEvents.each('paint')
     },
     tick: function() {
       var currentTime = new Date().getTime()

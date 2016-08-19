@@ -1,6 +1,9 @@
 * {
   font-family: arial;
 }
+.centered {
+text-align: center
+}
 .title {
   font-size: 42px;
   text-align: center;
@@ -8,23 +11,11 @@
   display: inline-block;
 }
 .value {
-  font-size: 80px;
+  font-size: 48px;
   text-align: center;
 }
-table{
-  margin-top:10px;
+.tooltip-inner {
+    white-space:pre-wrap;
 }
-td{
-  text-align: center;
-}
-.row{
-  display:table-row;
-  width:auto;
-  clear:both;
-}
-.cell{
-  float:left;/*fix for  buggy browsers*/
-  display:table-column;         
-  width:200px;          
-}
+
 

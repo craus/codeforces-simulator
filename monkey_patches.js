@@ -10,6 +10,12 @@ Array.prototype.remove = function(element) {
   }
 }
 
+Array.prototype.each = function(method) {
+  for (var i = 0; i < this.length; i++) {
+    this[i][method]()
+  }
+}
+
 Array.prototype.find = function(criteria) {
   for (var i = 0; i < this.length; i++) {
     if (criteria(this[i])) {
