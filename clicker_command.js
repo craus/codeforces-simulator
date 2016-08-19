@@ -53,7 +53,11 @@ function createClickerCommand(params)
       enable(less, this.canZoomDown())
       enable(more, this.canZoomUp())
       enable(buy, this.canUse())
-      buy.text(buy.attr('data-name') + ' ' + large(this.zoom))
+      var text = buy.attr('data-name')
+      if (text == undefined) {
+        text = ""
+      }
+      buy.text(text.replace('#{0}', large(this.zoom)))
       setTitle(buy, this.delta.map(function(resource) {
         return signPrefix(resource.value) + large(resource.value) + " " + resource.name
       }).join("<br>"))

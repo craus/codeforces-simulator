@@ -50,6 +50,16 @@ var init = function() {
   
   $('[data-toggle="tooltip"]').tooltip(); 
   
+  $("button").mouseup(function(){
+    $(this).blur();
+  })
+  
+  $('#confirm-delete').on('show.bs.modal', function(e) {
+    $(this).find('.btn-ok').attr('href', $(e.relatedTarget).data('href'));
+    
+    $('.debug-url').html('Delete URL: <strong>' + $(this).find('.btn-ok').attr('href') + '</strong>');
+  });
+  
   console.log("window.onload end")
 }
 

@@ -295,11 +295,14 @@ function createContestant(params) {
   
   var advanceSecond = buyEvent({
     name: "Advance Second",
+    id: "skip",
     cost: [],
     reward: [[secondTicked, k(1)]],
     type: linear,
     alwaysTopButton: 'off'
   })
+  
+  gameEvents.push(advanceSecond)
   
   var wipeSave = buyEvent({
     name: "Wipe Save",
@@ -313,6 +316,7 @@ function createContestant(params) {
   contestant = {
     paint: function() {
       $("#codeLines").text(large(Math.floor(codeLines.get())))
+      $("#experience").text(large(Math.floor(experience.get())))
       setTitle($("#codeLinesPerSecond"), "+"+secondTicked.getReward(codeLines)+" per second")
       gameEvents.each('paint')
     },

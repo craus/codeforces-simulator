@@ -31,21 +31,20 @@
 <div class="container-fluid text-center">
   <div class="row text-center">
     <div class="col-sm-4">
-      <h1>Rating44</h1>
+      <h1>Rating</h1>
     </div>
     <div class="col-sm-4" id = "codeLinesPerSecond" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Hooray!">
-      <h1>
-        Code lines
-      </h1>
+      <h1>Code lines</h1>
       <p class="value" id="codeLines"></p>
     </div>
     <div class="col-sm-4">
-      <h1>Blind typing</h1>
+      <h1>Experience</h1>
+      <p class="value" id="experience"></p>
     </div>      
   </div>
   <div class="row">
     <div class="col-sm-4">
-      <h1>Rating42</h1>
+      <h1></h1>
     </div>
     <div class="col-sm-4">
       <h1>
@@ -53,7 +52,7 @@
       </h1>
       <div class="btn-group" id = "solve">
         <button type="button" class="btn btn-primary less">&lt;</button>
-        <button type="button" class="btn btn-primary buy" data-toggle="tooltip" data-container="body" data-html="true" title="-10 code lines, +1 experience" data-name="Solve">Solve 1</button>
+        <button type="button" class="btn btn-primary buy" data-toggle="tooltip" data-container="body" data-html="true" title="-10 code lines, +1 experience" data-name="Solve #{0}">Solve 1</button>
         <button type="button" class="btn btn-primary more">></button>
       </div>
     </div>
@@ -61,6 +60,46 @@
       <h1>Blind typing</h1>
     </div>      
   </div>   
-  <button id = "wipeSave" onClick = "game.wipeSave()">Wipe save</button>
+  <div class="row">
+    <div class="col-sm-4">
+      <h1>Wipe save</h1>
+      <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-wipe-save">Wipe save</button>
+    </div>
+    <div class="col-sm-4">
+      <h1>Time</h1>
+      <div class="btn-group" id = "skip">
+        <button type="button" class="btn btn-primary less">&lt;</button>
+        <button type="button" class="btn btn-primary buy" data-toggle="tooltip" data-container="body" data-html="true" title="-10 code lines, +1 experience" data-name="Skip #{0} seconds">Skip 1</button>
+        <button type="button" class="btn btn-primary more">></button>
+      </div>
+    </div>
+    <div class="col-sm-4">
+      <h1>Algorithms</h1>
+    </div>      
+  </div>    
 </div>
+
+<div class="modal fade" id="confirm-wipe-save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm Wipe save</h4>
+            </div>
+        
+            <div class="modal-body">
+                <p>You will lost ALL your progress, this procedure is irreversible.</p>
+                <p>Do you want to proceed?</p>
+                <p class="debug-url"></p>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok" onclick="game.wipeSave()">YES</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 </body>

@@ -124,6 +124,9 @@ function next(a, x, d) {
 
 function enable(el, on) {
   el.prop('disabled', !on)
+  if (!on) {
+    el.tooltip('hide')
+  }
 }
 
 signPrefix = function(x) { 
