@@ -1,9 +1,16 @@
-variable = function(initialValue, id, name) {
+variable = function(initialValue, id, name, params) {
+  if (params == undefined) {
+    params = {}
+  }
   if (name == undefined) {
     name = id
   }
   if (savedata[id] != undefined) {
     initialValue = savedata[id]
+  }
+  var formatter = params.formatter
+  if (formatter == undefined) {
+    formatter = function(x) { return large(Math.floor(x)) }
   }
   return {
     value: initialValue, 
@@ -12,7 +19,7 @@ variable = function(initialValue, id, name) {
     get: function(){return this.value},
     paint: function() {
       var label = $('#'+id)
-      label.text(formatText(label, large(Math.floor(this.get()))))
+      label.text(formatText(label, formatter(this.get())))
     }
   }
 }  

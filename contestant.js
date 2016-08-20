@@ -89,7 +89,7 @@ function createContestant(params) {
   // }
   
   var codeLines = variable(7, 'codeLines', 'code lines')
-  var experience = variable(0, 'experience')
+  var experience = variable(0, 'experience', 'experience', {formatter: large})
   var algorithms = variable(1, 'algorithms')
   var imagination = variable(0, 'imagination')
   var blindTyping = variable(1, 'blindTyping', 'blind typing')
