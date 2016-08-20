@@ -4,6 +4,7 @@ function createClickerCommand(params)
   var less = buttonGroup.find('.less')
   var more = buttonGroup.find('.more')
   var buy = buttonGroup.find('.buy')
+  var cost = $('#'+params.id+"Cost")
   
   var result = $.extend({
     zoom: 1,
@@ -53,14 +54,14 @@ function createClickerCommand(params)
       enable(less, this.canZoomDown())
       enable(more, this.canZoomUp())
       enable(buy, this.canUse())
-      var text = buy.attr('data-name')
-      if (text == undefined) {
-        text = ""
-      }
-      buy.text(text.replace('#{0}', large(this.zoom)))
+      buy.text(formatText(buy, large(this.zoom)))
+      this.delta = this.getDelta()
       setTitle(buy, this.delta.map(function(resource) {
         return signPrefix(resource.value) + large(resource.value) + " " + resource.name
       }).join("<br>"))
+      cost.text(formatText(cost, this.delta.filter(function(resource) { return resource.value < 0 }).map(function(resource) {
+        return large(-resource.value) + " " + resource.name
+      }).join("<br>")))
     }
   }, params)
   

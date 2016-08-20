@@ -140,6 +140,16 @@ large = function(x) {
   return x.toPrecision(4) 
 }
 setTitle = function(el, title) {
-  el.attr('title', title).tooltip('fixTitle')
+  el.attr('data-original-title', title)
+}
+formatText = function(el, text) {
+  var format = el.attr('data-text')
+  if (format == undefined) {
+    format = "#{0}"
+  }
+  return format.replace('#{0}', text)
+}
+setFormattedText = function(el, text) {
+  el.text(formatText(el, text))
 }
 

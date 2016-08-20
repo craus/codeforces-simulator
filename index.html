@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
 	<script src="com.js"></script>
+	<script src="variable.js"></script>
+	<script src="calculatable.js"></script>
  	<script src="init.js"></script>
 	<script src="monkey_patches.js"></script>
 	<script src="bounds.js"></script>
@@ -33,7 +35,7 @@
     <div class="col-sm-4">
       <h1>Rating</h1>
     </div>
-    <div class="col-sm-4" id = "codeLinesPerSecond" data-toggle="tooltip" data-placement="bottom" data-container="body" title="Hooray!">
+    <div class="col-sm-4">
       <h1>Code lines</h1>
       <p class="value" id="codeLines"></p>
     </div>
@@ -47,17 +49,23 @@
       <h1></h1>
     </div>
     <div class="col-sm-4">
-      <h1>
-        Problems
-      </h1>
+      <h1>Problems</h1>
       <div class="btn-group" id = "solve">
         <button type="button" class="btn btn-primary less">&lt;</button>
-        <button type="button" class="btn btn-primary buy" data-toggle="tooltip" data-container="body" data-html="true" title="-10 code lines, +1 experience" data-name="Solve #{0}">Solve 1</button>
+        <button type="button" class="btn btn-primary buy" data-text="Solve #{0}">Solve 1</button>
         <button type="button" class="btn btn-primary more">></button>
       </div>
     </div>
     <div class="col-sm-4">
       <h1>Blind typing</h1>
+      <p class="value" id="blindTyping" data-text="Current level: #{0}"></p>     
+      <p class="value" id="codeLinesPerSecond" data-text="#{0} code lines per second"></p>
+      <p class="value" id="learnBlindTypingCost" data-text="Cost: #{0}"></p>
+      <div class="btn-group" id = "learnBlindTyping">
+        <button type="button" class="btn btn-primary less">&lt;</button>
+        <button type="button" class="btn btn-primary buy" data-text="Learn #{0}">Skip 1</button>
+        <button type="button" class="btn btn-primary more">></button>
+      </div>
     </div>      
   </div>   
   <div class="row">
@@ -69,12 +77,20 @@
       <h1>Time</h1>
       <div class="btn-group" id = "skip">
         <button type="button" class="btn btn-primary less">&lt;</button>
-        <button type="button" class="btn btn-primary buy" data-toggle="tooltip" data-container="body" data-html="true" title="-10 code lines, +1 experience" data-name="Skip #{0} seconds">Skip 1</button>
+        <button type="button" class="btn btn-primary buy" data-text="Skip #{0} seconds">Skip 1</button>
         <button type="button" class="btn btn-primary more">></button>
       </div>
     </div>
     <div class="col-sm-4">
       <h1>Algorithms</h1>
+      <p class="value" id="algorithms" data-text="Current level: #{0}"></p>
+      <p class="value" id="experiencePerProblem" data-text="#{0} experience per problem"></p>
+      <p class="value" id="learnAlgorithmsCost" data-text="Cost: #{0}"></p>
+      <div class="btn-group" id = "learnAlgorithms">
+        <button type="button" class="btn btn-primary less">&lt;</button>
+        <button type="button" class="btn btn-primary buy" data-text="Learn #{0}">Skip 1</button>
+        <button type="button" class="btn btn-primary more">></button>
+      </div>
     </div>      
   </div>    
 </div>
