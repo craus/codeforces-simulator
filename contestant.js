@@ -267,26 +267,16 @@ function createContestant(params) {
       type: linear,
     },
     {
-      name: 'Tick a second',
+      name: "Advance Second",
+      id: "skip",
       cost: [],
-      reward: [[time, constant(1)], [secondTicked, constant(1)]],
+      reward: [[secondTicked, constant(1)]],
       type: linear,
       alwaysTopButton: 'off'
     }
   ].map(function(event) {
     return ((event.type == linear) ? buyEvent : unlinearBuyEvent)(event)
   })
-  
-  var advanceSecond = buyEvent({
-    name: "Advance Second",
-    id: "skip",
-    cost: [],
-    reward: [[secondTicked, constant(1)]],
-    type: linear,
-    alwaysTopButton: 'off'
-  })
-  
-  gameEvents.push(advanceSecond)
   
   var wipeSave = buyEvent({
     name: "Wipe Save",
