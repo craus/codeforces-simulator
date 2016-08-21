@@ -18,8 +18,11 @@ variable = function(initialValue, id, name, params) {
     name: name,
     get: function(){return this.value},
     paint: function() {
-      var label = $('#'+id)
-      label.text(formatText(label, formatter(this.get())))
+      var variable = this
+      $('.'+id).each(function() {
+        var label = $(this)
+        label.text(formatText(label, formatter(variable.get())))
+      })
     }
   }
 }  

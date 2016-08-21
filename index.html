@@ -2,6 +2,7 @@
   <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 	<script src="jquery.js"></script>
   <script src="bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
 	<script src="com.js"></script>
@@ -30,70 +31,133 @@
 </head>
 
 <body>
+
+
+
 <div class="container-fluid text-center">
-  <div class="row text-center">
-    <div class="col-sm-4">
-      <h1>Rating</h1>
+  <div class="row">
+    <div class="col-sm-5 col-md-4 col-lg-3"></div>
+    <div class="col-sm-7 col-md-8 col-lg-9">
+      <ul class="nav nav-tabs centered">
+        <li class="active"><a data-toggle="tab" href="#training">Training</a></li>
+        <li><a data-toggle="tab" href="#skills">Skills</a></li>
+        <li><a data-toggle="tab" href="#community" class="danger">Community</a></li>
+        <li><a data-toggle="tab" href="#competitions">Competitions</a></li>
+        <li><a data-toggle="tab" href="#problemsetting">Problemsetting</a></li>
+        <li><a data-toggle="tab" href="#store">Store</a></li>
+      </ul>
     </div>
-    <div class="col-sm-4">
-      <h1>Code lines</h1>
-      <p class="value" id="codeLines"></p>
-    </div>
-    <div class="col-sm-4">
-      <h1>Experience</h1>
-      <p class="value" id="experience"></p>
-    </div>      
   </div>
   <div class="row">
-    <div class="col-sm-4">
-      <h1></h1>
-    </div>
-    <div class="col-sm-4">
-      <h1>Problems</h1>
-      <div class="btn-group" id = "solve">
-        <button type="button" class="btn btn-primary less">&lt;</button>
-        <button type="button" class="btn btn-primary buy" data-text="Solve #{0}">Solve 1</button>
-        <button type="button" class="btn btn-primary more">></button>
+    <div class="col-sm-5 col-md-4 col-lg-3">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <tbody>
+            <tr><td>Code lines</td><td class="codeLines"></td></tr>
+            <tr><td>Experience</td><td class="experience"></td></tr>
+            <tr><td>Blind typing</td><td class="blindTyping"></td></tr>
+            <tr><td>Algorithms</td><td class="algorithms"></td></tr>
+            <tr><td>Imagination</td><td class="imagination"></td></tr>
+            <tr><td>Rating</td><td class="rating"></td></tr>
+            <tr><td>Contribution</td><td class="contribution"></td></tr>
+            <tr><td>Money</td><td class="money"></td></tr>
+          </tbody>
+        </table>
       </div>
     </div>
-    <div class="col-sm-4">
-      <h1>Blind typing</h1>
-      <p class="value" id="blindTyping" data-text="Current level: #{0}"></p>     
-      <p class="value" id="codeLinesPerSecond" data-text="#{0} code lines per second"></p>
-      <p class="value" id="learnBlindTypingCost" data-text="Cost: #{0}"></p>
-      <div class="btn-group" id = "learnBlindTyping">
-        <button type="button" class="btn btn-primary less">&lt;</button>
-        <button type="button" class="btn btn-primary buy" data-text="Learn #{0}">Skip 1</button>
-        <button type="button" class="btn btn-primary more">></button>
-      </div>
-    </div>      
-  </div>   
-  <div class="row">
-    <div class="col-sm-4">
-      <h1>Wipe save</h1>
-      <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-wipe-save">Wipe save</button>
+    <div class="col-sm-7 col-md-6 col-lg-9">
+      <div class="tab-content">
+        <div id="training" class="tab-pane fade in active">
+          <h1>Problems</h1>
+          <p class="value solveDelta"></p>   
+          <div class="btn-group solve">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Solve #{0}"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>        
+        </div>
+        <div id="skills" class="tab-pane fade row">
+          <div class="col-sm-4">
+            <h1>Blind typing</h1>
+            <p class="value blindTyping" data-text="Current level: #{0}"></p>     
+            <p class="value codeLinesPerSecond" data-text="#{0} code lines per second"></p>
+            <p class="value learnBlindTypingCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnBlindTyping">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <h1>Algorithms</h1>
+            <p class="value algorithms" data-text="Current level: #{0}"></p>
+            <p class="value experiencePerProblem" data-text="#{0} experience per problem"></p>
+            <p class="value learnAlgorithmsCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnAlgorithms">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <h1>Imagination</h1>
+            <p class="value imagination" data-text="Current level: #{0}"></p>
+            <p class="value ideasPerProblem" data-text="#{0} ideas per problem"></p>
+            <p class="value learnImaginationCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnImagination">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+        </div>
+        <div id="community" class="tab-pane fade">
+          <h1>Community</h1>
+          <p class="value askForHelpDelta"></p>   
+          <div class="btn-group askForHelp">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Ask for help #{0} times"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+          <p class="value helpSomebodyDelta"></p>   
+          <div class="btn-group helpSomebody">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Help somebody #{0} times"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+        </div>
+        <div id="competitions" class="tab-pane">
+          <h1>Contests</h1>      
+          <p class="value playContestDelta"></p>   
+          <div class="btn-group playContest">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Play #{0} contests"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+        </div>
+        <div id="problemsetting" class="tab-pane fade">
+          <h1>Problemsetting</h1>
+          <p class="value createContestDelta"></p>   
+          <div class="btn-group createContest">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Create #{0} contests"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+        </div>
+        <div id="store" class="tab-pane fade">
+        </div>
+      </div>    
     </div>
-    <div class="col-sm-4">
-      <h1>Time</h1>
-      <div class="btn-group" id = "skip">
-        <button type="button" class="btn btn-primary less">&lt;</button>
-        <button type="button" class="btn btn-primary buy" data-text="Skip #{0} seconds">Skip 1</button>
-        <button type="button" class="btn btn-primary more">></button>
-      </div>
-    </div>
-    <div class="col-sm-4">
-      <h1>Algorithms</h1>
-      <p class="value" id="algorithms" data-text="Current level: #{0}"></p>
-      <p class="value" id="experiencePerProblem" data-text="#{0} experience per problem"></p>
-      <p class="value" id="learnAlgorithmsCost" data-text="Cost: #{0}"></p>
-      <div class="btn-group" id = "learnAlgorithms">
-        <button type="button" class="btn btn-primary less">&lt;</button>
-        <button type="button" class="btn btn-primary buy" data-text="Learn #{0}">Skip 1</button>
-        <button type="button" class="btn btn-primary more">></button>
-      </div>
-    </div>      
-  </div>    
+  </div>
 </div>
+
+<h1>Time</h1>
+<div class="btn-group skip">
+  <button type="button" class="btn btn-primary less">&lt;</button>
+  <button type="button" class="btn btn-primary buy" data-text="Skip #{0} seconds"></button>
+  <button type="button" class="btn btn-primary more">></button>
+</div>
+<button class="btn btn-danger" data-toggle="modal" data-target="#confirm-wipe-save">Wipe save</button>
 
 <div class="modal fade" id="confirm-wipe-save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">

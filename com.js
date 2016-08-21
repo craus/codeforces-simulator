@@ -135,9 +135,9 @@ signPrefix = function(x) {
 }
 large = function(x) {
   if (x == 0) return 0
-  if (Math.abs(x) > 1e4*(1+eps) || Math.abs(x) < 1-eps) return x.toPrecision(4) 
+  if (Math.abs(x) > 1e4*(1+eps) || Math.abs(x) < 1-eps) return x.toPrecision(4).replace('+','')
   if (Math.abs(x - Math.floor(x+eps)) < eps) return Math.floor(x+eps)
-  return x.toPrecision(4) 
+  return x.toPrecision(4).replace('+','') 
 }
 setTitle = function(el, title) {
   el.attr('data-original-title', title)

@@ -91,7 +91,7 @@ function createContestant(params) {
   var codeLines = variable(7, 'codeLines', 'code lines')
   var experience = variable(0, 'experience', 'experience', {formatter: large})
   var algorithms = variable(1, 'algorithms')
-  var imagination = variable(0, 'imagination')
+  var imagination = variable(1, 'imagination')
   var blindTyping = variable(1, 'blindTyping', 'blind typing')
   var ideas = variable(0, 'ideas')
   var totalIdeas = variable(0, 'totalIdeas', 'total ideas') 
@@ -222,38 +222,45 @@ function createContestant(params) {
     },
     {
       name: 'Learn imagination',
-      cost: [[experience, calculatable(function(){return Math.pow(1.19, imagination.get())})]],
+      id: 'learnImagination',
+      cost: [[experience, calculatable(function(){return 1e5*Math.pow(1.19, imagination.get()-1)})]],
       reward: [[imagination, constant(1)]]
     },
     {
       name: 'Play contest',
+      id: 'playContest',
       cost: [[codeLines, constant(50)]],
       reward: contestPlayedGainsRating,
       type: linear,
     },
     {
       name: 'Create contest',
+      id: 'createContest',
       cost: [[codeLines, constant(500)], [ideas, constant(5)]],
       reward: [[money, constant(1)], [contribution, calculatable(function(){return contribution.get() * rating.get() / 10000 })]]
     },  
     {
       name: 'Upgrade Cormen',
+      id: 'upgradeCormen',
       cost: [[money, calculatable(function(){return 1 * Math.pow(cormen.get()+1, 0.37)})]],
       reward: [[cormen, constant(1)]]
     },
     {
       name: 'Upgrade keyboard',
+      id: 'upgradeKeyboard',
       cost: [[money, calculatable(function(){return 1 * Math.pow(keyboard.get()+1, 0.29)})]],
       reward: [[keyboard, constant(1)]]
     },
     {
       name: 'Ask for help',
+      id: 'askForHelp',
       cost: [[contribution, constant(1)]],
       reward: [[problemHelpedToSolve, constant(1)]],
       type: linear, 
     },
     {
       name: 'Help somebody',
+      id: 'helpSomebody',
       cost: [[codeLines, constant(11)]],
       reward: [[contribution, constant(1)]],
       type: linear,

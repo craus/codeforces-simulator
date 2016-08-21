@@ -2,7 +2,7 @@
   font-family: arial;
 }
 .centered {
-text-align: center
+  text-align: center
 }
 .title {
   font-size: 42px;
@@ -10,8 +10,14 @@ text-align: center
   width: auto;
   display: inline-block;
 }
+table {
+  width: 100%;
+  table-layout: fixed;
+}
+.big {
+  font-size: 42px;
+}
 .value {
-  font-size: 48px;
   text-align: center;
 }
 .tooltip-inner {
