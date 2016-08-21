@@ -201,6 +201,9 @@ function createContestant(params) {
 
   var linear = {}
   
+  var algorithmCost = calculatable(function(){return 100*Math.pow(1.17, algorithms.get()-1) / Math.pow(10, cormen.get())})
+  var blindTypingCost = calculatable(function(){return Math.pow(1.23, blindTyping.get()-1) / Math.pow(10, keyboard.get())})
+  var imaginationCost = calculatable(function(){return 1e5*Math.pow(1.19, imagination.get()-1)})
   var gameEvents = [
     {
       name: 'Solve problem',
@@ -212,19 +215,19 @@ function createContestant(params) {
     {
       name: 'Learn algorithm',
       id: 'learnAlgorithms',
-      cost: [[experience, calculatable(function(){return 100*Math.pow(1.17, algorithms.get()-1) / Math.pow(10, cormen.get())})]],
+      cost: [[experience, algorithmCost]],
       reward: [[algorithms, constant(1)]]
     },   
     {
       name: 'Learn blind typing',
       id: 'learnBlindTyping',
-      cost: [[experience, calculatable(function(){return Math.pow(1.23, blindTyping.get()-1) / Math.pow(10, keyboard.get())})]],
+      cost: [[experience, blindTypingCost]],
       reward: [[blindTyping, constant(1)]]
     },
     {
       name: 'Learn imagination',
       id: 'learnImagination',
-      cost: [[experience, calculatable(function(){return 1e5*Math.pow(1.19, imagination.get()-1)})]],
+      cost: [[experience, imaginationCost]],
       reward: [[imagination, constant(1)]]
     },
     {
