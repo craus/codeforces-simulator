@@ -93,13 +93,13 @@ function createContestant(params) {
   var algorithms = variable(1, 'algorithms')
   var imagination = variable(1, 'imagination')
   var blindTyping = variable(1, 'blindTyping', 'blind typing')
-  var ideas = variable(0, 'ideas')
+  var ideas = variable(0, 'ideas', 'ideas', {formatter: large})
   var totalIdeas = variable(0, 'totalIdeas', 'total ideas') 
-  var contribution = variable(0, 'contribution')
-  var money = variable(0, 'money')
+  var contribution = variable(0, 'contribution', 'contribution', {formatter: large})
+  var money = variable(0, 'money', 'money', {formatter: large})
   var cormen = variable(0, 'cormenLevel', 'cormen level')
   var keyboard = variable(0, 'keyboardLevel', 'keyboard level')
-  var rating = variable(0, 'rating')
+  var rating = variable(0, 'rating', 'rating', {formatter: large})
   var time = variable(0, 'time')
 
   var resources = [
@@ -175,7 +175,8 @@ function createContestant(params) {
   
   var secondTicked = createEvent({
     reward: [
-      [codeLines, blindTyping]
+      [codeLines, blindTyping],
+      [time, constant(1)]
     ]
   })
   
@@ -295,6 +296,7 @@ function createContestant(params) {
     alwaysTopButton: 'off',
     upButton: 'off'
   })
+  
     
   contestant = {
     paint: function() {
