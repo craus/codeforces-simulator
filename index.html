@@ -63,6 +63,8 @@
             <tr><td>Rating</td><td class="rating"></td></tr>
             <tr><td>Contribution</td><td class="contribution"></td></tr>
             <tr><td>Money</td><td class="money"></td></tr>
+            <tr><td>Keyboard level</td><td class="keyboardLevel"></td></tr>
+            <tr><td>Cormen level</td><td class="cormenLevel"></td></tr>
           </tbody>
         </table>
       </div>
@@ -89,6 +91,14 @@
               <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
               <button type="button" class="btn btn-primary more">></button>
             </div>
+            <h1>Blind typing mastery</h1>
+            <p class="value blindTypingMastery" data-text="Current level: #{0}"></p>     
+            <p class="value learnBlindTypingMasteryCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnBlindTypingMastery">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
           </div>
           <div class="col-sm-4">
             <h1>Algorithms</h1>
@@ -100,6 +110,14 @@
               <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
               <button type="button" class="btn btn-primary more">></button>
             </div>
+            <h1>Algorithms mastery</h1>
+            <p class="value algorithmsMastery" data-text="Current level: #{0}"></p>
+            <p class="value learnAlgorithmsMasteryCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnAlgorithmsMastery">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
           </div>
           <div class="col-sm-4">
             <h1>Imagination</h1>
@@ -107,6 +125,14 @@
             <p class="value ideasPerProblem" data-text="#{0} ideas per problem"></p>
             <p class="value learnImaginationCost" data-text="Cost: #{0}"></p>
             <div class="btn-group learnImagination">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+            <h1>Imagination mastery</h1>
+            <p class="value imaginationMastery" data-text="Current level: #{0}"></p>
+            <p class="value learnImaginationMasteryCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnImaginationMastery">
               <button type="button" class="btn btn-primary less">&lt;</button>
               <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
               <button type="button" class="btn btn-primary more">></button>
@@ -147,6 +173,26 @@
           </div>
         </div>
         <div id="store" class="tab-pane fade">
+          <div class="col-sm-6">
+            <h1>Upgrade keyboard</h1>
+            <p class="value keyboardLevel" data-text="Current level: #{0}"></p>     
+            <p class="value upgradeKeyboardCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group upgradeKeyboard">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Upgrade #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <h1>Upgrade Cormen</h1>
+            <p class="value cormenLevel" data-text="Current level: #{0}"></p>
+            <p class="value upgradeCormenCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group upgradeCormen">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Upgrade #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
         </div>
       </div>    
     </div>

@@ -90,9 +90,15 @@ function createContestant(params) {
   
   var codeLines = variable(7, 'codeLines', 'code lines')
   var experience = variable(0, 'experience', 'experience', {formatter: large})
-  var algorithms = variable(1, 'algorithms')
-  var imagination = variable(1, 'imagination')
-  var blindTyping = variable(1, 'blindTyping', 'blind typing')
+  var algorithms = variable(0, 'algorithms')
+  var totalAlgorithms = variable(0, 'totalAlgorithms')
+  var algorithmsMastery = variable(0, 'algorithmsMastery', 'algorithms mastery')
+  var imagination = variable(0, 'imagination')
+  var totalImagination = variable(0, 'totalImagination')
+  var imaginationMastery = variable(0, 'imaginationMastery', 'imagination mastery')
+  var blindTyping = variable(0, 'blindTyping', 'blind typing')
+  var totalBlindTyping = variable(0, 'totalBlindTyping')
+  var blindTypingMastery = variable(0, 'blindTypingMastery', 'blind typing mastery')
   var ideas = variable(0, 'ideas', 'ideas', {formatter: large})
   var totalIdeas = variable(0, 'totalIdeas', 'total ideas') 
   var contribution = variable(0, 'contribution', 'contribution', {formatter: large})
@@ -108,6 +114,12 @@ function createContestant(params) {
     algorithms,
     imagination,
     blindTyping,
+    algorithmsMastery,
+    imaginationMastery,
+    blindTypingMastery,
+    totalAlgorithms,
+    totalImagination,
+    totalBlindTyping,   
     ideas, 
     totalIdeas, 
     contribution,
@@ -117,6 +129,13 @@ function createContestant(params) {
     rating, 
     time,     
   ]
+  
+  var algorithmCost = calculatable(function(){return 100*Math.pow(1.17, totalAlgorithms.get()) / Math.pow(10, cormen.get())})
+  var blindTypingCost = calculatable(function(){return Math.pow(1.23, totalBlindTyping.get()) / Math.pow(10, keyboard.get())})
+  var imaginationCost = calculatable(function(){return 1e5*Math.pow(1.19, totalImagination.get())})
+
+  var experiencePerProblem = calculatable(function(){return (1+algorithms.get()) * Math.pow(100, algorithmsMastery.get())})
+  var ideasPerProblem = calculatable(function() {return (1+imagination.get()) * Math.pow(100, imaginationMastery.get()) / Math.pow(1.11, totalIdeas.get())})
   
   var ideaGet = createEvent({
     reward: [
@@ -148,7 +167,7 @@ function createContestant(params) {
   
   problemSolvedGainsIdea = createUnlinearEvent({
     reward: [
-      [ideaGet, calculatable(function() {return imagination.get() / Math.pow(1.11, totalIdeas.get())})], 
+      [ideaGet, ideasPerProblem], 
     ],
     dependence: totalIdeas
   })
@@ -162,20 +181,20 @@ function createContestant(params) {
   
   var problemSolved = createEvent({
     reward: [
-      [experience, algorithms], 
+      [experience, experiencePerProblem], 
       [problemSolvedGainsIdea, constant(1)]
     ]
   })
   
   var problemHelpedToSolve = createEvent({
     reward: [
-      [experience, algorithms],
+      [experience, experiencePerProblem],
     ]
   })
   
   var secondTicked = createEvent({
     reward: [
-      [codeLines, blindTyping],
+      [codeLines, calculatable(function(){return (1+blindTyping.get()) * Math.pow(100, blindTypingMastery.get())})],
       [time, constant(1)]
     ]
   })
@@ -201,9 +220,6 @@ function createContestant(params) {
 
   var linear = {}
   
-  var algorithmCost = calculatable(function(){return 100*Math.pow(1.17, algorithms.get()-1) / Math.pow(10, cormen.get())})
-  var blindTypingCost = calculatable(function(){return Math.pow(1.23, blindTyping.get()-1) / Math.pow(10, keyboard.get())})
-  var imaginationCost = calculatable(function(){return 1e5*Math.pow(1.19, imagination.get()-1)})
   var gameEvents = [
     {
       name: 'Solve problem',
@@ -216,19 +232,37 @@ function createContestant(params) {
       name: 'Learn algorithm',
       id: 'learnAlgorithms',
       cost: [[experience, algorithmCost]],
-      reward: [[algorithms, constant(1)]]
+      reward: [[algorithms, constant(1)], [totalAlgorithms, constant(1)]]
     },   
     {
       name: 'Learn blind typing',
       id: 'learnBlindTyping',
       cost: [[experience, blindTypingCost]],
-      reward: [[blindTyping, constant(1)]]
+      reward: [[blindTyping, constant(1)], [totalBlindTyping, constant(1)]]
     },
     {
       name: 'Learn imagination',
       id: 'learnImagination',
       cost: [[experience, imaginationCost]],
-      reward: [[imagination, constant(1)]]
+      reward: [[imagination, constant(1)], [totalImagination, constant(1)]]
+    },
+    {
+      name: 'Learn algorithms mastery',
+      id: 'learnAlgorithmsMastery',
+      cost: [[algorithms, constant(100)]],
+      reward: [[algorithmsMastery, constant(1)]]
+    },   
+    {
+      name: 'Learn blind typing mastery',
+      id: 'learnBlindTypingMastery',
+      cost: [[blindTyping, constant(100)]],
+      reward: [[blindTypingMastery, constant(1)]]
+    },
+    {
+      name: 'Learn imagination mastery',
+      id: 'learnImaginationMastery',
+      cost: [[imagination, constant(100)]],
+      reward: [[imaginationMastery, constant(1)]]
     },
     {
       name: 'Play contest',
@@ -293,9 +327,10 @@ function createContestant(params) {
     
   contestant = {
     paint: function() {
-      setFormattedText($("#codeLinesPerSecond"), secondTicked.getReward(codeLines))
-      setFormattedText($("#experiencePerProblem"), problemSolved.getReward(experience))
-      setTitle($("#codeLinesPerSecond"), "+"+secondTicked.getReward(codeLines)+" per second")
+      setFormattedText($(".codeLinesPerSecond"), secondTicked.getReward(codeLines))
+      setFormattedText($(".experiencePerProblem"), problemSolved.getReward(experience))
+      setFormattedText($(".ideasPerProblem"), large(ideasPerProblem.get()))
+      setTitle($(".codeLinesPerSecond"), "+"+secondTicked.getReward(codeLines)+" per second")
       resources.each('paint')
       gameEvents.each('paint')
     },
