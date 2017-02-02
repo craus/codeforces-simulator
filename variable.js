@@ -21,7 +21,7 @@ variable = function(initialValue, id, name, params) {
       var variable = this
       $('.'+id).each(function() {
         var label = $(this)
-        label.text(formatText(label, formatter(variable.get())))
+        setFormattedText(label, formatter(variable.get()))
       })
     }
   }

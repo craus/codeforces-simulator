@@ -150,6 +150,9 @@ formatText = function(el, text) {
   return format.replace('#{0}', text)
 }
 setFormattedText = function(el, text) {
-  el.text(formatText(el, text))
+  var t = formatText(el, text)
+  if (el.text() != t) {
+    el.text(t)
+  }
 }
 
