@@ -174,7 +174,8 @@ function createContestant(params) {
   
   contestPlayedGainsRating = createUnlinearEvent({
     reward: [
-      [rating, calculatable(function(){return Math.pow(10, algorithms.get()) / Math.floor(Math.pow(1.07, rating.get()))})]
+      [rating, 
+      calculatable(function(){return Math.pow(10, algorithms.get() + 100 * algorithmsMastery.get() - rating.get() / 34)})]
     ],
     dependence: rating
   })
