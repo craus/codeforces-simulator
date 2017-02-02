@@ -328,8 +328,8 @@ function createContestant(params) {
     
   contestant = {
     paint: function() {
-      setFormattedText($(".codeLinesPerSecond"), secondTicked.getReward(codeLines))
-      setFormattedText($(".experiencePerProblem"), problemSolved.getReward(experience))
+      setFormattedText($(".codeLinesPerSecond"), large(secondTicked.getReward(codeLines)))
+      setFormattedText($(".experiencePerProblem"), large(problemSolved.getReward(experience)))
       setFormattedText($(".ideasPerProblem"), large(ideasPerProblem.get()))
       setTitle($(".codeLinesPerSecond"), "+"+secondTicked.getReward(codeLines)+" per second")
       resources.each('paint')
