@@ -39,12 +39,13 @@ function createContestant(params) {
   // rules
   
   // rules balance calculation
-  var A = Math.log(100)/100/Math.log(1.17)
-  var B = Math.log(100)/100/Math.log(1.23)
+  var A = Math.log(100)/100/Math.log(1.17) // на сколько порядков возрастёт множитель алгоритмов, если опыт возрастёт на 1 порядок
+  var RA = Math.log(1.05)/Math.log(1.17) // на сколько порядков возрастёт множитель алгоритмов для рейтинга, если опыт возрастёт на 1 порядок
+  var B = Math.log(100)/100/Math.log(1.23) // на сколько порядков возрастёт скорость печати, если опыт возрастёт на 1 порядок
   var AB_route = B/(1-A)
   
   var Im = Math.log(100)/100/Math.log(1.19)
-  var Id = 0.2 / (Math.log(2))
+  var Id = 0.2 / (Math.log(1.37))
   var u = (B + Im) / (1-A)
   var V = Id * u
   
@@ -53,6 +54,13 @@ function createContestant(params) {
   var Max_contribution_multiplier_per_contest = Math.exp(Cmax)
   var Norm_contribution_multiplier_per_contest = Math.exp(Cnorm)
 
+  var RC = (RA + B) / (1-A)    // на сколько порядков возрастёт рейтинг, если вклад возрастёт на 1 порядок
+  // r – порядок рейтинга, с – порядок вклада
+  // тогда r = c * RC + q, где q - на сколько игрок старается держать рейтинг
+  // q = r - c * RC
+  // q IN (-inf, inf)
+  // contribution_multiplier_per_contest IN (0, Max_contribution_multiplier_per_contest)
+  // пусть будет contribution_multiplier_per_contest = (atan(q) / (PI/2) + 1) / 2 * Max_contribution_multiplier_per_contest
   var R = Math.log(10) / Math.log(1.07) 
   
   var r_max = (Max_contribution_multiplier_per_contest-1) * 10000
@@ -64,6 +72,7 @@ function createContestant(params) {
   //var V = Id * (1+Im+Im*A/(1-A))
   balance = {
     A: A,
+    RA: RA,
     B: B,
     AB_route: AB_route,
     Im: Im,
@@ -73,6 +82,7 @@ function createContestant(params) {
     Max_contribution_multiplier_per_contest: Max_contribution_multiplier_per_contest,
     Norm_contribution_multiplier_per_contest: Norm_contribution_multiplier_per_contest,
     R: R,
+    RC: RC,
     r_max: r_max,
     id_max: id_max,
     r_norm: r_norm,
@@ -137,6 +147,10 @@ function createContestant(params) {
   var experiencePerProblem = calculatable(function(){return (1+algorithms.get()) * Math.pow(100, algorithmsMastery.get())})
   var ideasPerProblem = calculatable(function() {return (1+imagination.get()) * Math.pow(100, imaginationMastery.get()) / Math.pow(1.11, totalIdeas.get())})
   
+  var ratingQuality = calculatable(function() {return Math.log(rating.get()+1) - 0.75 * Math.log(contribution.get()+1)})
+  var normalizedContributionMultiplier = calculatable(function() {return Math.atan(ratingQuality.get()) / (Math.PI/2)}) // IN (-1, 1)
+  var contributionMultiplier = calculatable(function() {return Math.pow(8.8, normalizedContributionMultiplier.get())})
+
   var ideaGet = createEvent({
     reward: [
       [ideas, constant(1)],
@@ -175,7 +189,7 @@ function createContestant(params) {
   contestPlayedGainsRating = createUnlinearEvent({
     reward: [
       [rating, 
-      calculatable(function(){return Math.pow(10, algorithms.get() + 100 * algorithmsMastery.get() - rating.get() / 34)})]
+      calculatable(function(){return Math.pow(1.05, algorithms.get() + 100 * algorithmsMastery.get() - 0.01 * rating.get())})]
     ],
     dependence: rating
   })
@@ -276,7 +290,7 @@ function createContestant(params) {
       name: 'Create contest',
       id: 'createContest',
       cost: [[codeLines, constant(500)], [ideas, constant(5)]],
-      reward: [[money, constant(1)], [contribution, calculatable(function(){return contribution.get() * rating.get() / 10000 })]]
+      reward: [[money, constant(1)], [contribution, calculatable(function(){return contribution.get() * contributionMultiplier.get() })]]
     },  
     {
       name: 'Upgrade Cormen',
@@ -331,6 +345,7 @@ function createContestant(params) {
       setFormattedText($(".codeLinesPerSecond"), large(secondTicked.getReward(codeLines)))
       setFormattedText($(".experiencePerProblem"), large(problemSolved.getReward(experience)))
       setFormattedText($(".ideasPerProblem"), large(ideasPerProblem.get()))
+      setFormattedText($(".ratingQuality"), large(ratingQuality.get()))
       setTitle($(".codeLinesPerSecond"), "+"+secondTicked.getReward(codeLines)+" per second")
       resources.each('paint')
       gameEvents.each('paint')
