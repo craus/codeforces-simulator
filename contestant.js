@@ -145,7 +145,7 @@ function createContestant(params) {
   var imaginationCost = calculatable(function(){return 1e5*Math.pow(1.19, totalImagination.get())})
 
   var experiencePerProblem = calculatable(function(){return (1+algorithms.get()) * Math.pow(100, algorithmsMastery.get())})
-  var ideasPerProblem = calculatable(function() {return (1+imagination.get()) * Math.pow(100, imaginationMastery.get()) / Math.pow(1.11, totalIdeas.get())})
+  var ideasPerProblem = calculatable(function() {return (1+imagination.get()) * Math.pow(100, imaginationMastery.get()) / Math.pow(1.37, totalIdeas.get()) / 100})
   
   var ratingQuality = calculatable(function() {return Math.log(rating.get()+1) - 0.75 * Math.log(contribution.get()+1)})
   var normalizedContributionMultiplier = calculatable(function() {return Math.atan(ratingQuality.get()) / (Math.PI/2)}) // IN (-1, 1)
