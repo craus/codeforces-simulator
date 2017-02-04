@@ -7,6 +7,7 @@ var problem = function(name, time, score) {
     isActive: false,
     solved: false,
     knowSpeed: 10.0 / time.m,
+    cheapingSpeed: score * 0.01,
     paint: function(contest) {
       var panel = this.panel
       if (panel == undefined) {
@@ -15,23 +16,30 @@ var problem = function(name, time, score) {
       setFormattedText(panel.find(".name"), this.name)
       setFormattedText(panel.find(".timeLeft"), round(this.time.m), round(3*this.time.sigma))
       setFormattedText(panel.find(".timeSpent"), round(this.timeSpent))
-      setFormattedText(panel.find(".points"), this.score)
+      setFormattedText(panel.find(".points"), Math.ceil(this.score))
       panel.find(".solve").toggle(!this.isActive && !this.solved && contest.running())
       panel.find(".solving").toggle(this.isActive && contest.running())
       panel.find(".solved").toggle(this.solved)
     },
-    tick: function(contest, t) {
-      if (!this.isActive || !contest.running()) {
+    tick: function(contest, t) {      
+      if (!contest.running()) {
+        return
+      }
+      if (!this.solved) {
+        this.score -= this.cheapingSpeed * t
+      }
+      if (!this.isActive) {
         return
       }
       this.timeSpent += t
       this.time.m -= t
+
       if (this.time.m < 0) {
         this.time.m = 0
         this.time.sigma = 0
         this.solved = true
         contest.solved += 1
-        contest.score += score
+        contest.score += this.score
         this.isActive = false
       }
       this.time = this.time.know(t*this.knowSpeed)

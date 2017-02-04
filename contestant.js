@@ -344,16 +344,14 @@ function createContestant(params) {
   var currentContest = null
   
   playContestButton.click(function() { 
+    if (currentContest != null) {
+      currentContest.panel.remove()
+    }
     console.log("Started contest")
     currentContest = {
       problems: [
-        problem("A", gaussed(10, 3), 500),
-        problem("B", gaussed(20, 6), 1000),
-        problem("C", gaussed(30, 9), 1500),
-        problem("D", gaussed(40, 12), 2000),
-        problem("E", gaussed(50, 15), 2500),
       ],
-      time: 12, 
+      time: 80, 
       score: 0, 
       solved: 0, 
       running: function() { return this.time > 0 },
@@ -362,6 +360,7 @@ function createContestant(params) {
           setFormattedText(this.panel.find(".timeLeft"), large(Math.ceil(this.time)))
           setFormattedText(this.panel.find(".currentScore"), large(Math.ceil(this.score)))
           setFormattedText(this.panel.find(".problemsSolved"), large(Math.ceil(this.solved)))
+          setFormattedText(this.panel.find(".status"), this.running() ? "CONTEST IS RUNNING" : "CONTEST IS OVER")
         }
         this.problems.each('paint', this)
       },
@@ -371,6 +370,9 @@ function createContestant(params) {
           this.time -= t
         }
       }
+    }
+    for (var i = 0; i < 5; i++) {
+      currentContest.problems.push(problem(String.fromCharCode('A'.charCodeAt()+i), gaussed(10*(i+1), 5*(i+1)), 500*(i+1)))
     }
     var contestPanelSample = $(".contestPanelSample")
     var competitions = $("#competitions")
