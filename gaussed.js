@@ -15,9 +15,9 @@ gaussed = function(m, sigma) {
     m: m, 
     sigma: sigma,
     know: function(bits) {
-      var sigma1 = Math.exp(Math.log(sigma)-bits)
-      var gamma = Math.sqrt(sqr(sigma)-sqr(sigma1))
-      var b = gaussianRandom(m, gamma)
+      var sigma1 = Math.exp(Math.log(this.sigma)-bits)
+      var gamma = Math.sqrt(sqr(this.sigma)-sqr(sigma1))
+      var b = gaussianRandom(this.m, gamma)
       return gaussed(b, sigma1)
     }
   }

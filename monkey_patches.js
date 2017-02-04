@@ -11,8 +11,9 @@ Array.prototype.remove = function(element) {
 }
 
 Array.prototype.each = function(method) {
+  var args = Array.prototype.slice.call(arguments,1)
   for (var i = 0; i < this.length; i++) {
-    this[i][method]()
+    this[i][method].apply(this[i],args)
   }
 }
 

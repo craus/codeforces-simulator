@@ -139,18 +139,21 @@ large = function(x) {
   if (Math.abs(x - Math.floor(x+eps)) < eps) return Math.floor(x+eps)
   return x.toPrecision(4).replace('+','') 
 }
+round = function(x) {
+  return large(Math.round(x))
+}
 setTitle = function(el, title) {
   el.attr('data-original-title', title)
 }
-formatText = function(el, text) {
+formatText = function(el, text, text1) {
   var format = el.attr('data-text')
   if (format == undefined) {
     format = "#{0}"
   }
-  return format.replace('#{0}', text)
+  return format.replace('#{0}', text).replace('#{1}', text1)
 }
-setFormattedText = function(el, text) {
-  var t = formatText(el, text)
+setFormattedText = function(el, text, text1) {
+  var t = formatText(el, text, text1)
   if (el.text() != t) {
     el.text(t)
   }

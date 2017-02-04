@@ -29,6 +29,7 @@
   <script src="setter.js"></script>  
   <script src="unpredictable_event.js"></script>  
   <script src="gaussed.js"></script>  
+  <script src="problem.js"></script>  
 </head>
 
 <body>
@@ -72,7 +73,7 @@
     </div>
     <div class="col-sm-7 col-md-6 col-lg-9">
       <div class="tab-content">
-        <div id="training" class="tab-pane fade in active">
+        <div id="training" class="tab-pane fade in">
           <h1>Problems</h1>
           <p class="value solveDelta"></p>   
           <div class="btn-group solve">
@@ -155,13 +156,42 @@
             <button type="button" class="btn btn-primary more">></button>
           </div>
         </div>
-        <div id="competitions" class="tab-pane">
+        <div id="competitions" class="tab-pane active">
           <h1>Contests</h1>      
-          <p class="value playContestDelta"></p>   
-          <div class="btn-group playContest">
-            <button type="button" class="btn btn-primary less">&lt;</button>
-            <button type="button" class="btn btn-primary buy" data-text="Play #{0} contests"></button>
-            <button type="button" class="btn btn-primary more">></button>
+          <div class="row" style="margin-bottom:24px">
+            <button type="button" class="btn btn-primary playContest">Play contest</button>
+          </div>
+          <div class="col-sm-2 problemPanelSample hidden">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <p class="name" data-text="Problem #{0}">Problem A</p>   
+                <p class="points" data-text="#{0} points">500 points</p>
+                <p class="timeLeft", data-text="Left: #{0}±#{1} s">Left: 10±5 s</p>
+                <p class="timeSpent", data-text="Spent: #{0} s">Spent: 0 s</p>    
+                <button type="button" class="btn btn-primary solve">Solve</button>  
+                <p class="solved">ACCEPTED</p>    
+                <p class="solving">SOLVING...</p>                 
+              </div>
+            </div>
+          </div>          
+          <div class = "panel panel-default hidden contestPanelSample">
+            <div class = "panel-body">
+              <h2>Contest is running</h2>
+              <div class="row">
+                <div class="col-sm-4">
+                  <p class="currentScore" data-text="Current score: #{0}">Current score: 0</p>   
+                </div>
+                <div class="col-sm-4">
+                  <p class="problemsSolved" data-text="Problems solved: #{0}">Problems solved: 0</p>   
+                </div>
+                <div class="col-sm-4">
+                  <p class="timeLeft" data-text="Time left: #{0}">Time left: 80</p>   
+                </div>
+              </div>              
+              <div class="row-fluid problems">
+
+              </div>
+            </div>
           </div>
         </div>
         <div id="problemsetting" class="tab-pane fade">

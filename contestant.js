@@ -339,7 +339,56 @@ function createContestant(params) {
     upButton: 'off'
   })
   
-    
+  var playContestButton = $('.playContest')  
+  
+  var currentContest = null
+  
+  playContestButton.click(function() { 
+    console.log("Started contest")
+    currentContest = {
+      problems: [
+        problem("A", gaussed(10, 3), 500),
+        problem("B", gaussed(20, 6), 1000),
+        problem("C", gaussed(30, 9), 1500),
+        problem("D", gaussed(40, 12), 2000),
+        problem("E", gaussed(50, 15), 2500),
+      ],
+      time: 12, 
+      score: 0, 
+      solved: 0, 
+      running: function() { return this.time > 0 },
+      paint: function() {
+        if (this.panel != null) {
+          setFormattedText(this.panel.find(".timeLeft"), large(Math.ceil(this.time)))
+          setFormattedText(this.panel.find(".currentScore"), large(Math.ceil(this.score)))
+          setFormattedText(this.panel.find(".problemsSolved"), large(Math.ceil(this.solved)))
+        }
+        this.problems.each('paint', this)
+      },
+      tick: function(t) {
+        this.problems.each('tick', this, t)
+        if (this.running()) {
+          this.time -= t
+        }
+      }
+    }
+    var contestPanelSample = $(".contestPanelSample")
+    var competitions = $("#competitions")
+    var contestPanel = contestPanelSample.clone()
+    contestPanel.removeClass("hidden contestPanelSample")
+    competitions.append(contestPanel)
+    currentContest.panel = contestPanel
+    currentContest.problems.forEach(function(problem) {
+      var problemPanel = $(".problemPanelSample").clone()
+      problemPanel.removeClass("problemPanelSample hidden")
+      var problemsPanel = contestPanel.find(".problems")
+      problemsPanel.append(problemPanel)
+      problem.panel = problemPanel
+      problem.initPanel(currentContest)
+    })
+    currentContest.problems[0].panel.addClass("col-sm-offset-1")
+  })
+  
   contestant = {
     paint: function() {
       setFormattedText($(".codeLinesPerSecond"), large(secondTicked.getReward(codeLines)))
@@ -349,11 +398,17 @@ function createContestant(params) {
       setTitle($(".codeLinesPerSecond"), "+"+secondTicked.getReward(codeLines)+" per second")
       resources.each('paint')
       gameEvents.each('paint')
+      if (currentContest != null) {
+        currentContest.paint()
+      }
     },
     tick: function() {
       var currentTime = new Date().getTime()
       var deltaTime = currentTime - savedata.realTime
       secondTicked.run(deltaTime / 1000)
+      if (currentContest != null) {
+        currentContest.tick(deltaTime / 1000)
+      }
       save(currentTime)
     },
     wipeSave: function() {
