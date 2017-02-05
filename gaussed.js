@@ -21,7 +21,9 @@ gaussed = function(m, sigma) {
         var b = gaussianRandom(this.m, gamma)
         return gaussed(b, sigma1)
       }
-      var b = this.m + gaussianRandom(this.fixedAnswer - this.m, sigma1)
+      var gamma = Math.sqrt(sqr(this.sigma)-sqr(sigma1))
+      var d = this.m - this.fixedAnswer
+      var b = this.m - gaussianRandom(d * sqr(gamma) / sqr(this.sigma) , sigma1 * gamma / this.sigma)
       return gaussed(b, sigma1).fixAnswer(this.fixedAnswer)
     },
     fixAnswer: function(x) {
