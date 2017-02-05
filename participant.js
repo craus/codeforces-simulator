@@ -9,7 +9,7 @@ var createParticipant = function(contest, createController, name) {
       return contest.participants.sort((a, b) => b.score()-a.score()).indexOf(this)+1
     },
     solved: function() {
-      return this.problems.reduce((total,problem)=>total+problem.solved?1:0,0)
+      return this.problems.reduce((total,problem)=>total+(problem.solved?1:0),0)
     },
     tick: function(t) {
       this.controller.tick(t)
