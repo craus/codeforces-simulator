@@ -31,7 +31,7 @@ createContest = function() {
   for (var i = 0; i < 5; i++) {
     contest.problems.push(problem(String.fromCharCode('A'.charCodeAt()+i), gaussed(10*(i+1), 5*(i+1)), 500*(i+1)))
   }    
-  for (var i = 0; i < 100; i++) {
+  for (var i = 0; i < 10; i++) {
     contest.participants.push(createParticipant(
       contest, 
       i == 0 ? createHumanParticipant : createBot,

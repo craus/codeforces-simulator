@@ -22,7 +22,6 @@ var createParticipant = function(contest, createController, name) {
       }
     },
     paint: function() {
-      this.problems.each('paint')
       if (this.panel != null) {
         setFormattedText(this.panel.find(".currentScore"), large(Math.ceil(this.score())))
         setFormattedText(this.panel.find(".problemsSolved"), large(Math.ceil(this.solved())))
@@ -33,6 +32,7 @@ var createParticipant = function(contest, createController, name) {
         setFormattedText(this.row.find(".score"), Math.ceil(this.score()))
         setSortableValue(this.row.find(".scoreData"), Math.ceil(this.score()))
       }
+      this.problems.each('paint')
     },
     remove: function() {
       this.controller.remove()
@@ -92,8 +92,8 @@ var participantProblem = function(contest, participant, problem) {
         panel.find(".solved").toggle(this.solved)
       }
       if (this.td != undefined) {
-        setFormattedText(this.td, noZero(round(this.myScore())));
-        //setFormattedText(this.td, noZero(round(this.timeSpent)));
+        setFormattedText(this.td.find(".problemScore"), noZero(round(this.myScore())));
+        setFormattedText(this.td.find(".problemTimeSpent"), noZero(round(this.timeSpent)));
       }
     },
     init: function() {
