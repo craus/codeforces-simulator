@@ -4,6 +4,7 @@ createContest = function() {
     totalTime: 80, 
     penalty: 100,
     time: 0,
+    submitDataAmount: 10,
     timeElapsed: function() { return this.time },
     timeLeft: function() { return this.totalTime - this.time },
     running: function() { return this.timeLeft() > 0 },

@@ -68,12 +68,9 @@ var participantProblem = function(contest, participant, problem) {
         return
       }
       this.timeSpent += t
-      this.time.m -= t
 
-      if (this.time.m < 0) {
+      if (this.timeSpent > this.time.fixedAnswer) {
         this.submit()
-        this.time.m = 0
-        this.time.sigma = 0
         this.solved = true
       }
       this.time = this.time.know(t*problem.knowSpeed)
@@ -87,7 +84,7 @@ var participantProblem = function(contest, participant, problem) {
       var panel = this.panel
       if (panel != undefined) {      
         setFormattedText(panel.find(".name"), this.problem.name)
-        setFormattedText(panel.find(".timeLeft"), round(this.time.m), round(3*this.time.sigma))
+        setFormattedText(panel.find(".timeLeft"), round(this.time.m - this.timeSpent), round(3*this.time.sigma))
         setFormattedText(panel.find(".timeSpent"), round(this.timeSpent))
         setFormattedText(panel.find(".points"), Math.ceil(this.solved ? this.myScore() : this.score()))
         panel.find(".solve").toggle(!this.isActive() && !this.solved && contest.running())
@@ -96,6 +93,7 @@ var participantProblem = function(contest, participant, problem) {
       }
       if (this.td != undefined) {
         setFormattedText(this.td, noZero(round(this.myScore())));
+        //setFormattedText(this.td, noZero(round(this.timeSpent)));
       }
     },
     init: function() {
