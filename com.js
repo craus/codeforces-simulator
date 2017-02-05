@@ -142,6 +142,9 @@ large = function(x) {
 round = function(x) {
   return large(Math.round(x))
 }
+noZero = function(x) {
+  return x == 0 ? "" : x
+}
 setTitle = function(el, title) {
   el.attr('data-original-title', title)
 }
@@ -154,8 +157,20 @@ formatText = function(el, text, text1) {
 }
 setFormattedText = function(el, text, text1) {
   var t = formatText(el, text, text1)
-  if (el.text() != t) {
+  if (el.length > 0 && el.text() != t) {
+    //console.log("setting text", el, "was: ", el.text(), "is: ", t)
     el.text(t)
   }
+}
+needResort = false
+setSortableValue = function(el, value) {
+  var old = el.attr('data-value')
+  if (old != value) {
+    el.attr('data-value', value)
+    needResort = true
+  }
+}
+instantiate = function(name) {
+  return $("." + name + ":first").clone().removeClass("hidden " + name)
 }
 

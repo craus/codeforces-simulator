@@ -39,6 +39,10 @@ var init = function() {
     if (!debug.paused) {
       game.tick()
       game.paint()
+      if (needResort) {
+        needResort = false
+        $.bootstrapSortable({ applyLast: true })
+      }
     }
   }, 100)
   

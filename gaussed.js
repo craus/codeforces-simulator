@@ -16,9 +16,21 @@ gaussed = function(m, sigma) {
     sigma: sigma,
     know: function(bits) {
       var sigma1 = Math.exp(Math.log(this.sigma)-bits)
-      var gamma = Math.sqrt(sqr(this.sigma)-sqr(sigma1))
-      var b = gaussianRandom(this.m, gamma)
-      return gaussed(b, sigma1)
+      if (this.fixedAnswer == undefined) {
+        var gamma = Math.sqrt(sqr(this.sigma)-sqr(sigma1))
+        var b = gaussianRandom(this.m, gamma)
+        return gaussed(b, sigma1)
+      }
+      var b = this.m + gaussianRandom(this.fixedAnswer - this.m, sigma1)
+      return gaussed(b, sigma1).fixAnswer(this.fixedAnswer)
+    },
+    fixAnswer: function(x) {
+      if (x == undefined) {
+        this.fixedAnswer = gaussianRandom(this.m, this.sigma)
+      } else {
+        this.fixedAnswer = x
+      }
+      return this
     }
   }
 }

@@ -1,0 +1,109 @@
+var createParticipant = function(contest, createController, name) {
+  var participant = {
+    name: name,
+    activeProblem: null,
+    score: function() {
+      return this.problems.reduce((total,problem)=>total+problem.myScore(),0)
+    },    
+    rank: function() {
+      return contest.participants.sort((a, b) => b.score()-a.score()).indexOf(this)+1
+    },
+    solved: function() {
+      return this.problems.reduce((total,problem)=>total+problem.solved?1:0,0)
+    },
+    tick: function(t) {
+      this.controller.tick(t)
+      if (this.activeProblem != null) {
+        if (this.activeProblem.solved) {
+          this.activeProblem = null
+        } else {
+          this.activeProblem.solve(t)
+        }
+      }
+    },
+    paint: function() {
+      this.problems.each('paint')
+      if (this.panel != null) {
+        setFormattedText(this.panel.find(".currentScore"), large(Math.ceil(this.score())))
+        setFormattedText(this.panel.find(".problemsSolved"), large(Math.ceil(this.solved())))
+      }
+      if (this.row != undefined) {
+        setFormattedText(this.row.find(".name"), this.name)
+        setFormattedText(this.row.find(".rank"), this.rank())
+        setFormattedText(this.row.find(".score"), Math.ceil(this.score()))
+        setSortableValue(this.row.find(".scoreData"), Math.ceil(this.score()))
+      }
+    },
+    remove: function() {
+      this.controller.remove()
+    }
+  }
+  participant.problems = contest.problems.map(function(p) {return participantProblem(contest, participant, p)}),
+  participant.controller = createController(contest, participant)
+  return participant
+}
+
+var participantProblem = function(contest, participant, problem) {
+  return {
+    problem: problem,
+    time: Object.assign({}, problem.time),
+    timeSpent: 0,
+    solved: false,
+    tries: 0,
+    lastSubmitTime: Number.NEGATIVE_INFINITY,
+    score: function() {
+      return problem.score - problem.cheapingSpeed*contest.timeElapsed()
+    },
+    myScore: function() {
+      if (!this.solved) {
+        return 0
+      }
+      return problem.score - problem.cheapingSpeed*this.lastSubmitTime - (this.tries-1)*contest.penalty
+    },
+    isActive: function() {
+      return participant.activeProblem == this
+    },
+    solve: function(t) {
+      if (this.solved) {
+        return
+      }
+      this.timeSpent += t
+      this.time.m -= t
+
+      if (this.time.m < 0) {
+        this.submit()
+        this.time.m = 0
+        this.time.sigma = 0
+        this.solved = true
+      }
+      this.time = this.time.know(t*problem.knowSpeed)
+    },
+    submit: function() {
+      this.tries += 1
+      this.lastSubmitTime = contest.time
+      this.time = this.time.know(contest.submitDataAmount)
+    },
+    paint: function() {
+      var panel = this.panel
+      if (panel != undefined) {      
+        setFormattedText(panel.find(".name"), this.problem.name)
+        setFormattedText(panel.find(".timeLeft"), round(this.time.m), round(3*this.time.sigma))
+        setFormattedText(panel.find(".timeSpent"), round(this.timeSpent))
+        setFormattedText(panel.find(".points"), Math.ceil(this.solved ? this.myScore() : this.score()))
+        panel.find(".solve").toggle(!this.isActive() && !this.solved && contest.running())
+        panel.find(".solving").toggle(this.isActive() && contest.running())
+        panel.find(".solved").toggle(this.solved)
+      }
+      if (this.td != undefined) {
+        setFormattedText(this.td, noZero(round(this.myScore())));
+      }
+    },
+    init: function() {
+      if (this.panel == undefined) {
+        return
+      }
+      var me = this      
+      this.panel.find(".solve").click(function() { participant.activeProblem = me})
+    }
+  }
+}

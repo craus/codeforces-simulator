@@ -345,50 +345,10 @@ function createContestant(params) {
   
   playContestButton.click(function() { 
     if (currentContest != null) {
-      currentContest.panel.remove()
+      currentContest.remove()
     }
     console.log("Started contest")
-    currentContest = {
-      problems: [
-      ],
-      time: 80, 
-      score: 0, 
-      solved: 0, 
-      running: function() { return this.time > 0 },
-      paint: function() {
-        if (this.panel != null) {
-          setFormattedText(this.panel.find(".timeLeft"), large(Math.ceil(this.time)))
-          setFormattedText(this.panel.find(".currentScore"), large(Math.ceil(this.score)))
-          setFormattedText(this.panel.find(".problemsSolved"), large(Math.ceil(this.solved)))
-          setFormattedText(this.panel.find(".status"), this.running() ? "CONTEST IS RUNNING" : "CONTEST IS OVER")
-        }
-        this.problems.each('paint', this)
-      },
-      tick: function(t) {
-        this.problems.each('tick', this, t)
-        if (this.running()) {
-          this.time -= t
-        }
-      }
-    }
-    for (var i = 0; i < 5; i++) {
-      currentContest.problems.push(problem(String.fromCharCode('A'.charCodeAt()+i), gaussed(10*(i+1), 5*(i+1)), 500*(i+1)))
-    }
-    var contestPanelSample = $(".contestPanelSample")
-    var competitions = $("#competitions")
-    var contestPanel = contestPanelSample.clone()
-    contestPanel.removeClass("hidden contestPanelSample")
-    competitions.append(contestPanel)
-    currentContest.panel = contestPanel
-    currentContest.problems.forEach(function(problem) {
-      var problemPanel = $(".problemPanelSample").clone()
-      problemPanel.removeClass("problemPanelSample hidden")
-      var problemsPanel = contestPanel.find(".problems")
-      problemsPanel.append(problemPanel)
-      problem.panel = problemPanel
-      problem.initPanel(currentContest)
-    })
-    currentContest.problems[0].panel.addClass("col-sm-offset-1")
+    currentContest = createContest()
   })
   
   contestant = {
