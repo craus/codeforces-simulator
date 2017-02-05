@@ -25,7 +25,7 @@ function createContestant(params) {
       savedata[resource.id] = resource.value
     })
     savedata.realTime = timestamp || new Date().getTime()
-    localStorage[saveName] = JSON.stringify(savedata)
+    //localStorage[saveName] = JSON.stringify(savedata)
   } 
   
   wipeSave = function() {
