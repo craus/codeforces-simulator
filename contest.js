@@ -11,7 +11,8 @@ createContest = function() {
     participants: [],
     paint: function() {
       if (this.panel != null) {
-        setFormattedText(this.panel.find(".contestTimeLeft"), large(Math.ceil(this.timeLeft())))
+        setFormattedText(this.panel.find(".contestTimeLeft"), this.timeLeft().toFixed(2))
+        setFormattedText(this.panel.find(".contestTime"), this.timeElapsed().toFixed(2))
         setFormattedText(this.panel.find(".status"), this.running() ? "CONTEST IS RUNNING" : "CONTEST IS OVER")
       }
       this.problems.each('paint', this)
@@ -21,6 +22,7 @@ createContest = function() {
       if (!this.running()) {
         return
       }
+      t = Math.min(t, this.timeLeft())
       this.time += t
       this.participants.each('tick', t)
     },
