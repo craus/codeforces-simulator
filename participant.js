@@ -46,7 +46,7 @@ var createParticipant = function(contest, createController, name) {
 var participantProblem = function(contest, participant, problem) {
   return {
     problem: problem,
-    time: Object.assign({}, problem.time),
+    timeOrder: Object.assign({}, problem.timeOrder),
     timeSpent: 0,
     solved: false,
     tries: 0,
@@ -69,22 +69,26 @@ var participantProblem = function(contest, participant, problem) {
       }
       this.timeSpent += t
 
-      if (this.timeSpent > this.time.fixedAnswer) {
+      if (this.timeSpent > Math.exp(this.timeOrder.fixedAnswer)) {
         this.submit()
         this.solved = true
       }
-      this.time = this.time.know(t*problem.knowSpeed)
+      this.timeOrder = this.timeOrder.know(t*problem.knowSpeed)
     },
     submit: function() {
       this.tries += 1
       this.lastSubmitTime = contest.time
-      this.time = this.time.know(contest.submitDataAmount)
+      this.timeOrder = this.timeOrder.know(contest.submitDataAmount)
     },
     paint: function() {
       var panel = this.panel
       if (panel != undefined) {      
         setFormattedText(panel.find(".name"), this.problem.name)
-        setFormattedText(panel.find(".timeLeft"), round(this.time.m - this.timeSpent), round(3*this.time.sigma))
+        setFormattedText(
+          panel.find(".timeLeft"), 
+          round(Math.exp(this.timeOrder.m-3*this.timeOrder.sigma) - this.timeSpent),
+          round(Math.exp(this.timeOrder.m+3*this.timeOrder.sigma) - this.timeSpent)
+        )
         setFormattedText(panel.find(".timeSpent"), round(this.timeSpent))
         setFormattedText(panel.find(".points"), Math.ceil(this.solved ? this.myScore() : this.score()))
         panel.find(".solve").toggle(!this.isActive() && !this.solved && contest.running())

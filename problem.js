@@ -1,9 +1,9 @@
-var problem = function(name, time, score) {
+var problem = function(name, timeOrder, score) {
   return {
     name: name, 
-    time: time.fixAnswer(),
+    timeOrder: timeOrder.fixAnswer(),
     score: score,
-    knowSpeed: 10.0 / time.m,
+    knowSpeed: 0.1,
     cheapingSpeed: score * 0.01,
     paint: function() {
     }
