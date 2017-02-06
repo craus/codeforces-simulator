@@ -48,7 +48,7 @@ createContest = function() {
     standings.append(row)
     participant.row = row
     if (participant.controller.isHuman) {
-      row.addClass("danger")
+      row.addClass("info")
     }
     participant.problems.forEach(problem => {
       var td = instantiate("participantProblemCellSample")
