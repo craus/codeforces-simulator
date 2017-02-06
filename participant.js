@@ -50,7 +50,7 @@ var participantProblem = function(contest, participant, problem) {
     timeSpent: 0,
     solved: false,
     tries: 0,
-    lastSubmitTime: Number.NEGATIVE_INFINITY,
+    lastSubmitTime: null,
     score: function() {
       return problem.score - problem.cheapingSpeed*contest.timeElapsed()
     },
@@ -94,6 +94,7 @@ var participantProblem = function(contest, participant, problem) {
       if (this.td != undefined) {
         setFormattedText(this.td.find(".problemScore"), noZero(round(this.myScore())));
         setFormattedText(this.td.find(".problemTimeSpent"), noZero(round(this.timeSpent)));
+        setFormattedText(this.td.find(".submitTime"), noZero(this.lastSubmitTime, x => x.toFixed(2)));
       }
     },
     init: function() {

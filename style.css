@@ -4,6 +4,12 @@
 .centered {
   text-align: center
 }
+.table > tbody > tr > td {
+   vertical-align: middle;
+}
+.vcentered{
+  vertical-align: middle
+}
 .title {
   font-size: 42px;
   text-align: center;
