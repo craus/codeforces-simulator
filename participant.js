@@ -72,6 +72,7 @@ var participantProblem = function(contest, participant, problem) {
       if (this.timeSpent > this.time.fixedAnswer) {
         this.submit()
         this.solved = true
+        participant.activeProblem = null
       }
       this.time = this.time.know(Math.log((this.timeSpent+1) / (this.timeSpent-t+1))*problem.knowSpeed)
     },
@@ -90,6 +91,7 @@ var participantProblem = function(contest, participant, problem) {
         panel.find(".solve").toggle(!this.isActive() && !this.solved && contest.running())
         panel.find(".solving").toggle(this.isActive() && contest.running())
         panel.find(".solved").toggle(this.solved)
+        panel.find(".nonSolved").toggle(!this.solved && !contest.running())
       }
       if (this.td != undefined) {
         setFormattedText(this.td.find(".problemScore"), noZero(round(this.myScore())));
