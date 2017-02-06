@@ -1,11 +1,15 @@
 * {
   font-family: arial;
 }
+.btn.disabled.nohover {
+  cursor: default;
+  outline: none
+}
 .centered {
   text-align: center
 }
 .table > tbody > tr > td {
-   vertical-align: middle;
+  vertical-align: middle;
 }
 .vcentered{
   vertical-align: middle

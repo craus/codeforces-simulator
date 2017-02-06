@@ -72,6 +72,7 @@ var participantProblem = function(contest, participant, problem) {
       if (this.timeSpent > this.time.fixedAnswer) {
         this.submit()
         this.solved = true
+        participant.activeProblem = null
       }
       this.time = this.time.know(Math.log((this.timeSpent+1) / (this.timeSpent-t+1))*problem.knowSpeed)
     },
@@ -85,15 +86,16 @@ var participantProblem = function(contest, participant, problem) {
       if (panel != undefined) {      
         setFormattedText(panel.find(".name"), this.problem.name)
         setFormattedText(panel.find(".timeLeft"), round(this.time.m - this.timeSpent), round(3*this.time.sigma))
-        setFormattedText(panel.find(".timeSpent"), round(this.timeSpent))
+        setFormattedText(panel.find(".timeSpent"), this.timeSpent.toFixed(2), contest.running() ? "" : "/" + this.time.fixedAnswer.toFixed(2))
         setFormattedText(panel.find(".points"), Math.ceil(this.solved ? this.myScore() : this.score()))
         panel.find(".solve").toggle(!this.isActive() && !this.solved && contest.running())
         panel.find(".solving").toggle(this.isActive() && contest.running())
         panel.find(".solved").toggle(this.solved)
+        panel.find(".nonSolved").toggle(!this.solved && !contest.running())
       }
       if (this.td != undefined) {
         setFormattedText(this.td.find(".problemScore"), noZero(round(this.myScore())));
-        setFormattedText(this.td.find(".problemTimeSpent"), noZero(round(this.timeSpent)));
+        setFormattedText(this.td.find(".problemTimeSpent"), noZero(this.timeSpent, x => x.toFixed(2)));
         setFormattedText(this.td.find(".submitTime"), noZero(this.lastSubmitTime, x => x.toFixed(2)));
       }
     },

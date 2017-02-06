@@ -1,4 +1,5 @@
 <head>
+  <link rel="shortcut icon" href="https://due.com/wp-content/themes/due/images/programmers-thumb-08.png">
   <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 	<script src="jquery.js"></script>
 	<script src="underscore.js"></script>
@@ -54,10 +55,11 @@
                 <p class="name" data-text="Problem #{0}">Problem A</p>   
                 <p class="points" data-text="#{0} points">500 points</p>
                 <p class="timeLeft", data-text="Left: #{0}±#{1} s">Left: 10±5 s</p>
-                <p class="timeSpent", data-text="Spent: #{0} s">Spent: 0 s</p>    
-                <button type="button" class="btn btn-primary solve">Solve</button>  
-                <p class="solved">ACCEPTED</p>    
-                <p class="solving">SOLVING...</p>                 
+                <p class="timeSpent", data-text="Spent: #{0}#{1} s">Spent: 0 s</p>    
+                <button type="button" class="btn btn-primary solve">Solve</button>    
+                <button type="button" tabindex=-1 class="btn btn-default disabled nohover solving">SOLVING...</button>    
+                <button type="button" tabindex=-1 class="btn btn-success disabled nohover solved">ACCEPTED</button>    
+                <button type="button" tabindex=-1 class="btn btn-default disabled nohover nonSolved">NOT SOLVED</button>  
               </div>
             </div>
           </div>          
@@ -65,13 +67,16 @@
             <div class = "panel-body">
               <h2 class="status">Contest is running</h2>
               <div class="row">
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                   <p class="currentScore" data-text="Current score: #{0}">Current score: 0</p>   
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
                   <p class="problemsSolved" data-text="Problems solved: #{0}">Problems solved: 0</p>   
                 </div>
-                <div class="col-sm-4">
+                <div class="col-sm-3">
+                  <p class="contestTime" data-text="Time elapsed: #{0}">Time: 80</p>   
+                </div>
+                <div class="col-sm-3">
                   <p class="contestTimeLeft" data-text="Time left: #{0}">Time left: 80</p>   
                 </div>
               </div>              
