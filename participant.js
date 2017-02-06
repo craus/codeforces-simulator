@@ -73,7 +73,7 @@ var participantProblem = function(contest, participant, problem) {
         this.submit()
         this.solved = true
       }
-      this.time = this.time.know(t*problem.knowSpeed)
+      this.time = this.time.know(Math.log((this.timeSpent+1) / (this.timeSpent-t+1))*problem.knowSpeed)
     },
     submit: function() {
       this.tries += 1

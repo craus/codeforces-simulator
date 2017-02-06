@@ -29,7 +29,7 @@ createContest = function() {
     }
   }
   for (var i = 0; i < 5; i++) {
-    contest.problems.push(problem(String.fromCharCode('A'.charCodeAt()+i), gaussed(10*(i+1), 5*(i+1)), 500*(i+1)))
+    contest.problems.push(problem(String.fromCharCode('A'.charCodeAt()+i), gaussed(10*(i+1), 3*(i+1)), 500*(i+1)))
   }    
   for (var i = 0; i < 10; i++) {
     contest.participants.push(createParticipant(

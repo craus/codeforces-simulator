@@ -3,7 +3,7 @@ var problem = function(name, time, score) {
     name: name, 
     time: time.fixAnswer(),
     score: score,
-    knowSpeed: 10.0 / time.m,
+    knowSpeed: 0.5,
     cheapingSpeed: score * 0.01,
     paint: function() {
     }
