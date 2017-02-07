@@ -24,7 +24,7 @@ function createContestant(params) {
     resources.forEach(function(resource) {
       savedata[resource.id] = resource.value
     })
-    savedata.realTime = timestamp || new Date().getTime()
+    savedata.realTime = timestamp || Date.now()
     //localStorage[saveName] = JSON.stringify(savedata)
   } 
   
@@ -353,6 +353,7 @@ function createContestant(params) {
   
   contestant = {
     paint: function() {
+      debug.profile('paint')
       setFormattedText($(".codeLinesPerSecond"), large(secondTicked.getReward(codeLines)))
       setFormattedText($(".experiencePerProblem"), large(problemSolved.getReward(experience)))
       setFormattedText($(".ideasPerProblem"), large(ideasPerProblem.get()))
@@ -363,15 +364,18 @@ function createContestant(params) {
       if (currentContest != null) {
         currentContest.paint()
       }
+      debug.unprofile('paint')
     },
     tick: function() {
-      var currentTime = new Date().getTime()
+      debug.profile('tick')
+      var currentTime = Date.now()
       var deltaTime = currentTime - savedata.realTime
       secondTicked.run(deltaTime / 1000)
       if (currentContest != null) {
         currentContest.tick(deltaTime / 1000)
       }
       save(currentTime)
+      debug.unprofile('tick')
     },
     wipeSave: function() {
       console.log("wipeSave")
