@@ -4,7 +4,7 @@ var problem = function(name, time, score) {
     time: time.fixAnswer(),
     score: score,
     knowSpeed: 0.5,
-    cheapingSpeed: score * 0.01,
+    cheapingSpeed: score * 0.48 / 120,
     paint: function() {
     }
   }
