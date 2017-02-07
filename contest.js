@@ -1,39 +1,60 @@
 createContest = function() {
   var contest = {
     problems: [],
-    totalTime: 60, 
+    totalTime: 120, 
     penalty: 100,
-    time: 0,
+    time: -5,
     submitDataAmount: 10,
-    timeElapsed: function() { return this.time },
+    timeElapsed: function() { return Math.max(0,this.time) },
     timeLeft: function() { return this.totalTime - this.time },
-    running: function() { return this.timeLeft() > 0 },
+    countdown: function() { return this.time < 0 },
+    running: function() { return this.timeLeft() > 0 && !this.countdown() },
+    finished: function() { return !this.countdown() && !this.running() },
+    status: function() {
+      if (this.countdown()) return "CONTEST STARTS IN " + Math.ceil(-this.time)
+      if (this.running()) return "CONTEST IS RUNNING"
+      if (this.finished()) return "CONTEST IS OVER"
+      return "?"
+    },
     participants: [],
     paint: function() {
       if (this.panel != null) {
         setFormattedText(this.panel.find(".contestTimeLeft"), this.timeLeft().toFixed(2))
         setFormattedText(this.panel.find(".contestTime"), this.timeElapsed().toFixed(2))
-        setFormattedText(this.panel.find(".status"), this.running() ? "CONTEST IS RUNNING" : "CONTEST IS OVER")
+        setFormattedText(this.panel.find(".status"), this.status())
       }
       this.problems.each('paint', this)
       this.participants.each('paint', this)
     },
     tick: function(t) {
-      if (!this.running()) {
-        return
+      if (!this.finished()) {
+        t = Math.min(t, this.timeLeft())
+        this.time += t
       }
-      t = Math.min(t, this.timeLeft())
-      this.time += t
-      this.participants.each('tick', t)
+      if (this.running()) {
+        this.participants.each('tick', t)
+      }
     },
     remove: function() {
       this.participants.each('remove')
     }
-  }
-  for (var i = 0; i < 5; i++) {
-    contest.problems.push(problem(String.fromCharCode('A'.charCodeAt()+i), gaussed(10*(i+1), 5*(i+1)), 500*(i+1), contest))
-  }    
-  for (var i = 0; i < 10; i++) {
+  }  
+  var cnt = 5
+
+  var difficulty = Math.max(1, Math.round(gaussianRandom(75/cnt, 3)))
+  var sigma = Math.max(1, Math.min(difficulty/2, Math.round(gaussianRandom(25/cnt, 0.5))))
+
+  for (var i = 0; i < cnt; i++) {
+    var d = Math.max(1,Math.round(gaussianRandom(i+1, 0.3)))
+    contest.problems.push(problem('?', gaussed(difficulty*d, sigma*d), 500*d, contest))
+  }   
+  contest.problems.sort((a,b) => a.score-b.score)
+  for (var i = 0; i < cnt; i++) {
+    contest.problems[i].name = String.fromCharCode('A'.charCodeAt()+i)
+  } 
+  
+  var players = Math.max(2, gaussianRandom(10, 1))
+  for (var i = 0; i < players; i++) {
     contest.participants.push(createParticipant(
       contest, 
       i == 0 ? createHumanParticipant : createBot,

@@ -102,22 +102,22 @@ $(document).ready(init);
 // console.log("nmm = ", nmm)
 // console.log("nmixed = ", nmixed)
 
-var nmore = 0
-var nless = 0
-for (var j = 0; j < 1e6; j++) {
-  if (j % 10000 == 0) {
-    console.log(j)
-  }
-  var x = gaussed(3000, 1000).fixAnswer()
-  var y = x.know(0.001)
-  if (y.m > x.m) {
-    continue
-  }
-  if (y.m > x.fixedAnswer) {
-    nmore++
-  } else {
-    nless++
-  }
-}
-console.log("nmore = ", nmore)
-console.log("nless = ", nless)
+// var nmore = 0
+// var nless = 0
+// for (var j = 0; j < 1e6; j++) {
+  // if (j % 10000 == 0) {
+    // console.log(j)
+  // }
+  // var x = gaussed(3000, 1000).fixAnswer()
+  // var y = x.know(0.001)
+  // if (y.m > x.m) {
+    // continue
+  // }
+  // if (y.m > x.fixedAnswer) {
+    // nmore++
+  // } else {
+    // nless++
+  // }
+// }
+// console.log("nmore = ", nmore)
+// console.log("nless = ", nless)

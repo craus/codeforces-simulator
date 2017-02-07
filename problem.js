@@ -3,7 +3,7 @@ var problem = function(name, time, score, contest) {
     name: name, 
     time: time.fixAnswer(),
     score: score,
-    knowSpeed: 0.5,
+    knowSpeed: Math.max(0.1, gaussianRandom(0.5, 0.15)),
     cheapingSpeed: score * 0.48 / contest.totalTime,
     paint: function() {
     }
