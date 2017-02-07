@@ -12,7 +12,7 @@ createContest = function() {
     finished: function() { return !this.countdown() && !this.running() },
     status: function() {
       if (this.countdown()) return "CONTEST STARTS IN " + Math.ceil(-this.time)
-      if (this.running()) return "CONTEST IS RUNNING"
+      if (this.running()) return this.player.rank() == this.participants.length ? "CONTEST IS RUИNING" : "CONTEST IS RUNNING"
       if (this.finished()) return "CONTEST IS OVER"
       return "?"
     },
@@ -42,11 +42,11 @@ createContest = function() {
   }  
   var cnt = 5
 
-  var difficulty = Math.max(1, Math.round(gaussianRandom(75/cnt, 3)))
+  var difficulty = Math.max(8, Math.round(gaussianRandom(75/cnt, 3)))
   var sigma = Math.max(1, Math.min(difficulty/2, Math.round(gaussianRandom(25/cnt, 0.5))))
   var ks = Math.max(0.1, gaussianRandom(1, 0.3))
   for (var i = 0; i < cnt; i++) {
-    var d = Math.max(1,Math.round(gaussianRandom(i+1, 0.3)))
+    var d = Math.max(1,Math.round(gaussianRandom(i+1, 0.5)))
     var knowSpeed = Math.max(0.1, gaussianRandom(10 * ks, 3 * ks))
     contest.problems.push(problem('?', gaussed(difficulty*d, sigma*d), 500*d, knowSpeed, contest))
   }   
@@ -63,6 +63,7 @@ createContest = function() {
       i == 0 ? "You" : "Bot#"+i
     ))
   }
+  contest.player = contest.participants[0]
   
   var contestPanel = contest.panel
   var standings = contestPanel.find(".participantsStandings")
