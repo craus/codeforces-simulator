@@ -85,6 +85,9 @@ var participantProblem = function(contest, participant, problem) {
       var panel = this.panel
       if (panel != undefined) {      
         setFormattedText(panel.find(".name"), this.problem.name)
+        if (!contest.running()) {
+          this.time.know(Number.POSITIVE_INFINITY)
+        }
         setFormattedText(panel.find(".timeLeft"), round(this.time.m - this.timeSpent), round(3*this.time.sigma))
         setFormattedText(panel.find(".timeSpent"), this.timeSpent.toFixed(2), contest.running() ? "" : "/" + this.time.fixedAnswer.toFixed(2))
         setFormattedText(panel.find(".points"), Math.ceil(this.solved ? this.myScore() : this.score()))
