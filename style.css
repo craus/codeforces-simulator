@@ -1,6 +1,9 @@
 * {
   font-family: arial;
 }
+.btn {
+  outline: none
+}
 .btn.disabled.nohover {
   cursor: default;
   outline: none

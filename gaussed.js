@@ -15,13 +15,15 @@ gaussed = function(m, sigma) {
     m: m, 
     sigma: sigma,
     know: function(bits) {
+      if (this.sigma < 1e-9) {
+        return this
+      }
       var sigma1 = Math.exp(Math.log(this.sigma)-bits)
+      var gamma = Math.sqrt(Math.abs(sqr(this.sigma)-sqr(sigma1)))
       if (this.fixedAnswer == undefined) {
-        var gamma = Math.sqrt(sqr(this.sigma)-sqr(sigma1))
         var b = gaussianRandom(this.m, gamma)
         return gaussed(b, sigma1)
       }
-      var gamma = Math.sqrt(sqr(this.sigma)-sqr(sigma1))
       var d = this.m - this.fixedAnswer
       var b = this.m - gaussianRandom(d * sqr(gamma) / sqr(this.sigma) , sigma1 * gamma / this.sigma)
       return gaussed(b, sigma1).fixAnswer(this.fixedAnswer)
