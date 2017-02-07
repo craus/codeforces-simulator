@@ -1,9 +1,9 @@
-var problem = function(name, time, score, contest) {
+var problem = function(name, time, score, knowSpeed, contest) {
   return {
     name: name, 
     time: time.fixAnswer(),
     score: score,
-    knowSpeed: Math.max(0.1, gaussianRandom(0.5, 0.15)),
+    knowSpeed: knowSpeed,
     cheapingSpeed: score * 0.48 / contest.totalTime,
     paint: function() {
     }

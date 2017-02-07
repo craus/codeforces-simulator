@@ -22,6 +22,7 @@ createContest = function() {
         setFormattedText(this.panel.find(".contestTimeLeft"), this.timeLeft().toFixed(2))
         setFormattedText(this.panel.find(".contestTime"), this.timeElapsed().toFixed(2))
         setFormattedText(this.panel.find(".status"), this.status())
+        setFormattedText(this.panel.find(".standings"), this.finished() ? "Final standings" : "Standings")
       }
       this.problems.each('paint', this)
       this.participants.each('paint', this)
@@ -43,10 +44,11 @@ createContest = function() {
 
   var difficulty = Math.max(1, Math.round(gaussianRandom(75/cnt, 3)))
   var sigma = Math.max(1, Math.min(difficulty/2, Math.round(gaussianRandom(25/cnt, 0.5))))
-
+  var ks = Math.max(0.1, gaussianRandom(1, 0.3))
   for (var i = 0; i < cnt; i++) {
     var d = Math.max(1,Math.round(gaussianRandom(i+1, 0.3)))
-    contest.problems.push(problem('?', gaussed(difficulty*d, sigma*d), 500*d, contest))
+    var knowSpeed = Math.max(0.1, gaussianRandom(10 * ks, 3 * ks))
+    contest.problems.push(problem('?', gaussed(difficulty*d, sigma*d), 500*d, knowSpeed, contest))
   }   
   contest.problems.sort((a,b) => a.score-b.score)
   for (var i = 0; i < cnt; i++) {

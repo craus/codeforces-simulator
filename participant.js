@@ -74,7 +74,7 @@ var participantProblem = function(contest, participant, problem) {
         this.solved = true
         participant.activeProblem = null
       }
-      this.time = this.time.know(Math.log((this.timeSpent+1) / (this.timeSpent-t+1))*problem.knowSpeed)
+      this.time = this.time.know(Math.log((this.timeSpent+100) / (this.timeSpent-t+100))*problem.knowSpeed)
     },
     submit: function() {
       this.tries += 1
@@ -85,9 +85,9 @@ var participantProblem = function(contest, participant, problem) {
       var panel = this.panel
       if (panel != undefined) {      
         setFormattedText(panel.find(".name"), this.problem.name)
-        if (contest.finished()) {
-          this.time = this.time.know(1000)
-        }
+        // if (contest.finished()) {
+          // this.time = this.time.know(1000)
+        // }
         setFormattedText(panel.find(".timeLeft"), round(this.time.m - this.timeSpent), noZero(round(2*this.time.sigma), x => "±" + x))
         setFormattedText(panel.find(".timeSpent"), this.timeSpent.toFixed(2), contest.running() ? "" : "/" + this.time.fixedAnswer.toFixed(2))
         setFormattedText(panel.find(".points"), Math.ceil(this.solved ? this.myScore() : this.score()))
