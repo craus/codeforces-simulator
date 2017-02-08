@@ -28,7 +28,7 @@ table {
   table-layout: fixed;
 }
 .big {
-  font-size: 42px;
+  font-size: 24px;
 }
 .value {
   text-align: center;
@@ -36,5 +36,9 @@ table {
 .tooltip-inner {
     white-space:pre-wrap;
 }
+.panel-default.panel-wisdom >.panel-heading{
+background: #ca950f; color: #fff; }
+.label-wisdom {
+background: #ca950f; color: #fff; }
 
 

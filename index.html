@@ -39,85 +39,99 @@
   <script src="humanParticipant.js"></script> 
   <script src="problem.js"></script> 
   <script src="participant.js"></script> 
+  <script src="spellcaster.js"></script> 
   
   <script src="init.js"></script>
 </head>
 
 <body>
-
-<div class="container-fluid text-center" id = "competitions">
-          <h1>Contests</h1>      
-          <div class="row" style="margin-bottom:24px">
-            <button type="button" class="btn btn-primary playContest">Play contest</button>
-          </div>
-          <div class="col-sm-2 problemPanelSample hidden">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <p class="name" data-text="Problem #{0}">Problem A</p>   
-                <p>max. <b class="maxPoints">500</b> points</p>
-                <p class="points" data-text="#{0} points">500 points</p>
-                <p class="timeLeft", data-text="Left: #{0}#{1} s">Left: 10±5 s</p>
-                <p class="timeSpent", data-text="Spent: #{0}#{1} s">Spent: 0 s</p>    
-                <button type="button" class="btn btn-primary solve">Solve</button>    
-                <button type="button" tabindex=-1 class="btn btn-default disabled nohover solving">SOLVING...</button>    
-                <button type="button" tabindex=-1 class="btn btn-success disabled nohover solved">ACCEPTED</button>    
-                <button type="button" tabindex=-1 class="btn btn-default disabled nohover nonSolved">NOT SOLVED</button>  
-              </div>
-            </div>
-          </div>          
-          <div class = "panel panel-default hidden contestPanelSample">
-            <div class = "panel-body">
-              <h2 class="status">Contest is running</h2>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="currentScore" data-text="Current score: #{0}">Current score: 0</p>   
-                </div>
-                <div class="col-sm-3">
-                  <p class="problemsSolved" data-text="Problems solved: #{0}">Problems solved: 0</p>   
-                </div>
-                <div class="col-sm-3">
-                  <p class="contestTime" data-text="Time elapsed: #{0} s">Time: 80 s</p>   
-                </div>
-                <div class="col-sm-3">
-                  <p class="contestTimeLeft" data-text="Time left: #{0} s">Time left: 80 s</p>   
-                </div>
-              </div>              
-              <div class="row problems scope">
-
-              </div>              
-              <div class="row monitor">
-                <div>
-                  <h3 class="standings">Standings</h3>            
-                  <table class="table sortable">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Who</th>
-                        <th data-defaultsort="desc">=</th>
-                        <th style = "text-align: center">A</th>
-                        <th style = "text-align: center">B</th>
-                        <th style = "text-align: center">C</th>
-                        <th style = "text-align: center">D</th>
-                        <th style = "text-align: center">E</th>
-                      </tr>
-                    </thead>
-                    <tbody class = "participantsStandings">
-                      <tr class = "participantProblems hidden participantRowSample">
-                        <td class = "rank vcentered">1</td>
-                        <td class = "name vcentered">Bot#1</td>
-                        <td class = "scoreData vcentered"><b class = "score">480</b></td>
-                        <td class = "hidden participantProblemCellSample" style = "text-align: center">
-                          <div class = "problemScore" style = "font-size: 16px">0</div>
-                          <div class = "submitTime" style = "font-size: 11px">24</div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
+  <div class="container-fluid">
+    <div class="row centered">
+      <br>
+      <div class="col-sm-6">       
+        <div class="panel panel-default panel-wisdom">
+          <div class="panel-heading"><h2>Wisdom</h2></div>
+          <div class="panel-body big">10 <span class="label label-default label-wisdom">+5</span></div>
+        </div>   
+      </div>
+      <div class="col-sm-6">       
+        <div class="panel panel-primary">
+          <div class="panel-heading"><h2>Mana</h2></div>
+          <div class="panel-body big">10</div>
+        </div>   
+      </div>
+    </div>
+    <div class="row centered">
+      <div class="col-sm-2">  
+        <h1>Effects</h1>
+        <div class="panel panel-default">
+          <div class="panel-heading">+1 wisdom/s</div>
+          <div class="panel-body">8 seconds</div>
+        </div>        
+        <div class="panel panel-default">
+          <div class="panel-heading">+1 wisdom/s</div>
+          <div class="panel-body">10 seconds</div>
+        </div>        
+      </div>
+      <div class="col-sm-10">
+        <h1>Spells</h1>
+        <div class="container-fluid">
+          <div class="row spells">
+            <div class="col-sm-3 spell">
+              <div class="panel panel-default">
+                <div class="panel-heading"><h2>Sign of Wisdom</h2></div>
+                <div class="panel-body">
+                  <h3>Effect</h3>
+                  <p>+1 wisdom/s</p>
+                  <p>&nbsp;</p>
+                  <h3>Duration</h3>
+                  <p>10 seconds</p>
+                  <button type="button" class="btn btn-default">Cast</button>
                 </div>
               </div>
             </div>
+            <div class="col-sm-3 spell">
+              <div class="panel panel-default">
+                <div class="panel-heading"><h2>Collect Mana</h2></div>
+                <div class="panel-body">
+                  <h3>Effect</h3>
+                  <p>+1 mana</p>
+                  <p>&nbsp;</p>
+                  <h3>Duration</h3>
+                  <p>Instant</p>
+                  <button type="button" class="btn btn-default">Cast</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3 spell">
+              <div class="panel panel-default">
+                <div class="panel-heading"><h2>Empower</h2></div>
+                <div class="panel-body">
+                  <h3>Effect</h3>
+                  <p>Spells effects x2</p>
+                  <p>Spells costs x3</p>  
+                  <h3>Duration</h3>
+                  <p>10 seconds</p>
+                  <button type="button" class="btn btn-default">Cast</button>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-3 spell">
+              <div class="panel panel-default">
+                <div class="panel-heading"><h2>Cancel</h2></div>
+                <div class="panel-body">
+                  <h3>Effect</h3>
+                  <p>Cancels the oldest effect</p>
+                  <p>&nbsp;</p>  
+                  <h3>Duration</h3>
+                  <p>Instant</p>
+                  <button type="button" class="btn btn-default">Cast</button>
+                </div>
+              </div>
+            </div>
           </div>
-
-</div>
-
+        </div>
+      </div>
+    </div>
+  </div>
 </body>

@@ -20,7 +20,7 @@ var init = function() {
   // } 
  
   eps = 1e-8
-  game = createContestant()
+  game = createSpellcaster()
   
   realTime = 0
   var secondTime = 0
