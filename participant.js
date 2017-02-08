@@ -89,7 +89,7 @@ var participantProblem = function(contest, participant, problem) {
           // this.time = this.time.know(1000)
         // }
         setFormattedText(panel.find(".timeLeft"), round(this.time.m - this.timeSpent), noZero(round(2*this.time.sigma), x => "±" + x))
-        setFormattedText(panel.find(".timeSpent"), this.timeSpent.toFixed(2), contest.running() ? "" : "/" + this.time.fixedAnswer.toFixed(2))
+        setFormattedText(panel.find(".timeSpent"), this.timeSpent.toFixed(2), !contest.finished() ? "" : "/" + this.time.fixedAnswer.toFixed(2))
         setFormattedText(panel.find(".points"), Math.ceil(this.solved ? this.myScore() : this.score()))
         setFormattedText(panel.find(".maxPoints"), problem.score)
         panel.find(".solve").toggle(!this.isActive() && !this.solved && contest.running())
