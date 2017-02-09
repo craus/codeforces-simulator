@@ -16,7 +16,7 @@ var createSpell = function(params) {
     if (params.manaCost) {
       resources.mana.value -= params.manaCost
     }
-    resources.globalCooldown.value += 1
+    resources.globalCooldown.value += 0.01
     params.action()
   })
   return {
