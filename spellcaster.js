@@ -44,32 +44,66 @@ function createSpellcaster(params) {
   }
 
   var effects = []
-
-  var signOfWisdom = createSpell({
-    name: 'signOfWisdom',
-    action: function() {
-      effects.push(createEffect({
-        name: 'wisdom',
-        wisdomIncome: 1,
-        tick: function(t) {
-          resources.wisdom.value += t
-        },
-        duration: 10
-      })) 
-    },
-    manaCost: 1
-  })
   
-  var collectMana = createSpell({
-    name: 'collectMana',
-    action: function() {
-      resources.mana.value += 1
-    }
+  var effectMultiplier = calculatable(() => {
+    return effects.reduce((acc, cur) => acc * (cur.effectMultiplier || 1), 1)
+  })
+  var costMultiplier = calculatable(() => {
+    return effects.reduce((acc, cur) => acc * (cur.costMultiplier || 1), 1)
   })
 
-  var spells = [
-    signOfWisdom,
-    collectMana
+  var spells = {
+    signOfWisdom: createSpell({
+      name: 'signOfWisdom',
+      power: effectMultiplier,
+      action: function() {
+        effects.push(createEffect({
+          name: 'wisdom',
+          wisdomIncome: this.power.get(),
+          tick: function(t) {
+            resources.wisdom.value += t * this.wisdomIncome
+          },
+          paint: function() {
+            setFormattedText(this.panel.find(".income"), large(this.wisdomIncome))
+          },
+          duration: 10
+        })) 
+      },
+      cost: costMultiplier
+    }),
+  
+    collectMana: createSpell({
+      name: 'collectMana',
+      power: effectMultiplier,
+      action: function() {
+        resources.mana.value += this.power.get()
+      }
+    }),
+  
+    empower: createSpell({
+      name: 'empower',
+      power: calculatable(() => Math.pow(2, effectMultiplier.get())),
+      power2: calculatable(() => Math.pow(3, effectMultiplier.get())),
+      action: function() {
+        effects.push(createEffect({
+          name: 'empower',
+          effectMultiplier: this.power.get(),
+          costMultiplier: this.power2.get(),
+          duration: 10,
+          paint: function() {
+            setFormattedText(this.panel.find(".effectMultiplier"), large(this.effectMultiplier))
+            setFormattedText(this.panel.find(".costMultiplier"), large(this.costMultiplier))
+          }
+        })) 
+      },
+      cost: costMultiplier
+    })
+  }
+
+  var spellsList = [
+    spells.signOfWisdom,
+    spells.collectMana,
+    spells.empower
   ]
 
   var resourcesList = [
@@ -85,10 +119,10 @@ function createSpellcaster(params) {
       
       resourcesList.each('paint')
       effects.each('paint')
-      spells.each('paint')
+      spellsList.each('paint')
       
       
-      setFormattedText($(".wisdomIncome"), signed(noZero(effects.reduce((acc, cur) => acc + (cur.wisdomIncome || 2), 0))))
+      setFormattedText($(".wisdomIncome"), signed(noZero(effects.reduce((acc, cur) => acc + (cur.wisdomIncome || 0), 0))))
       
       debug.unprofile('paint')
     },

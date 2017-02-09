@@ -42,7 +42,6 @@
   
   
   <script src="effect.js"></script> 
-  <script src="wisdomEffect.js"></script> 
   
   <script src="spell.js"></script> 
   <script src="spellcaster.js"></script> 
@@ -72,7 +71,15 @@
         <h1>Effects</h1>
         <div class="effects">
           <div class="panel panel-default hidden wisdomEffectSample">
-            <div class="panel-heading">+1 wisdom/s</div>
+            <div class="panel-heading">+<span class="income">2</span> wisdom/s</div>
+            <div class="panel-body"><span class="duration">10</span> seconds</div>
+          </div>      
+          <div class="panel panel-default hidden empowerEffectSample">
+            <div class="panel-heading">
+              x<span class="effectMultiplier">2</span> effects
+              <br>
+              x<span class="costMultiplier">3</span> costs
+              </div>
             <div class="panel-body"><span class="duration">10</span> seconds</div>
           </div>      
         </div>
@@ -86,11 +93,11 @@
                 <div class="panel-heading"><h2>Sign of Wisdom</h2></div>
                 <div class="panel-body">
                   <h3>Effect</h3>
-                  <p>+1 wisdom/s</p>
+                  <p>+<span class="power">1</span> wisdom/s</p>
                   <p>&nbsp;</p>
                   <h3>Duration</h3>
                   <p><span class="duration">10</span> seconds</p>
-                  <button type="button" class="btn btn-default cast nohover">Cast (<span class="manaCost"></span> mana)</button>
+                  <button type="button" class="btn btn-default cast nohover">Cast (<span class="cost">123</span> mana)</button>
                 </div>
               </div>
             </div>
@@ -99,7 +106,7 @@
                 <div class="panel-heading"><h2>Collect Mana</h2></div>
                 <div class="panel-body">
                   <h3>Effect</h3>
-                  <p>+1 mana</p>
+                  <p>+<span class="power">1</span> mana</p>
                   <p>&nbsp;</p>
                   <h3>Duration</h3>
                   <p>Instant</p>
@@ -107,16 +114,16 @@
                 </div>
               </div>
             </div>
-            <div class="col-sm-3 spell">
+            <div class="col-sm-3 spell empower">
               <div class="panel panel-default">
                 <div class="panel-heading"><h2>Empower</h2></div>
                 <div class="panel-body">
                   <h3>Effect</h3>
-                  <p>Spells effects x2</p>
-                  <p>Spells costs x3</p>  
+                  <p>Spells effects x<span class="power">2</span></p>
+                  <p>Spells costs x<span class="power2">3</span></p>  
                   <h3>Duration</h3>
                   <p>10 seconds</p>
-                  <button type="button" class="btn btn-default">Cast</button>
+                  <button type="button" class="btn btn-default cast nohover">Cast (<span class="cost">123</span> mana)</button>
                 </div>
               </div>
             </div>

@@ -9,15 +9,20 @@ var createEffect = function(params) {
     },
     destroy: function() {
       panel.remove()
-    },
-    paint: function() {
-      setFormattedText(this.panel.find(".duration"), this.duration.toFixed(2))
     }
   }, params, {
     tick: function(t) {
       t = Math.min(t, this.duration)
-      params.tick(t)
+      if (params.tick) {
+        params.tick.apply(this, [t])
+      }
       this.duration -= t
+    },
+    paint: function() {
+      setFormattedText(this.panel.find(".duration"), this.duration.toFixed(2))
+      if (params.paint) {
+        params.paint.apply(this)
+      }
     }
   })    
 }
