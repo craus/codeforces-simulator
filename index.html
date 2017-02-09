@@ -39,6 +39,7 @@
   <script src="humanParticipant.js"></script> 
   <script src="problem.js"></script> 
   <script src="participant.js"></script> 
+  <script src="spell.js"></script> 
   <script src="spellcaster.js"></script> 
   
   <script src="init.js"></script>
@@ -51,20 +52,20 @@
       <div class="col-sm-6">       
         <div class="panel panel-default panel-wisdom">
           <div class="panel-heading"><h2>Wisdom</h2></div>
-          <div class="panel-body big">10 <span class="label label-default label-wisdom">+5</span></div>
+          <div class="panel-body big"><span class="wisdom">10</span> <span class="label label-default label-wisdom">+5</span></div>
         </div>   
       </div>
       <div class="col-sm-6">       
         <div class="panel panel-primary">
           <div class="panel-heading"><h2>Mana</h2></div>
-          <div class="panel-body big">10</div>
+          <div class="panel-body big mana">10</div>
         </div>   
       </div>
     </div>
     <div class="row centered">
-      <div class="col-sm-2">  
+      <div class="col-sm-2 effects">  
         <h1>Effects</h1>
-        <div class="panel panel-default">
+        <div class="panel panel-default hidden wisdomEffectSample">
           <div class="panel-heading">+1 wisdom/s</div>
           <div class="panel-body">8 seconds</div>
         </div>        
@@ -77,7 +78,7 @@
         <h1>Spells</h1>
         <div class="container-fluid">
           <div class="row spells">
-            <div class="col-sm-3 spell">
+            <div class="col-sm-3 signOfWisdom">
               <div class="panel panel-default">
                 <div class="panel-heading"><h2>Sign of Wisdom</h2></div>
                 <div class="panel-body">
@@ -86,7 +87,7 @@
                   <p>&nbsp;</p>
                   <h3>Duration</h3>
                   <p>10 seconds</p>
-                  <button type="button" class="btn btn-default">Cast</button>
+                  <button type="button" class="btn btn-default cast">Cast</button>
                 </div>
               </div>
             </div>

@@ -1,7 +1,9 @@
 createWisdomEffect = (power, duration) => {
-  return {
-    tick: () => {
-      
+  var effect = createEffect({
+    name: 'wisdomEffect',
+    tick: t => {
+
     }
-  }
+  })
+
 }
