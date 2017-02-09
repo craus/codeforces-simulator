@@ -58,7 +58,7 @@ function createClickerCommand(params)
       buy.html(formatText(buy, large(this.zoom)))
       this.delta = this.getDelta()
       var deltaText = this.delta.map(function(resource) {
-        return signPrefix(resource.value) + large(resource.value) + " " + resource.name
+        return sign(resource.value) + large(resource.value) + " " + resource.name
       }).join("<br>")
       setTitle(buy, deltaText)
       deltaLabel.html(formatText(deltaLabel, deltaText))

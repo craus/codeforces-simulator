@@ -4,7 +4,7 @@
 .btn {
   outline: none
 }
-.btn.disabled.nohover {
+.btn.disabled.nohover, .btn[disabled].nohover {
   cursor: default;
   outline: none
 }
@@ -38,6 +38,8 @@ table {
 }
 .panel-default.panel-wisdom >.panel-heading{
 background: #ca950f; color: #fff; }
+.panel-default.panel-cd >.panel-heading{
+background: #3ab68b; color: #fff; }
 .label-wisdom {
 background: #ca950f; color: #fff; }
 

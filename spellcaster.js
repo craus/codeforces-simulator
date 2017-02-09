@@ -21,7 +21,7 @@ function createSpellcaster(params) {
       return
     }
     savedata = {}
-    resources.forEach(function(resource) {
+    resourcesList.forEach(function(resource) {
       savedata[resource.id] = resource.value
     })
     savedata.realTime = timestamp || Date.now()
@@ -34,34 +34,62 @@ function createSpellcaster(params) {
     location.reload()
   }
   
-  var mana = variable(5, 'mana')
-  var wisdom = variable(0, 'wisdom')
-  var time = variable(0, 'time')
+  resources = {
+    mana: variable(5, 'mana'),
+    wisdom: variable(0, 'wisdom'),
+    time: variable(0, 'time'),
+    globalCooldown: variable(0, 'globalCooldown', '', {
+      formatter: x => x.toFixed(2)
+    })
+  }
 
   var effects = []
 
-  var lastEffectID = 0
-
-  var addEffect = function(effect) {
-    effects.push(effect) 
-  }
-
-  var signOfWisdom = createSpell('signOfWisdom', () => { addEffect(createWisdomEffect(1, 10)) })
+  var signOfWisdom = createSpell({
+    name: 'signOfWisdom',
+    action: function() {
+      effects.push(createEffect({
+        name: 'wisdom',
+        wisdomIncome: 1,
+        tick: function(t) {
+          resources.wisdom.value += t
+        },
+        duration: 10
+      })) 
+    },
+    manaCost: 1
+  })
+  
+  var collectMana = createSpell({
+    name: 'collectMana',
+    action: function() {
+      resources.mana.value += 1
+    }
+  })
 
   var spells = [
-    signOfWisdom
+    signOfWisdom,
+    collectMana
   ]
 
-  var resources = [
-    wisdom,
-    mana, 
-    time,     
+  var resourcesList = [
+    resources.wisdom,
+    resources.mana, 
+    resources.time,  
+    resources.globalCooldown
   ]
 
   spellcaster = {
     paint: function() {
       debug.profile('paint')
-      resources.each('paint')
+      
+      resourcesList.each('paint')
+      effects.each('paint')
+      spells.each('paint')
+      
+      
+      setFormattedText($(".wisdomIncome"), signed(noZero(effects.reduce((acc, cur) => acc + (cur.wisdomIncome || 2), 0))))
+      
       debug.unprofile('paint')
     },
     tick: function() {
@@ -69,7 +97,14 @@ function createSpellcaster(params) {
       var currentTime = Date.now()
       var deltaTime = (currentTime - savedata.realTime) / 1000
       
-      effects.each('tick')
+      effects.filter(e => e.expired()).each('destroy')
+      effects = effects.filter(e => !e.expired())
+      effects.each('tick', deltaTime)
+      
+      resources.globalCooldown.value -= deltaTime
+      if (resources.globalCooldown.value < 0) {
+        resources.globalCooldown.value = 0
+      }
 
       save(currentTime)
       debug.unprofile('tick')

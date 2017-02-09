@@ -10,7 +10,7 @@ variable = function(initialValue, id, name, params) {
   }
   var formatter = params.formatter
   if (formatter == undefined) {
-    formatter = function(x) { return large(Math.floor(x)) }
+    formatter = function(x) { return large(Math.floor(x+eps)) }
   }
   return {
     value: initialValue, 

@@ -18,8 +18,7 @@ var init = function() {
   //   console.log("have no storage")
   //     // Sorry! No Web Storage support..
   // } 
- 
-  eps = 1e-8
+
   game = createSpellcaster()
   
   realTime = 0

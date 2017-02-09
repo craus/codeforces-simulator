@@ -1,3 +1,5 @@
+const eps = 1e-9
+
 toType = function(obj) {
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
 }
@@ -129,9 +131,14 @@ function enable(el, on) {
   }
 }
 
-signPrefix = function(x) { 
+sign = function(x) { 
+  if (x == null) return null
   if (x > 0) return "+";
   return "";
+}
+signed = function(x) {
+  if (x == null) return null
+  return sign(x) + x
 }
 large = function(x) {
   if (x == null) return null
