@@ -98,7 +98,7 @@ function createSpellcaster(params) {
           name: 'empower',
           effectMultiplier: this.power.get(),
           costMultiplier: this.power2.get(),
-          duration: 10,
+          duration: this.duration.get(),
           paint: function() {
             setFormattedText(this.panel.find(".effectMultiplier"), large(this.effectMultiplier))
             setFormattedText(this.panel.find(".costMultiplier"), large(this.costMultiplier))
@@ -119,7 +119,6 @@ function createSpellcaster(params) {
           effects.shift()
         }
       },
-      cost: {wisdom: costMultiplier},
       hotkey: "4", 
       paint: function() {
         this.panel.find(".cancelWhat").text(this.power.get() == 1 ? "the oldest effect" : this.power.get() + " oldest effects")
