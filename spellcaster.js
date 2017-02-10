@@ -35,10 +35,16 @@ function createSpellcaster(params) {
   }
   
   resources = {
-    mana: variable(5, 'mana'),
-    wisdom: variable(0, 'wisdom'),
-    time: variable(0, 'time'),
-    readiness: variable(5, 'readiness', '', {
+    mana: variable(5, 'mana', 'mana', {
+      formatter: x => x.toFixed(0)
+    }),
+    wisdom: variable(0, 'wisdom', 'wisdom', {
+      formatter: x => x.toFixed(0)
+    }),
+    time: variable(0, 'time', 'time', {
+      formatter: x => x.toFixed(2)
+    }),
+    readiness: variable(5, 'readiness', 'readiness', {
       formatter: x => x.toFixed(2)
     })
   }

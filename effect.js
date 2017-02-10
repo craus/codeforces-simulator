@@ -19,7 +19,7 @@ var createEffect = function(params) {
       this.duration -= t
     },
     paint: function() {
-      setFormattedText(this.panel.find(".duration"), this.duration.toFixed(2))
+      setFormattedText(this.panel.find(".duration"), precision(this.duration))
       if (params.paint) {
         params.paint.apply(this)
       }
