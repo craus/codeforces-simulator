@@ -55,13 +55,19 @@
   <div class="container-fluid">
     <div class="row centered">
       <br>
-      <div class="col-sm-6">       
+      <div class="col-sm-2">       
+        <div class="panel panel-default panel-readiness">
+          <div class="panel-heading"><h2>Readiness</h2></div>
+          <div class="panel-body big"><span class="readiness">10</span></div>
+        </div>   
+      </div>
+      <div class="col-sm-5">       
         <div class="panel panel-default panel-wisdom">
           <div class="panel-heading"><h2>Wisdom</h2></div>
           <div class="panel-body big"><span class="wisdom">10</span> <span class="label label-default label-wisdom wisdomIncome">+5</span></div>
         </div>   
       </div>
-      <div class="col-sm-6">       
+      <div class="col-sm-5">       
         <div class="panel panel-primary">
           <div class="panel-heading"><h2>Mana</h2></div>
           <div class="panel-body big mana">10</div>
@@ -83,7 +89,15 @@
               x<span class="costMultiplier">3</span> costs
               </div>
             <div class="panel-body"><span class="duration">10</span> seconds</div>
-          </div>      
+          </div>  
+          <div class="panel panel-default hidden prolongEffectSample">
+            <div class="panel-heading">
+              x<span class="durationMultiplier">2</span> durations
+              <br>
+              x<span class="prolongCostMultiplier">3</span> prolong cost
+              </div>
+            <div class="panel-body"><span class="duration">?</span> seconds</div>
+          </div>           
         </div>
       </div>
       <div class="col-sm-10">
@@ -98,7 +112,7 @@
                   <p>+<span class="power">1</span> wisdom/s</p>
                   <p>&nbsp;</p>
                   <h3>Duration</h3>
-                  <p><span class="duration">10</span> seconds</p>
+                  <p><span class="duration">?</span> seconds</p>
                   <button type="button" class="btn btn-default cast nohover">Cast (<span class="cost">123</span>)</button>
                 </div>
               </div>
@@ -124,21 +138,35 @@
                   <p>Spells effects x<span class="power">2</span></p>
                   <p>Spells costs x<span class="power2">3</span></p>  
                   <h3>Duration</h3>
-                  <p>10 seconds</p>
+                  <p><span class="duration">?</span> seconds</p>
                   <button type="button" class="btn btn-default cast nohover">Cast (<span class="cost">123</span>)</button>
                 </div>
               </div>
             </div>
-            <div class="col-sm-3 spell">
+            <div class="col-sm-3 spell cancel">
               <div class="panel panel-default">
                 <div class="panel-heading"><h2>Cancel</h2></div>
                 <div class="panel-body">
                   <h3>Effect</h3>
-                  <p>Cancels the oldest effect</p>
+                  <p>Cancels <span class="cancelWhat">the oldest effect</span></p>
                   <p>&nbsp;</p>  
                   <h3>Duration</h3>
                   <p>Instant</p>
-                  <button type="button" class="btn btn-default">Cast</button>
+                  <button type="button" class="btn btn-default cast nohover">Cast</button>
+                </div>
+              </div>
+            </div>            
+            <div class="col-sm-3 spell prolong">
+              <div class="panel panel-default">
+                <div class="panel-heading"><h2>Prolong</h2></div>
+                <div class="panel-body">
+                  <h3>Effect</h3>
+                  <p>Spells durations x<span class="power">2</span></p>
+                  <p>Prolong cost x<span class="power2">3</span></p>
+                  <p>&nbsp;</p>  
+                  <h3>Duration</h3>
+                  <p><span class="duration">?</span> seconds</p>
+                  <button type="button" class="btn btn-default cast nohover">Cast (<span class="cost">123</span>)</button>
                 </div>
               </div>
             </div>

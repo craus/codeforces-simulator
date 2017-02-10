@@ -35,3 +35,7 @@ Math.sign = function(x) {
     return 0
   }
 }
+
+Number.prototype.clamp = function(min, max) {
+  return Math.min(Math.max(this, min), max);
+};

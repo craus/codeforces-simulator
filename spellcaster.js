@@ -38,7 +38,7 @@ function createSpellcaster(params) {
     mana: variable(5, 'mana'),
     wisdom: variable(0, 'wisdom'),
     time: variable(0, 'time'),
-    globalCooldown: variable(0, 'globalCooldown', '', {
+    readiness: variable(5, 'readiness', '', {
       formatter: x => x.toFixed(2)
     })
   }
@@ -50,12 +50,17 @@ function createSpellcaster(params) {
   })
   var costMultiplier = calculatable(() => {
     return effects.reduce((acc, cur) => acc * (cur.costMultiplier || 1), 1)
+  })  
+  var durationMultiplier = calculatable(() => {
+    return effects.reduce((acc, cur) => acc * (cur.durationMultiplier || 1), 1)
   })
-
+  var duration = calculatable(() => 10 * durationMultiplier.get())
+  
   var spells = {
     signOfWisdom: createSpell({
       name: 'signOfWisdom',
       power: effectMultiplier,
+      duration: duration,
       action: function() {
         effects.push(createEffect({
           name: 'wisdom',
@@ -66,10 +71,11 @@ function createSpellcaster(params) {
           paint: function() {
             setFormattedText(this.panel.find(".income"), large(this.wisdomIncome))
           },
-          duration: 10
+          duration: this.duration.get()
         })) 
       },
-      cost: costMultiplier
+      cost: costMultiplier,
+      hotkey: "1"
     }),
   
     collectMana: createSpell({
@@ -78,13 +84,15 @@ function createSpellcaster(params) {
       action: function() {
         resources.mana.value += this.power.get()
       },
-      cost: {wisdom: costMultiplier}
+      cost: {wisdom: calculatable(() => 0.1 * costMultiplier.get())},
+      hotkey: "2"
     }),
   
     empower: createSpell({
       name: 'empower',
       power: calculatable(() => Math.pow(2, effectMultiplier.get())),
       power2: calculatable(() => Math.pow(3, effectMultiplier.get())),
+      duration: duration,
       action: function() {
         effects.push(createEffect({
           name: 'empower',
@@ -97,21 +105,64 @@ function createSpellcaster(params) {
           }
         })) 
       },
-      cost: costMultiplier
-    })
+      cost: costMultiplier,
+      hotkey: "3"
+    }),
+    
+    cancel: createSpell({
+      name: 'cancel',
+      power: effectMultiplier,
+      action: function() {
+        var actualPower = Math.min(effects.length, this.power.get())
+        for (var i = 0; i < actualPower; i++) {
+          effects[0].destroy()
+          effects.shift()
+        }
+      },
+      cost: {wisdom: costMultiplier},
+      hotkey: "4", 
+      paint: function() {
+        this.panel.find(".cancelWhat").text(this.power.get() == 1 ? "the oldest effect" : this.power.get() + " oldest effects")
+      }
+    }),
+    
+    prolong: createSpell({
+      name: 'prolong',
+      power: calculatable(() => Math.pow(2, effectMultiplier.get())),
+      power2: calculatable(() => Math.pow(3, effectMultiplier.get())),
+      duration: duration,
+      action: function() {
+        effects.push(createEffect({
+          name: 'prolong',
+          durationMultiplier: this.power.get(),
+          prolongCostMultiplier: this.power2.get(),
+          duration: this.duration.get(),
+          paint: function() {
+            setFormattedText(this.panel.find(".durationMultiplier"), large(this.durationMultiplier))
+            setFormattedText(this.panel.find(".prolongCostMultiplier"), large(this.prolongCostMultiplier))
+          }
+        })) 
+      },
+      cost: calculatable(() => {
+        return effects.reduce((acc, cur) => acc * (cur.prolongCostMultiplier || 1), 1) * costMultiplier.get()
+      }),
+      hotkey: "5"
+    }),
   }
 
   var spellsList = [
     spells.signOfWisdom,
     spells.collectMana,
-    spells.empower
+    spells.empower,
+    spells.cancel, 
+    spells.prolong
   ]
 
   var resourcesList = [
     resources.wisdom,
     resources.mana, 
     resources.time,  
-    resources.globalCooldown
+    resources.readiness
   ]
 
   spellcaster = {
@@ -136,10 +187,7 @@ function createSpellcaster(params) {
       effects = effects.filter(e => !e.expired())
       effects.each('tick', deltaTime)
       
-      resources.globalCooldown.value -= deltaTime
-      if (resources.globalCooldown.value < 0) {
-        resources.globalCooldown.value = 0
-      }
+      resources.readiness.value = (resources.readiness.value + deltaTime).clamp(0,5)
 
       save(currentTime)
       debug.unprofile('tick')
