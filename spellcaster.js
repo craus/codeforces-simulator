@@ -77,7 +77,8 @@ function createSpellcaster(params) {
       power: effectMultiplier,
       action: function() {
         resources.mana.value += this.power.get()
-      }
+      },
+      cost: {wisdom: costMultiplier}
     }),
   
     empower: createSpell({

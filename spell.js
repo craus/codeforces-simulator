@@ -1,21 +1,20 @@
 var createSpell = function(params) {
+  params.cost = params.cost || {}
+  if (params.cost.get) {
+    params.cost = {mana: params.cost}
+  }
   var panel = $('.' + params.name)
   var available = function() {
     if (resources.globalCooldown.get() > 0) {
       return false
     }
-    if (!params.cost) {
-      return true
-    }
-    return resources.mana.get() > params.cost.get() - eps
+    return Object.entries(params.cost).every(r => resources[r[0]].get() > r[1].get() - eps)
   }
   panel.find(".cast").click(function() {
     if (!available()) {
       return
     }
-    if (params.cost) {
-      resources.mana.value -= params.cost.get()
-    }
+    Object.entries(params.cost).forEach(r => resources[r[0]].value -= r[1].get())
     resources.globalCooldown.value += 0.01
     params.action()
   })
@@ -25,7 +24,7 @@ var createSpell = function(params) {
   }, params, {    
     paint: function() {
       if (params.cost) {
-        setFormattedText(panel.find(".cost"), large(params.cost.get()))
+        setFormattedText(panel.find(".cost"), Object.entries(params.cost).map(r => large(r[1].get()) + " " + resources[r[0]].name).join(', '))
       }
       panel.find(".cast").prop('disabled', !this.available())
       
