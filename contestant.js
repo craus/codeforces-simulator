@@ -24,8 +24,9 @@ function createContestant(params) {
     resources.forEach(function(resource) {
       savedata[resource.id] = resource.value
     })
+    members.each('save')
     savedata.realTime = timestamp || Date.now()
-    //localStorage[saveName] = JSON.stringify(savedata)
+    localStorage[saveName] = JSON.stringify(savedata)
   } 
   
   wipeSave = function() {
@@ -330,11 +331,33 @@ function createContestant(params) {
     return ((event.type == linear) ? buyEvent : unlinearBuyEvent)(event)
   })
   
-  var playContestButton = $('.playContest')  
+  var memberNames = [
+    'you',
+    'tourist',
+    'Petr',
+    'rng_58',
+    'Zlobober',
+    'JKeeJ1e30',
+    'Bredor',
+    'Egor',
+    'Kirundel',
+    'HellKitsune',
+    'MAXIMAN'
+  ]
+  members = []
+  for (var i = 0; i < memberNames.length; i++) {
+    members.push(createMember({
+      name: memberNames[i],
+      id: i,
+      members: members
+    }))
+  }
+  members.sort((a, b) => b.rating-a.rating + 0.001 * (b.id-a.id)).indexOf(this)+1
+  members.each('paint')
   
   var currentContest = null
   
-  playContestButton.click(function() { 
+  $('.playContest').click(function() { 
     if (currentContest != null) {
       currentContest.remove()
     }

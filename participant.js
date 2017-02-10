@@ -1,6 +1,6 @@
 var createParticipant = function(contest, createController, name) {
   var participant = {
-    name: name,
+    member: member,
     activeProblem: null,
     score: function() {
       return this.problems.reduce((total,problem)=>total+problem.myScore(),0)

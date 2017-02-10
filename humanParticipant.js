@@ -1,6 +1,6 @@
 var createHumanParticipant = function(contest, participant) {
   var contestPanelSample = $(".contestPanelSample")
-  var competitions = $("#competitions")
+  var competitions = $("#contests")
   var contestPanel = contestPanelSample.clone()
   contestPanel.removeClass("hidden contestPanelSample")
   contest.panel = contestPanel

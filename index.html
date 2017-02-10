@@ -39,115 +39,259 @@
   <script src="humanParticipant.js"></script> 
   <script src="problem.js"></script> 
   <script src="participant.js"></script> 
+  <script src="member.js"></script> 
   
   <script src="init.js"></script>
 </head>
 
 <body>
 
-<div class="modal fade" id="confirm-wipe-save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-        
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4 class="modal-title" id="myModalLabel">Confirm Wipe save</h4>
-            </div>
-        
-            <div class="modal-body">
-                <p>You will lost ALL your progress, this procedure is irreversible.</p>
-                <p>Do you want to proceed?</p>
-                <p class="debug-url"></p>
-            </div>
-            
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                <a class="btn btn-danger btn-ok" onclick="wipeSave()">YES</a>
-            </div>
+<div class="container-fluid text-center">
+  <div class="row">
+      <ul class="nav nav-tabs centered">
+        <li class="active"><a data-toggle="tab" href="#contests">Contests</a></li>
+        <li><a data-toggle="tab" href="#rating">Rating</a></li>
+        <li><a data-toggle="tab" href="#settings">Settings</a></li>
+      </ul>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="tab-content">
+        <div id="training" class="tab-pane fade in">
+          <h1>Problems</h1>
+          <p class="value solveDelta"></p>   
+          <div class="btn-group solve">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Solve #{0}"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>        
         </div>
+        <div id="skills" class="tab-pane fade row">
+          <div class="col-sm-4">
+            <h1>Blind typing</h1>
+            <p class="value blindTyping" data-text="Current level: #{0}"></p>     
+            <p class="value codeLinesPerSecond" data-text="#{0} code lines per second"></p>
+            <p class="value learnBlindTypingCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnBlindTyping">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+            <h1>Blind typing mastery</h1>
+            <p class="value blindTypingMastery" data-text="Current level: #{0}"></p>     
+            <p class="value learnBlindTypingMasteryCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnBlindTypingMastery">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <h1>Algorithms</h1>
+            <p class="value algorithms" data-text="Current level: #{0}"></p>
+            <p class="value experiencePerProblem" data-text="#{0} experience per problem"></p>
+            <p class="value learnAlgorithmsCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnAlgorithms">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+            <h1>Algorithms mastery</h1>
+            <p class="value algorithmsMastery" data-text="Current level: #{0}"></p>
+            <p class="value learnAlgorithmsMasteryCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnAlgorithmsMastery">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <h1>Imagination</h1>
+            <p class="value imagination" data-text="Current level: #{0}"></p>
+            <p class="value ideasPerProblem" data-text="#{0} ideas per problem"></p>
+            <p class="value learnImaginationCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnImagination">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+            <h1>Imagination mastery</h1>
+            <p class="value imaginationMastery" data-text="Current level: #{0}"></p>
+            <p class="value learnImaginationMasteryCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnImaginationMastery">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+        </div>
+        <div id="community" class="tab-pane fade">
+          <h1>Community</h1>
+          <p class="value askForHelpDelta"></p>   
+          <div class="btn-group askForHelp">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Ask for help #{0} times"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+          <p class="value helpSomebodyDelta"></p>   
+          <div class="btn-group helpSomebody">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Help somebody #{0} times"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+        </div>
+        <div id="contests" class="tab-pane active">
+          <h1>Contests</h1>   
+          <button type="button" class="btn btn-primary playContest">Play contest</button>
+          <div class="col-sm-2 problemPanelSample hidden">
+            <div class="panel panel-default">
+              <div class="panel-body">
+                <p class="name" data-text="Problem #{0}">Problem A</p>   
+                <p>max. <b class="maxPoints">500</b> points</p>
+                <p class="points" data-text="#{0} points">500 points</p>
+                <p class="timeLeft", data-text="Left: #{0}#{1} s">Left: 10±5 s</p>
+                <p class="timeSpent", data-text="Spent: #{0}#{1} s">Spent: 0 s</p>    
+                <button type="button" class="btn btn-primary solve">Solve</button>    
+                <button type="button" tabindex=-1 class="btn btn-default disabled nohover solving">SOLVING...</button>    
+                <button type="button" tabindex=-1 class="btn btn-success disabled nohover solved">ACCEPTED</button>    
+                <button type="button" tabindex=-1 class="btn btn-default disabled nohover nonSolved">NOT SOLVED</button>  
+              </div>
+            </div>
+          </div>          
+          <div class = "panel panel-default hidden contestPanelSample">
+            <div class = "panel-body">
+              <h2 class="status">Contest is running</h2>
+              <div class="row">
+                <div class="col-sm-3">
+                  <p class="currentScore" data-text="Current score: #{0}">Current score: 0</p>   
+                </div>
+                <div class="col-sm-3">
+                  <p class="problemsSolved" data-text="Problems solved: #{0}">Problems solved: 0</p>   
+                </div>
+                <div class="col-sm-3">
+                  <p class="contestTime" data-text="Time elapsed: #{0} s">Time: 80 s</p>   
+                </div>
+                <div class="col-sm-3">
+                  <p class="contestTimeLeft" data-text="Time left: #{0} s">Time left: 80 s</p>   
+                </div>
+              </div>              
+              <div class="row problems scope">
+
+              </div>              
+              <div class="row monitor">
+                <div>
+                  <h3 class="standings">Standings</h3>            
+                  <table class="table sortable">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Who</th>
+                        <th data-defaultsort="desc">=</th>
+                        <th style = "text-align: center">A</th>
+                        <th style = "text-align: center">B</th>
+                        <th style = "text-align: center">C</th>
+                        <th style = "text-align: center">D</th>
+                        <th style = "text-align: center">E</th>
+                      </tr>
+                    </thead>
+                    <tbody class = "participantsStandings">
+                      <tr class = "participantProblems hidden participantRowSample">
+                        <td class = "rank vcentered">1</td>
+                        <td class = "name vcentered">Bot#1</td>
+                        <td class = "scoreData vcentered"><b class = "score">480</b></td>
+                        <td class = "hidden participantProblemCellSample" style = "text-align: center">
+                          <div class = "problemScore" style = "font-size: 16px">0</div>
+                          <div class = "submitTime" style = "font-size: 11px">24</div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="rating" class="tab-pane fade">
+          <h1>Rating</h1>           
+            <table class="table sortable">
+              <thead>
+                <tr>
+                  <th data-defaultsort="asc">#</th>
+                  <th>Who</th>
+                  <th>=</th>
+                </tr>
+              </thead>
+              <tbody class = "ratingList">
+                <tr class = "hidden memberRatingRowSample">
+                  <td class = "vcentered rankValue"><span class="rank">?</span></td>
+                  <td class = "vcentered"><span class="name">?</span></td>
+                  <td class = "vcentered"><span class="memberRating">?</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <div id="settings" class="tab-pane fade">
+          <h1>Settings</h1>
+          <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-wipe-save">Wipe save</button>
+        </div>
+        <div id="problemsetting" class="tab-pane fade">
+          <h1>Problemsetting</h1>
+          <p class="value contributionMultiplier" data-text="Contribution multiplier: #{0}"></p> 
+          <p class="value createContestDelta"></p>   
+          <div class="btn-group createContest">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Create #{0} contests"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+        </div>
+        <div id="store" class="tab-pane fade">
+          <div class="col-sm-6">
+            <h1>Upgrade keyboard</h1>
+            <p class="value keyboardLevel" data-text="Current level: #{0}"></p>     
+            <p class="value upgradeKeyboardCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group upgradeKeyboard">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Upgrade #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <h1>Upgrade Cormen</h1>
+            <p class="value cormenLevel" data-text="Current level: #{0}"></p>
+            <p class="value upgradeCormenCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group upgradeCormen">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Upgrade #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+        </div>
+      </div>    
     </div>
+  </div>
 </div>
 
-<div class="container-fluid text-center" id = "competitions">
-     
-  <div class="row" style="margin-bottom:24px">
-    <div class="col-sm-4">
-      <h1>Rating</h1>   
-      <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-wipe-save">Wipe save</button>
-    </div>
-    <div class="col-sm-4">
-      <h1>Contests</h1>   
-      <button type="button" class="btn btn-primary playContest">Play contest</button>
-    </div>
-  </div>
-  <div class="col-sm-2 problemPanelSample hidden">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <p class="name" data-text="Problem #{0}">Problem A</p>   
-        <p>max. <b class="maxPoints">500</b> points</p>
-        <p class="points" data-text="#{0} points">500 points</p>
-        <p class="timeLeft", data-text="Left: #{0}#{1} s">Left: 10±5 s</p>
-        <p class="timeSpent", data-text="Spent: #{0}#{1} s">Spent: 0 s</p>    
-        <button type="button" class="btn btn-primary solve">Solve</button>    
-        <button type="button" tabindex=-1 class="btn btn-default disabled nohover solving">SOLVING...</button>    
-        <button type="button" tabindex=-1 class="btn btn-success disabled nohover solved">ACCEPTED</button>    
-        <button type="button" tabindex=-1 class="btn btn-default disabled nohover nonSolved">NOT SOLVED</button>  
+<div class="modal fade" id="confirm-wipe-save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Confirm Wipe save</h4>
       </div>
-    </div>
-  </div>          
-  <div class = "panel panel-default hidden contestPanelSample">
-    <div class = "panel-body">
-      <h2 class="status">Contest is running</h2>
-      <div class="row">
-        <div class="col-sm-3">
-          <p class="currentScore" data-text="Current score: #{0}">Current score: 0</p>   
-        </div>
-        <div class="col-sm-3">
-          <p class="problemsSolved" data-text="Problems solved: #{0}">Problems solved: 0</p>   
-        </div>
-        <div class="col-sm-3">
-          <p class="contestTime" data-text="Time elapsed: #{0} s">Time: 80 s</p>   
-        </div>
-        <div class="col-sm-3">
-          <p class="contestTimeLeft" data-text="Time left: #{0} s">Time left: 80 s</p>   
-        </div>
-      </div>              
-      <div class="row problems scope">
-
-      </div>              
-      <div class="row monitor">
-        <div>
-          <h3 class="standings">Standings</h3>            
-          <table class="table sortable">
-            <thead>
-              <tr>
-                <th>#</th>
-                <th>Who</th>
-                <th data-defaultsort="desc">=</th>
-                <th style = "text-align: center">A</th>
-                <th style = "text-align: center">B</th>
-                <th style = "text-align: center">C</th>
-                <th style = "text-align: center">D</th>
-                <th style = "text-align: center">E</th>
-              </tr>
-            </thead>
-            <tbody class = "participantsStandings">
-              <tr class = "participantProblems hidden participantRowSample">
-                <td class = "rank vcentered">1</td>
-                <td class = "name vcentered">Bot#1</td>
-                <td class = "scoreData vcentered"><b class = "score">480</b></td>
-                <td class = "hidden participantProblemCellSample" style = "text-align: center">
-                  <div class = "problemScore" style = "font-size: 16px">0</div>
-                  <div class = "submitTime" style = "font-size: 11px">24</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  
+      <div class="modal-body">
+        <p>You will lost ALL your progress, this procedure is irreversible.</p>
+        <p>Do you want to proceed?</p>
+        <p class="debug-url"></p>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-danger btn-ok" onclick="wipeSave()">YES</a>
       </div>
     </div>
   </div>
-
 </div>
 
 </body>
