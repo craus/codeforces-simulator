@@ -45,78 +45,105 @@
 
 <body>
 
-<div class="container-fluid text-center" id = "competitions">
-          <h1>Contests</h1>      
-          <div class="row" style="margin-bottom:24px">
-            <button type="button" class="btn btn-primary playContest">Play contest</button>
-          </div>
-          <div class="col-sm-2 problemPanelSample hidden">
-            <div class="panel panel-default">
-              <div class="panel-body">
-                <p class="name" data-text="Problem #{0}">Problem A</p>   
-                <p>max. <b class="maxPoints">500</b> points</p>
-                <p class="points" data-text="#{0} points">500 points</p>
-                <p class="timeLeft", data-text="Left: #{0}#{1} s">Left: 10±5 s</p>
-                <p class="timeSpent", data-text="Spent: #{0}#{1} s">Spent: 0 s</p>    
-                <button type="button" class="btn btn-primary solve">Solve</button>    
-                <button type="button" tabindex=-1 class="btn btn-default disabled nohover solving">SOLVING...</button>    
-                <button type="button" tabindex=-1 class="btn btn-success disabled nohover solved">ACCEPTED</button>    
-                <button type="button" tabindex=-1 class="btn btn-default disabled nohover nonSolved">NOT SOLVED</button>  
-              </div>
-            </div>
-          </div>          
-          <div class = "panel panel-default hidden contestPanelSample">
-            <div class = "panel-body">
-              <h2 class="status">Contest is running</h2>
-              <div class="row">
-                <div class="col-sm-3">
-                  <p class="currentScore" data-text="Current score: #{0}">Current score: 0</p>   
-                </div>
-                <div class="col-sm-3">
-                  <p class="problemsSolved" data-text="Problems solved: #{0}">Problems solved: 0</p>   
-                </div>
-                <div class="col-sm-3">
-                  <p class="contestTime" data-text="Time elapsed: #{0} s">Time: 80 s</p>   
-                </div>
-                <div class="col-sm-3">
-                  <p class="contestTimeLeft" data-text="Time left: #{0} s">Time left: 80 s</p>   
-                </div>
-              </div>              
-              <div class="row problems scope">
+<div id="confirm" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-              </div>              
-              <div class="row monitor">
-                <div>
-                  <h3 class="standings">Standings</h3>            
-                  <table class="table sortable">
-                    <thead>
-                      <tr>
-                        <th>#</th>
-                        <th>Who</th>
-                        <th data-defaultsort="desc">=</th>
-                        <th style = "text-align: center">A</th>
-                        <th style = "text-align: center">B</th>
-                        <th style = "text-align: center">C</th>
-                        <th style = "text-align: center">D</th>
-                        <th style = "text-align: center">E</th>
-                      </tr>
-                    </thead>
-                    <tbody class = "participantsStandings">
-                      <tr class = "participantProblems hidden participantRowSample">
-                        <td class = "rank vcentered">1</td>
-                        <td class = "name vcentered">Bot#1</td>
-                        <td class = "scoreData vcentered"><b class = "score">480</b></td>
-                        <td class = "hidden participantProblemCellSample" style = "text-align: center">
-                          <div class = "problemScore" style = "font-size: 16px">0</div>
-                          <div class = "submitTime" style = "font-size: 11px">24</div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Modal Header</h4>
+      </div>
+      <div class="modal-body">
+        <p>Some text in the modal.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="container-fluid text-center" id = "competitions">
+     
+  <div class="row" style="margin-bottom:24px">
+    <div class="col-sm-4">
+      <h1>Rating</h1>   
+      <button type="button" class="btn btn-primary wipeProgress">Wipe progress</button>
+    </div>
+    <div class="col-sm-4">
+      <h1>Contests</h1>   
+      <button type="button" class="btn btn-primary playContest">Play contest</button>
+    </div>
+  </div>
+  <div class="col-sm-2 problemPanelSample hidden">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p class="name" data-text="Problem #{0}">Problem A</p>   
+        <p>max. <b class="maxPoints">500</b> points</p>
+        <p class="points" data-text="#{0} points">500 points</p>
+        <p class="timeLeft", data-text="Left: #{0}#{1} s">Left: 10±5 s</p>
+        <p class="timeSpent", data-text="Spent: #{0}#{1} s">Spent: 0 s</p>    
+        <button type="button" class="btn btn-primary solve">Solve</button>    
+        <button type="button" tabindex=-1 class="btn btn-default disabled nohover solving">SOLVING...</button>    
+        <button type="button" tabindex=-1 class="btn btn-success disabled nohover solved">ACCEPTED</button>    
+        <button type="button" tabindex=-1 class="btn btn-default disabled nohover nonSolved">NOT SOLVED</button>  
+      </div>
+    </div>
+  </div>          
+  <div class = "panel panel-default hidden contestPanelSample">
+    <div class = "panel-body">
+      <h2 class="status">Contest is running</h2>
+      <div class="row">
+        <div class="col-sm-3">
+          <p class="currentScore" data-text="Current score: #{0}">Current score: 0</p>   
+        </div>
+        <div class="col-sm-3">
+          <p class="problemsSolved" data-text="Problems solved: #{0}">Problems solved: 0</p>   
+        </div>
+        <div class="col-sm-3">
+          <p class="contestTime" data-text="Time elapsed: #{0} s">Time: 80 s</p>   
+        </div>
+        <div class="col-sm-3">
+          <p class="contestTimeLeft" data-text="Time left: #{0} s">Time left: 80 s</p>   
+        </div>
+      </div>              
+      <div class="row problems scope">
+
+      </div>              
+      <div class="row monitor">
+        <div>
+          <h3 class="standings">Standings</h3>            
+          <table class="table sortable">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Who</th>
+                <th data-defaultsort="desc">=</th>
+                <th style = "text-align: center">A</th>
+                <th style = "text-align: center">B</th>
+                <th style = "text-align: center">C</th>
+                <th style = "text-align: center">D</th>
+                <th style = "text-align: center">E</th>
+              </tr>
+            </thead>
+            <tbody class = "participantsStandings">
+              <tr class = "participantProblems hidden participantRowSample">
+                <td class = "rank vcentered">1</td>
+                <td class = "name vcentered">Bot#1</td>
+                <td class = "scoreData vcentered"><b class = "score">480</b></td>
+                <td class = "hidden participantProblemCellSample" style = "text-align: center">
+                  <div class = "problemScore" style = "font-size: 16px">0</div>
+                  <div class = "submitTime" style = "font-size: 11px">24</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 

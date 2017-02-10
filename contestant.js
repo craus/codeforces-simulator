@@ -119,25 +119,25 @@ function createContestant(params) {
   var time = variable(0, 'time')
 
   var resources = [
-    codeLines, 
-    experience,
-    algorithms,
-    imagination,
-    blindTyping,
-    algorithmsMastery,
-    imaginationMastery,
-    blindTypingMastery,
-    totalAlgorithms,
-    totalImagination,
-    totalBlindTyping,   
-    ideas, 
-    totalIdeas, 
-    contribution,
-    money, 
-    cormen,
-    keyboard, 
+    // codeLines, 
+    // experience,
+    // algorithms,
+    // imagination,
+    // blindTyping,
+    // algorithmsMastery,
+    // imaginationMastery,
+    // blindTypingMastery,
+    // totalAlgorithms,
+    // totalImagination,
+    // totalBlindTyping,   
+    // ideas, 
+    // totalIdeas, 
+    // contribution,
+    // money, 
+    // cormen,
+    // keyboard, 
     rating, 
-    time,     
+    // time,     
   ]
   
   var algorithmCost = calculatable(function(){return 100*Math.pow(1.17, totalAlgorithms.get()) / Math.pow(10, cormen.get())})
@@ -376,10 +376,6 @@ function createContestant(params) {
       }
       save(currentTime)
       debug.unprofile('tick')
-    },
-    wipeSave: function() {
-      console.log("wipeSave")
-      wipeSave.run(1)
     }
   }
   return contestant
