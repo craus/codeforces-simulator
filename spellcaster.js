@@ -121,7 +121,7 @@ function createSpellcaster(params) {
       },
       hotkey: "4", 
       paint: function() {
-        this.panel.find(".cancelWhat").text(this.power.get() == 1 ? "the oldest effect" : this.power.get() + " oldest effects")
+        setFormattedText(this.panel.find(".cancelWhat"), this.power.get() == 1 ? "the oldest effect" : this.power.get() + " oldest effects")
       }
     }),
     
