@@ -45,24 +45,27 @@
 
 <body>
 
-<div id="confirm" class="modal fade" role="dialog">
-  <div class="modal-dialog">
-
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Modal Header</h4>
-      </div>
-      <div class="modal-body">
-        <p>Some text in the modal.</p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
+<div class="modal fade" id="confirm-wipe-save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+        
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Confirm Wipe save</h4>
+            </div>
+        
+            <div class="modal-body">
+                <p>You will lost ALL your progress, this procedure is irreversible.</p>
+                <p>Do you want to proceed?</p>
+                <p class="debug-url"></p>
+            </div>
+            
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                <a class="btn btn-danger btn-ok" onclick="wipeSave()">YES</a>
+            </div>
+        </div>
     </div>
-
-  </div>
 </div>
 
 <div class="container-fluid text-center" id = "competitions">
@@ -70,7 +73,7 @@
   <div class="row" style="margin-bottom:24px">
     <div class="col-sm-4">
       <h1>Rating</h1>   
-      <button type="button" class="btn btn-primary wipeProgress">Wipe progress</button>
+      <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-wipe-save">Wipe save</button>
     </div>
     <div class="col-sm-4">
       <h1>Contests</h1>   

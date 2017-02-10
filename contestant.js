@@ -330,15 +330,6 @@ function createContestant(params) {
     return ((event.type == linear) ? buyEvent : unlinearBuyEvent)(event)
   })
   
-  var wipeSave = buyEvent({
-    name: "Wipe Save",
-    cost: [],
-    reward: [[unpredictableEvent({effect: wipeSave}), constant(1)]],
-    type: linear,
-    alwaysTopButton: 'off',
-    upButton: 'off'
-  })
-  
   var playContestButton = $('.playContest')  
   
   var currentContest = null
