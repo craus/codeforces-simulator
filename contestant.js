@@ -29,6 +29,7 @@ function createContestant(params) {
       currentContest.save()
     }
     savedata.currentContest = currentContest
+    savedata.activeTab = $('.sections>.active>a').attr('href')
     savedata.realTime = timestamp || Date.now()
     localStorage[saveName] = JSON.stringify(savedata)
   } 
@@ -373,6 +374,8 @@ function createContestant(params) {
     currentContest = createContest()
     contestant.paint()
   })
+  
+  $('a[href="' + savedata.activeTab + '"]').tab('show')
   
   contestant = {
     paint: function() {
