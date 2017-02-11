@@ -88,6 +88,7 @@ createContest = function({record = null} = {}) {
     contest.problems.sort((a,b) => a.score-b.score)
     for (var i = 0; i < cnt; i++) {
       contest.problems[i].name = String.fromCharCode('A'.charCodeAt()+i)
+      contest.problems[i].hotkey = String.fromCharCode('1'.charCodeAt()+i)
     } 
   }
   
@@ -97,7 +98,7 @@ createContest = function({record = null} = {}) {
       contest: contest
     }))
   } else {
-    var players = Math.clamp(Math.round(gaussianRandom(10, 1)), 2, members.length)
+    var players = Math.clamp(Math.round(gaussianRandom(30, 3)), 2, members.length)
     var membersParticipants = members.filter(m => !m.isHuman).rndSubset(players-1)
     membersParticipants.push(members.find(m => m.isHuman))
     console.log(members)
