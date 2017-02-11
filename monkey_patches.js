@@ -26,6 +26,16 @@ Array.prototype.find = function(criteria) {
   return null
 }
 
+Array.prototype.rndSubset = function(cnt) {
+  var result = []
+  for (var i = 0; i < this.length; i++) {
+    if (rndEvent((cnt - result.length) / (this.length - i))) {
+      result.push(this[i])
+    }
+  }
+  return result
+}
+
 Math.sign = function(x) {
   if (x > 0) {
     return 1
@@ -34,4 +44,8 @@ Math.sign = function(x) {
   } else {
     return 0
   }
+}
+
+Math.clamp = function(x, a, b) {
+  return Math.max(a, Math.min(x, b))
 }

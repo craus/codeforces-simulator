@@ -19,7 +19,6 @@ var init = function() {
   //     // Sorry! No Web Storage support..
   // } 
  
-  eps = 1e-8
   game = createContestant()
   
   realTime = 0

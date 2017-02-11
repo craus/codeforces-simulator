@@ -1,5 +1,19 @@
+eps = 1e-8
+  
 toType = function(obj) {
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}
+
+greatestPossible = function(a, b, acceptable) {
+  var cur = a
+  var step = (b-a)/2
+  while (step > eps) {
+    if (acceptable(cur+step)) {
+      cur += step
+    }
+    step /= 2
+  }
+  return cur
 }
 
 function normAng(ang)
@@ -21,6 +35,9 @@ function dist(x1, y1, x2, y2) {
 
 function rnd(min, max) {
   return min + Math.random()*(max-min)
+}
+function rndEvent(p) {
+  return Math.random() < p
 }
 
 identityMatrix = [1,0,0,1,0,0]
@@ -127,6 +144,28 @@ function enable(el, on) {
   if (!on) {
     el.tooltip('hide')
   }
+}
+
+sign = function(x) { 
+  if (x == null) return null
+  if (x > 0) return "+";
+  return "";
+}
+signed = function(x) {
+  if (x == null) return null
+  return sign(x) + x
+}
+large = function(x) {
+  if (x == null) return null
+  if (x == 0) return 0
+  if (Math.abs(x) > 1e4*(1+eps) || Math.abs(x) < 1-eps) return x.toPrecision(4).replace('+','')
+  if (Math.abs(x - Math.floor(x+eps)) < eps) return Math.floor(x+eps)
+  return x.toPrecision(4).replace('+','') 
+}
+precision = function(x, p = 4) {
+  if (x == null) return null
+  if (x == 0) return 0
+  return x.toPrecision(p).replace('+','') 
 }
 
 signPrefix = function(x) { 

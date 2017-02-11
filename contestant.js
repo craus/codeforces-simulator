@@ -24,8 +24,14 @@ function createContestant(params) {
     resources.forEach(function(resource) {
       savedata[resource.id] = resource.value
     })
+    members.each('save')
+    if (currentContest) {
+      currentContest.save()
+    }
+    savedata.currentContest = currentContest
+    savedata.activeTab = $('.sections>.active>a').attr('href')
     savedata.realTime = timestamp || Date.now()
-    //localStorage[saveName] = JSON.stringify(savedata)
+    localStorage[saveName] = JSON.stringify(savedata)
   } 
   
   wipeSave = function() {
@@ -119,25 +125,25 @@ function createContestant(params) {
   var time = variable(0, 'time')
 
   var resources = [
-    codeLines, 
-    experience,
-    algorithms,
-    imagination,
-    blindTyping,
-    algorithmsMastery,
-    imaginationMastery,
-    blindTypingMastery,
-    totalAlgorithms,
-    totalImagination,
-    totalBlindTyping,   
-    ideas, 
-    totalIdeas, 
-    contribution,
-    money, 
-    cormen,
-    keyboard, 
+    // codeLines, 
+    // experience,
+    // algorithms,
+    // imagination,
+    // blindTyping,
+    // algorithmsMastery,
+    // imaginationMastery,
+    // blindTypingMastery,
+    // totalAlgorithms,
+    // totalImagination,
+    // totalBlindTyping,   
+    // ideas, 
+    // totalIdeas, 
+    // contribution,
+    // money, 
+    // cormen,
+    // keyboard, 
     rating, 
-    time,     
+    // time,     
   ]
   
   var algorithmCost = calculatable(function(){return 100*Math.pow(1.17, totalAlgorithms.get()) / Math.pow(10, cormen.get())})
@@ -330,26 +336,46 @@ function createContestant(params) {
     return ((event.type == linear) ? buyEvent : unlinearBuyEvent)(event)
   })
   
-  var wipeSave = buyEvent({
-    name: "Wipe Save",
-    cost: [],
-    reward: [[unpredictableEvent({effect: wipeSave}), constant(1)]],
-    type: linear,
-    alwaysTopButton: 'off',
-    upButton: 'off'
-  })
+  var memberNames = [
+    'you',
+    'tourist',
+    'Petr',
+    'rng_58',
+    'Zlobober',
+    'JKeeJ1e30',
+    'Bredor',
+    'Egor',
+    'Kirundel',
+    'HellKitsune',
+    'MAXIMAN'
+  ]
+  members = []
+  for (var i = 0; i < memberNames.length; i++) {
+    members.push(createMember({
+      name: memberNames[i],
+      id: i,
+      members: members,
+      isHuman: i==0
+    }))
+  }
+  members.sort((a, b) => b.rating-a.rating + 0.001 * (b.id-a.id))
+  members.each('paint')
   
-  var playContestButton = $('.playContest')  
+  currentContest = null
+  if (savedata.currentContest) {
+    currentContest = createContest({record: savedata.currentContest})
+  }
   
-  var currentContest = null
-  
-  playContestButton.click(function() { 
+  $('.playContest').click(function() { 
     if (currentContest != null) {
       currentContest.remove()
     }
     console.log("Started contest")
     currentContest = createContest()
+    contestant.paint()
   })
+  
+  $('a[href="' + savedata.activeTab + '"]').tab('show')
   
   contestant = {
     paint: function() {
@@ -364,22 +390,22 @@ function createContestant(params) {
       if (currentContest != null) {
         currentContest.paint()
       }
+      $(".playContest").toggle(currentContest == null || currentContest.finished())
       debug.unprofile('paint')
+    },
+    tickInternal: function(t) {      
+      secondTicked.run(t)
+      if (currentContest != null) {
+        currentContest.tick(t)
+      }
     },
     tick: function() {
       debug.profile('tick')
       var currentTime = Date.now()
       var deltaTime = currentTime - savedata.realTime
-      secondTicked.run(deltaTime / 1000)
-      if (currentContest != null) {
-        currentContest.tick(deltaTime / 1000)
-      }
+      this.tickInternal(deltaTime/1000)
       save(currentTime)
       debug.unprofile('tick')
-    },
-    wipeSave: function() {
-      console.log("wipeSave")
-      wipeSave.run(1)
     }
   }
   return contestant

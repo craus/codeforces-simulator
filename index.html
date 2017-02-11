@@ -1,4 +1,14 @@
 <head>
+  <script>
+    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+    ga('create', 'UA-41065171-3', 'auto');
+    ga('send', 'pageview');
+  </script>
+
   <link rel="shortcut icon" href="https://due.com/wp-content/themes/due/images/programmers-thumb-08.png">
   <link rel="stylesheet" type="text/css" href="bootstrap.min.css">
 	<script src="jquery.js"></script>
@@ -39,17 +49,111 @@
   <script src="humanParticipant.js"></script> 
   <script src="problem.js"></script> 
   <script src="participant.js"></script> 
+  <script src="member.js"></script> 
   
   <script src="init.js"></script>
 </head>
 
 <body>
 
-<div class="container-fluid text-center" id = "competitions">
-          <h1>Contests</h1>      
-          <div class="row" style="margin-bottom:24px">
-            <button type="button" class="btn btn-primary playContest">Play contest</button>
+<div class="container-fluid text-center">
+  <div class="row">
+      <ul class="nav nav-tabs centered sections">
+        <li class="active"><a data-toggle="tab" href="#contests">Contests</a></li>
+        <li><a data-toggle="tab" href="#rating">Rating</a></li>
+        <li><a data-toggle="tab" href="#settings">Settings</a></li>
+      </ul>
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <div class="tab-content">
+        <div id="training" class="tab-pane fade in">
+          <h1>Problems</h1>
+          <p class="value solveDelta"></p>   
+          <div class="btn-group solve">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Solve #{0}"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>        
+        </div>
+        <div id="skills" class="tab-pane fade row">
+          <div class="col-sm-4">
+            <h1>Blind typing</h1>
+            <p class="value blindTyping" data-text="Current level: #{0}"></p>     
+            <p class="value codeLinesPerSecond" data-text="#{0} code lines per second"></p>
+            <p class="value learnBlindTypingCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnBlindTyping">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+            <h1>Blind typing mastery</h1>
+            <p class="value blindTypingMastery" data-text="Current level: #{0}"></p>     
+            <p class="value learnBlindTypingMasteryCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnBlindTypingMastery">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
           </div>
+          <div class="col-sm-4">
+            <h1>Algorithms</h1>
+            <p class="value algorithms" data-text="Current level: #{0}"></p>
+            <p class="value experiencePerProblem" data-text="#{0} experience per problem"></p>
+            <p class="value learnAlgorithmsCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnAlgorithms">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+            <h1>Algorithms mastery</h1>
+            <p class="value algorithmsMastery" data-text="Current level: #{0}"></p>
+            <p class="value learnAlgorithmsMasteryCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnAlgorithmsMastery">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <h1>Imagination</h1>
+            <p class="value imagination" data-text="Current level: #{0}"></p>
+            <p class="value ideasPerProblem" data-text="#{0} ideas per problem"></p>
+            <p class="value learnImaginationCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnImagination">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+            <h1>Imagination mastery</h1>
+            <p class="value imaginationMastery" data-text="Current level: #{0}"></p>
+            <p class="value learnImaginationMasteryCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group learnImaginationMastery">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Learn #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+        </div>
+        <div id="community" class="tab-pane fade">
+          <h1>Community</h1>
+          <p class="value askForHelpDelta"></p>   
+          <div class="btn-group askForHelp">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Ask for help #{0} times"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+          <p class="value helpSomebodyDelta"></p>   
+          <div class="btn-group helpSomebody">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Help somebody #{0} times"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+        </div>
+        <div id="contests" class="tab-pane active">
+          <h1>Contests</h1>   
+          <button type="button" class="btn btn-primary playContest">Play contest</button>
+          <hr>
           <div class="col-sm-2 problemPanelSample hidden">
             <div class="panel panel-default">
               <div class="panel-body">
@@ -93,6 +197,7 @@
                       <tr>
                         <th>#</th>
                         <th>Who</th>
+                        <th class = "deltaRatingTitle">Δ</th>
                         <th data-defaultsort="desc">=</th>
                         <th style = "text-align: center">A</th>
                         <th style = "text-align: center">B</th>
@@ -105,6 +210,7 @@
                       <tr class = "participantProblems hidden participantRowSample">
                         <td class = "rank vcentered">1</td>
                         <td class = "name vcentered">Bot#1</td>
+                        <td class = "deltaRatingCell vcentered"><b class = "deltaRating">480</b></td>
                         <td class = "scoreData vcentered"><b class = "score">480</b></td>
                         <td class = "hidden participantProblemCellSample" style = "text-align: center">
                           <div class = "problemScore" style = "font-size: 16px">0</div>
@@ -117,7 +223,88 @@
               </div>
             </div>
           </div>
+        </div>
+        <div id="rating" class="tab-pane fade">
+          <h1>Rating</h1>           
+            <table class="table sortable">
+              <thead>
+                <tr>
+                  <th data-defaultsort="asc">#</th>
+                  <th>Who</th>
+                  <th>=</th>
+                </tr>
+              </thead>
+              <tbody class = "ratingList">
+                <tr class = "hidden memberRatingRowSample">
+                  <td class = "vcentered rankValue"><span class="rank">?</span></td>
+                  <td class = "vcentered"><span class="name">?</span></td>
+                  <td class = "vcentered"><span class="memberRating">?</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        <div id="settings" class="tab-pane fade">
+          <h1>Settings</h1>
+          <button class="btn btn-danger" data-toggle="modal" data-target="#confirm-wipe-save">Wipe save</button>
+        </div>
+        <div id="problemsetting" class="tab-pane fade">
+          <h1>Problemsetting</h1>
+          <p class="value contributionMultiplier" data-text="Contribution multiplier: #{0}"></p> 
+          <p class="value createContestDelta"></p>   
+          <div class="btn-group createContest">
+            <button type="button" class="btn btn-primary less">&lt;</button>
+            <button type="button" class="btn btn-primary buy" data-text="Create #{0} contests"></button>
+            <button type="button" class="btn btn-primary more">></button>
+          </div>
+        </div>
+        <div id="store" class="tab-pane fade">
+          <div class="col-sm-6">
+            <h1>Upgrade keyboard</h1>
+            <p class="value keyboardLevel" data-text="Current level: #{0}"></p>     
+            <p class="value upgradeKeyboardCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group upgradeKeyboard">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Upgrade #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <h1>Upgrade Cormen</h1>
+            <p class="value cormenLevel" data-text="Current level: #{0}"></p>
+            <p class="value upgradeCormenCost" data-text="Cost: #{0}"></p>
+            <div class="btn-group upgradeCormen">
+              <button type="button" class="btn btn-primary less">&lt;</button>
+              <button type="button" class="btn btn-primary buy" data-text="Upgrade #{0}"></button>
+              <button type="button" class="btn btn-primary more">></button>
+            </div>
+          </div>
+        </div>
+      </div>    
+    </div>
+  </div>
+</div>
 
+<div class="modal fade" id="confirm-wipe-save" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Confirm Wipe save</h4>
+      </div>
+  
+      <div class="modal-body">
+        <p>You will lost ALL your progress, this procedure is irreversible.</p>
+        <p>Do you want to proceed?</p>
+        <p class="debug-url"></p>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-danger btn-ok" onclick="wipeSave()">YES</a>
+      </div>
+    </div>
+  </div>
 </div>
 
 </body>
