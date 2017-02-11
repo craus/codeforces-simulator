@@ -386,6 +386,7 @@ function createContestant(params) {
       if (currentContest != null) {
         currentContest.paint()
       }
+      $(".playContest").toggle(currentContest == null || currentContest.finished())
       debug.unprofile('paint')
     },
     tick: function() {

@@ -28,13 +28,22 @@ createContest = function({record = null} = {}) {
       this.participants.sort((a, b) => b.score()-a.score())
       this.participants.each('paint', this)
     },
-    tick: function(t) {
+    shortTick: function(t) {
       if (!this.finished()) {
         t = Math.min(t, this.timeLeft())
         this.time += t
       }
       if (this.running()) {
         this.participants.each('tick', t)
+      }
+    },
+    tick: function(t) {
+      var shortTicks = Math.ceil(t / 0.1)
+      for (var i = 0; i < shortTicks; i++) {
+        if (this.finished()) {
+          return
+        } 
+        this.shortTick(t / shortTicks)
       }
     },
     remove: function() {
