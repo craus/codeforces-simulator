@@ -26,7 +26,7 @@ createContest = function({record = null} = {}) {
         setFormattedText(this.panel.find(".contestTime"), this.timeElapsed().toFixed(2))
         setFormattedText(this.panel.find(".status"), this.status())
         setFormattedText(this.panel.find(".standings"), this.finished() ? "Final standings" : "Standings")
-        this.panel.find(".deltaRatingTitle").toggle(this.finished())
+        this.panel.find(".showOnFinished").toggle(this.finished())
       }
       this.problems.each('paint', this)
       this.participants.sort((a, b) => b.score()-a.score() + 0.001 * (b.member.id-a.member.id))

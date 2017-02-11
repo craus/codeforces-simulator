@@ -46,7 +46,7 @@ var createParticipant = function({contest, createController, member, record}) {
         setFormattedText(this.row.find(".rank"), this.rank())
         setFormattedText(this.row.find(".score"), Math.ceil(this.score()))
         setFormattedText(this.row.find(".deltaRating"), signed(Math.round(this.deltaRating)))
-        this.row.find(".deltaRatingCell").toggle(contest.finished())
+        setFormattedText(this.row.find(".expectedPlace"), this.expectedPlace().toFixed(2))
         setSortableValue(this.row.find(".scoreData"), Math.ceil(this.score()))
       }
       this.problems.each('paint')
