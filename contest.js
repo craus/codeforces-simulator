@@ -1,4 +1,7 @@
 createContest = function({record = null} = {}) {
+  
+  ga('set', 'metric1', 3872);
+  
   var contest = {
     problems: [],
     totalTime: record ? record.totalTime : 120, 
