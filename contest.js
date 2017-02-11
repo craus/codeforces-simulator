@@ -23,10 +23,20 @@ createContest = function({record = null} = {}) {
         setFormattedText(this.panel.find(".contestTime"), this.timeElapsed().toFixed(2))
         setFormattedText(this.panel.find(".status"), this.status())
         setFormattedText(this.panel.find(".standings"), this.finished() ? "Final standings" : "Standings")
+        this.panel.find(".deltaRatingTitle").toggle(this.finished())
       }
       this.problems.each('paint', this)
       this.participants.sort((a, b) => b.score()-a.score())
       this.participants.each('paint', this)
+    },
+    recalculateRatings: function() {
+      this.participants.sort((a, b) => b.score()-a.score())
+      this.participants.each('recalculateRating')
+    },
+    applyRecalculatedRatings: function() {
+      this.participants.forEach(p => {
+        p.member.rating += p.deltaRating
+      })
     },
     shortTick: function(t) {
       if (!this.finished()) {
@@ -35,6 +45,10 @@ createContest = function({record = null} = {}) {
       }
       if (this.running()) {
         this.participants.each('tick', t)
+      }
+      if (this.finished()) {
+        this.recalculateRatings()
+        this.applyRecalculatedRatings()
       }
     },
     tick: function(t) {

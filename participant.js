@@ -8,11 +8,22 @@ var createParticipant = function({contest, createController, member, record}) {
     memberID: member.id,
     activeProblem: null,
     createController: createController.name,
+    deltaRating: record ? record.deltaRating : 0,
     score: function() {
       return this.problems.reduce((total,problem)=>total+problem.myScore(),0)
     },    
     rank: function() {
       return contest.participants.indexOf(this)+1
+    },
+    expectedPlace: function(imaginedRating) {
+      return contest.participants.filter(p => p != this).reduce((total, foe) => total + (1-this.member.winProbability(foe.member, imaginedRating)), 0)+1
+    },
+    recalculateRating: function() {
+      var m = Math.sqrt(this.rank()*this.expectedPlace())
+      console.log(m)
+      var requiredRating = greatestPossible(this.member.rating-100000, this.member.rating+100000, r => this.expectedPlace(r) > m)
+      console.log(requiredRating)
+      this.deltaRating = (requiredRating - this.member.rating) / 2
     },
     solved: function() {
       return this.problems.reduce((total,problem)=>total+(problem.solved?1:0),0)
@@ -36,6 +47,8 @@ var createParticipant = function({contest, createController, member, record}) {
         setFormattedText(this.row.find(".name"), this.member.name)
         setFormattedText(this.row.find(".rank"), this.rank())
         setFormattedText(this.row.find(".score"), Math.ceil(this.score()))
+        setFormattedText(this.row.find(".deltaRating"), Math.round(this.deltaRating))
+        this.row.find(".deltaRatingCell").toggle(contest.finished())
         setSortableValue(this.row.find(".scoreData"), Math.ceil(this.score()))
       }
       this.problems.each('paint')

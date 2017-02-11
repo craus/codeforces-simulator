@@ -18,9 +18,13 @@ var createMember = function(params) {
         name: this.name
       }
     },
+    winProbability: function(foe, imaginedRating) {
+      var rating = imaginedRating || this.rating
+      return 1.0 / (1 + Math.pow(10, (foe.rating - rating)/400))
+    },
     paint: function() {
       setFormattedText(ratingRow.find('.rank'), this.rank())
-      setFormattedText(ratingRow.find('.memberRating'), this.rating)
+      setFormattedText(ratingRow.find('.memberRating'), Math.round(this.rating))
       setFormattedText(ratingRow.find('.name'), this.name)
       setSortableValue(ratingRow.find('.rankValue'), this.rank())
     }

@@ -1,5 +1,19 @@
+eps = 1e-8
+  
 toType = function(obj) {
   return ({}).toString.call(obj).match(/\s([a-zA-Z]+)/)[1].toLowerCase()
+}
+
+greatestPossible = function(a, b, acceptable) {
+  var cur = a
+  var step = (b-a)/2
+  while (step > eps) {
+    if (acceptable(cur+step)) {
+      cur += step
+    }
+    step /= 2
+  }
+  return cur
 }
 
 function normAng(ang)

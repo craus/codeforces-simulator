@@ -360,7 +360,7 @@ function createContestant(params) {
   members.sort((a, b) => b.rating-a.rating + 0.001 * (b.id-a.id))
   members.each('paint')
   
-  var currentContest = null
+  currentContest = null
   if (savedata.currentContest) {
     currentContest = createContest({record: savedata.currentContest})
   }
@@ -390,14 +390,17 @@ function createContestant(params) {
       $(".playContest").toggle(currentContest == null || currentContest.finished())
       debug.unprofile('paint')
     },
+    tickInternal: function(t) {      
+      secondTicked.run(t)
+      if (currentContest != null) {
+        currentContest.tick(t)
+      }
+    },
     tick: function() {
       debug.profile('tick')
       var currentTime = Date.now()
       var deltaTime = currentTime - savedata.realTime
-      secondTicked.run(deltaTime / 1000)
-      if (currentContest != null) {
-        currentContest.tick(deltaTime / 1000)
-      }
+      this.tickInternal(deltaTime/1000)
       save(currentTime)
       debug.unprofile('tick')
     }
