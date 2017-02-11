@@ -134,12 +134,21 @@ var participantProblem = function({contest, participant, problem, record}) {
         setFormattedText(this.td.find(".submitTime"), noZero(this.lastSubmitTime, x => x.toFixed(2)));
       }
     },
+    activate: function() {
+      participant.activeProblem = this
+    },
     init: function() {
       if (this.panel == undefined) {
         return
-      }
-      var me = this      
-      this.panel.find(".solve").click(function() { participant.activeProblem = me})
+      }     
+      var me = this
+      this.panel.find(".solve").click(() => me.activate())
+      setFormattedText(this.panel.find(".hotkey"), this.problem.hotkey)
+      window.addEventListener("keydown", (e) => {
+        if (e.key == me.problem.hotkey) {
+          me.activate()
+        }
+      })
     }
   }, record || {})
 }
