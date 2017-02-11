@@ -371,6 +371,7 @@ function createContestant(params) {
     }
     console.log("Started contest")
     currentContest = createContest()
+    contestant.paint()
   })
   
   contestant = {
