@@ -9,3 +9,11 @@ var problem = function(name, time, score, knowSpeed, contest) {
     }
   }
 }
+
+var loadProblem = function(problemRecord) {
+  return Object.assign({}, problemRecord, {
+    paint: function() {
+    },
+    time: Object.assign(gaussed(0,1), problemRecord.time)
+  })
+}

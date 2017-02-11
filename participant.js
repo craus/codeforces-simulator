@@ -1,19 +1,25 @@
-var createParticipant = function(contest, createController, name) {
+var createParticipant = function({contest, createController, member, record}) {
+  if (record) {
+    createController = eval(record.createController)
+    member = members.find(m => m.id == record.memberID)
+  }
   var participant = {
     member: member,
+    memberID: member.id,
     activeProblem: null,
+    createController: createController.name,
     score: function() {
       return this.problems.reduce((total,problem)=>total+problem.myScore(),0)
     },    
     rank: function() {
-      return contest.participants.sort((a, b) => b.score()-a.score()).indexOf(this)+1
+      return contest.participants.indexOf(this)+1
     },
     solved: function() {
       return this.problems.reduce((total,problem)=>total+(problem.solved?1:0),0)
     },
     tick: function(t) {
       this.controller.tick(t)
-      if (this.activeProblem != null) {
+      if (this.activeProblem) {
         if (this.activeProblem.solved) {
           this.activeProblem = null
         } else {
@@ -27,7 +33,7 @@ var createParticipant = function(contest, createController, name) {
         setFormattedText(this.panel.find(".problemsSolved"), large(Math.ceil(this.solved())))
       }
       if (this.row != undefined) {
-        setFormattedText(this.row.find(".name"), this.name)
+        setFormattedText(this.row.find(".name"), this.member.name)
         setFormattedText(this.row.find(".rank"), this.rank())
         setFormattedText(this.row.find(".score"), Math.ceil(this.score()))
         setSortableValue(this.row.find(".scoreData"), Math.ceil(this.score()))
@@ -36,15 +42,29 @@ var createParticipant = function(contest, createController, name) {
     },
     remove: function() {
       this.controller.remove()
+    },
+    save: function() {
+      this.activeProblemIndex = this.problems.indexOf(this.activeProblem)
     }
   }
-  participant.problems = contest.problems.map(function(p) {return participantProblem(contest, participant, p)}),
+  participant.problems = contest.problems.map(function(p,i) {return participantProblem({
+    contest: contest, 
+    participant: participant, 
+    problem: p,
+    record: record ? record.problems[i] : null
+  })})
+  if (record) {
+    participant.activeProblem = participant.problems[record.activeProblemIndex]
+  }
   participant.controller = createController(contest, participant)
   return participant
 }
 
-var participantProblem = function(contest, participant, problem) {
-  return {
+var participantProblem = function({contest, participant, problem, record}) {
+  if (record) {
+    record.time = Object.assign(gaussed(0,1), record.time)
+  }
+  return Object.assign({
     problem: problem,
     time: Object.assign({}, problem.time),
     timeSpent: 0,
@@ -110,5 +130,5 @@ var participantProblem = function(contest, participant, problem) {
       var me = this      
       this.panel.find(".solve").click(function() { participant.activeProblem = me})
     }
-  }
+  }, record || {})
 }

@@ -5,6 +5,7 @@ var createMember = function(params) {
     id: params.id, 
     name: params.name,
     rating: 1500,
+    isHuman: params.isHuman,
     rank: function() {
       return params.members.indexOf(this)+1
     },
@@ -13,7 +14,8 @@ var createMember = function(params) {
         savedata.members = {}
       }
       savedata.members[params.id] = {
-        rating: this.rating
+        rating: this.rating,
+        name: this.name
       }
     },
     paint: function() {
@@ -25,6 +27,7 @@ var createMember = function(params) {
   }
   if (savedata.members && savedata.members[params.id]) {
     member.rating = savedata.members[params.id].rating
+    member.name = savedata.members[params.id].name
   }
   return member
 }

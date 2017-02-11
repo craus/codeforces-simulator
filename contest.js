@@ -1,10 +1,10 @@
-createContest = function() {
+createContest = function({record = null} = {}) {
   var contest = {
     problems: [],
-    totalTime: 120, 
-    penalty: 100,
-    time: -5,
-    submitDataAmount: 10,
+    totalTime: record ? record.totalTime : 120, 
+    penalty: record ? record.penalty : 100,
+    time: record ? record.time : -5,
+    submitDataAmount: record ? record.submitDataAmount : 10,
     timeElapsed: function() { return Math.max(0,this.time) },
     timeLeft: function() { return this.totalTime - this.time },
     countdown: function() { return this.time < 0 },
@@ -25,6 +25,7 @@ createContest = function() {
         setFormattedText(this.panel.find(".standings"), this.finished() ? "Final standings" : "Standings")
       }
       this.problems.each('paint', this)
+      this.participants.sort((a, b) => b.score()-a.score())
       this.participants.each('paint', this)
     },
     tick: function(t) {
@@ -38,32 +39,51 @@ createContest = function() {
     },
     remove: function() {
       this.participants.each('remove')
+    },
+    save: function() {
+      this.participants.each('save')
     }
   }  
   var cnt = 5
 
-  var difficulty = Math.max(8, Math.round(gaussianRandom(75/cnt, 3)))
-  var sigma = Math.max(1, Math.min(difficulty/2, Math.round(gaussianRandom(25/cnt, 0.5))))
-  var ks = Math.max(0.1, gaussianRandom(1, 0.3))
-  for (var i = 0; i < cnt; i++) {
-    var d = Math.max(1,Math.round(gaussianRandom(i+1, 0.5)))
-    var knowSpeed = Math.max(0.1, gaussianRandom(10 * ks, 3 * ks))
-    contest.problems.push(problem('?', gaussed(difficulty*d, sigma*d), 500*d, knowSpeed, contest))
-  }   
-  contest.problems.sort((a,b) => a.score-b.score)
-  for (var i = 0; i < cnt; i++) {
-    contest.problems[i].name = String.fromCharCode('A'.charCodeAt()+i)
-  } 
-  
-  var players = Math.max(2, gaussianRandom(10, 1))
-  for (var i = 0; i < players; i++) {
-    contest.participants.push(createParticipant(
-      contest, 
-      i == 0 ? createHumanParticipant : createBot,
-      i == 0 ? "You" : "Bot#"+i
-    ))
+  if (record) {
+    contest.problems = record.problems.map(p => loadProblem(p))
+  } else {
+    var difficulty = Math.max(8, Math.round(gaussianRandom(75/cnt, 3)))
+    var sigma = Math.max(1, Math.min(difficulty/2, Math.round(gaussianRandom(25/cnt, 0.5))))
+    var ks = Math.max(0.1, gaussianRandom(1, 0.3))
+    for (var i = 0; i < cnt; i++) {
+      var d = Math.max(1,Math.round(gaussianRandom(i+1, 0.5)))
+      var knowSpeed = Math.max(0.1, gaussianRandom(10 * ks, 3 * ks))
+      contest.problems.push(problem('?', gaussed(difficulty*d, sigma*d), 500*d, knowSpeed, contest))
+    }   
+    contest.problems.sort((a,b) => a.score-b.score)
+    for (var i = 0; i < cnt; i++) {
+      contest.problems[i].name = String.fromCharCode('A'.charCodeAt()+i)
+    } 
   }
-  contest.player = contest.participants[0]
+  
+  if (record) {
+    contest.participants = record.participants.map(p => createParticipant({
+      record: p,
+      contest: contest
+    }))
+  } else {
+    var players = Math.clamp(Math.round(gaussianRandom(10, 1)), 2, members.length)
+    var membersParticipants = members.filter(m => !m.isHuman).rndSubset(players-1)
+    membersParticipants.push(members.find(m => m.isHuman))
+    console.log(members)
+    console.log(players)
+    for (var i = 0; i < players; i++) {
+      var member = membersParticipants[i]
+      contest.participants.push(createParticipant({
+        contest: contest, 
+        createController: member.isHuman ? createHumanParticipant : createBot,
+        member: member
+      }))
+    }
+  }
+  contest.player = contest.participants.find(p => p.controller.isHuman)
   
   var contestPanel = contest.panel
   var standings = contestPanel.find(".participantsStandings")

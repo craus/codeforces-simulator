@@ -25,6 +25,10 @@ function createContestant(params) {
       savedata[resource.id] = resource.value
     })
     members.each('save')
+    if (currentContest) {
+      currentContest.save()
+    }
+    savedata.currentContest = currentContest
     savedata.realTime = timestamp || Date.now()
     localStorage[saveName] = JSON.stringify(savedata)
   } 
@@ -349,13 +353,17 @@ function createContestant(params) {
     members.push(createMember({
       name: memberNames[i],
       id: i,
-      members: members
+      members: members,
+      isHuman: i==0
     }))
   }
-  members.sort((a, b) => b.rating-a.rating + 0.001 * (b.id-a.id)).indexOf(this)+1
+  members.sort((a, b) => b.rating-a.rating + 0.001 * (b.id-a.id))
   members.each('paint')
   
   var currentContest = null
+  if (savedata.currentContest) {
+    currentContest = createContest({record: savedata.currentContest})
+  }
   
   $('.playContest').click(function() { 
     if (currentContest != null) {
