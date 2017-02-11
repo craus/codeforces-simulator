@@ -143,7 +143,7 @@ var participantProblem = function({contest, participant, problem, record}) {
       }     
       var me = this
       this.panel.find(".solve").click(() => me.activate())
-      setFormattedText(this.panel.find(".hotkey"), this.problem.hotkey)
+      this.panel.find(".hotkey").attr('title', 'Hotkey: ' + this.problem.hotkey).tooltip('fixTitle')
       window.addEventListener("keydown", (e) => {
         if (e.key == me.problem.hotkey) {
           me.activate()

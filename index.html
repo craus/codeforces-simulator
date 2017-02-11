@@ -21,6 +21,12 @@
   <link rel="stylesheet" type="text/css" href="style.css">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip(); 
+    });
+  </script>  
+  
 	<script src="com.js"></script>
 	<script src="variable.js"></script>
 	<script src="calculatable.js"></script>
@@ -55,11 +61,7 @@
   <script src="init.js"></script>
 
   
-  <script>
-    $(document).ready(function(){
-      $('[data-toggle="tooltip"]').tooltip(); 
-    });
-  </script>  
+
   
 </head>
 
@@ -171,7 +173,7 @@
                 <p class="points" data-text="#{0} points">500 points</p>
                 <p class="timeLeft", data-text="Left: #{0}#{1} s">Left: 10±5 s</p>
                 <p class="timeSpent", data-text="Spent: #{0}#{1} s">Spent: 0 s</p>    
-                <button type="button" class="btn btn-primary solve">Solve [<span class='hotkey'>1</span>]</button>    
+                <button type="button" class="btn btn-primary solve hotkey" data-toggle="tooltip" data-placement="bottom" title="Hotkey: ?" data-delay='{"show":"500"}'>Solve</button>    
                 <button type="button" tabindex=-1 class="btn btn-default disabled nohover solving">SOLVING...</button>    
                 <button type="button" tabindex=-1 class="btn btn-success disabled nohover solved">ACCEPTED</button>    
                 <button type="button" tabindex=-1 class="btn btn-default disabled nohover nonSolved">NOT SOLVED</button>  
@@ -225,7 +227,7 @@
                         <td class = "scoreData vcentered"><b class = "score">480</b></td>
                         <td class = "hidden participantProblemCellSample" style = "text-align: center">
                           <div class = "problemScore" style = "font-size: 16px">0</div>
-                          <div class = "submitTime" style = "font-size: 11px" data-toggle="tooltip" data-placement="top" title="Accepted moment" data-delay='{"show":"500"}'>24</div>
+                          <div class = "submitTime" style = "font-size: 11px" data-toggle="tooltip" data-placement="top" title="Submit time" data-delay='{"show":"500"}'>24</div>
                         </td>
                       </tr>
                     </tbody>
