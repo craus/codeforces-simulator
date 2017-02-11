@@ -20,9 +20,7 @@ var createParticipant = function({contest, createController, member, record}) {
     },
     recalculateRating: function() {
       var m = Math.sqrt(this.rank()*this.expectedPlace())
-      console.log(m)
       var requiredRating = greatestPossible(this.member.rating-100000, this.member.rating+100000, r => this.expectedPlace(r) > m)
-      console.log(requiredRating)
       this.deltaRating = (requiredRating - this.member.rating) / 2
     },
     solved: function() {
@@ -47,7 +45,7 @@ var createParticipant = function({contest, createController, member, record}) {
         setFormattedText(this.row.find(".name"), this.member.name)
         setFormattedText(this.row.find(".rank"), this.rank())
         setFormattedText(this.row.find(".score"), Math.ceil(this.score()))
-        setFormattedText(this.row.find(".deltaRating"), Math.round(this.deltaRating))
+        setFormattedText(this.row.find(".deltaRating"), signed(Math.round(this.deltaRating)))
         this.row.find(".deltaRatingCell").toggle(contest.finished())
         setSortableValue(this.row.find(".scoreData"), Math.ceil(this.score()))
       }

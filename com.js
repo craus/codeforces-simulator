@@ -146,6 +146,28 @@ function enable(el, on) {
   }
 }
 
+sign = function(x) { 
+  if (x == null) return null
+  if (x > 0) return "+";
+  return "";
+}
+signed = function(x) {
+  if (x == null) return null
+  return sign(x) + x
+}
+large = function(x) {
+  if (x == null) return null
+  if (x == 0) return 0
+  if (Math.abs(x) > 1e4*(1+eps) || Math.abs(x) < 1-eps) return x.toPrecision(4).replace('+','')
+  if (Math.abs(x - Math.floor(x+eps)) < eps) return Math.floor(x+eps)
+  return x.toPrecision(4).replace('+','') 
+}
+precision = function(x, p = 4) {
+  if (x == null) return null
+  if (x == 0) return 0
+  return x.toPrecision(p).replace('+','') 
+}
+
 signPrefix = function(x) { 
   if (x > 0) return "+";
   return "";
