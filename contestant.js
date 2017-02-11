@@ -406,6 +406,8 @@ function createContestant(params) {
   contestant = {
     paint: function() {
       debug.profile('paint')
+      debug.unprofile('paintCycle')
+      debug.profile('paintCycle')
       setFormattedText($(".codeLinesPerSecond"), large(secondTicked.getReward(codeLines)))
       setFormattedText($(".experiencePerProblem"), large(problemSolved.getReward(experience)))
       setFormattedText($(".ideasPerProblem"), large(ideasPerProblem.get()))
@@ -427,6 +429,8 @@ function createContestant(params) {
     },
     tick: function() {
       debug.profile('tick')
+      debug.unprofile('tickCycle')
+      debug.profile('tickCycle')
       var currentTime = Date.now()
       var deltaTime = currentTime - savedata.realTime
       this.tickInternal(deltaTime/1000)
