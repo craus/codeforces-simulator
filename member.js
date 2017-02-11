@@ -1,6 +1,9 @@
 var createMember = function(params) {
   var ratingRow = instantiate('memberRatingRowSample')
-  $('.ratingList').append(ratingRow)
+  $('.ratingList').append(ratingRow)    
+  if (params.isHuman) {
+    ratingRow.addClass("info")
+  }
   var member = {
     id: params.id, 
     name: params.name,

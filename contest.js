@@ -26,17 +26,19 @@ createContest = function({record = null} = {}) {
         this.panel.find(".deltaRatingTitle").toggle(this.finished())
       }
       this.problems.each('paint', this)
-      this.participants.sort((a, b) => b.score()-a.score())
+      this.participants.sort((a, b) => b.score()-a.score() + 0.001 * (b.member.id-a.member.id))
       this.participants.each('paint', this)
     },
     recalculateRatings: function() {
-      this.participants.sort((a, b) => b.score()-a.score())
+      this.participants.sort((a, b) => b.score()-a.score() + 0.001 * (b.member.id-a.member.id))
       this.participants.each('recalculateRating')
     },
     applyRecalculatedRatings: function() {
       this.participants.forEach(p => {
         p.member.rating += p.deltaRating
       })
+      members.sort((a, b) => b.rating-a.rating + 0.001 * (b.id-a.id))
+      members.each('paint')
     },
     shortTick: function(t) {
       if (!this.finished()) {
