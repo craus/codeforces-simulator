@@ -19,7 +19,7 @@ var init = function() {
   //     // Sorry! No Web Storage support..
   // } 
 
-  game = createSpellcaster()
+  game = createAscender()
   
   realTime = 0
   var secondTime = 0
