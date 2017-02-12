@@ -26,7 +26,9 @@ var createAscendResource = function(i, resources) {
   
     var basePaint = result.paint
     result.paint = function() {
+      panel.find('.ascend').prop('disabled', ascendValue() <= result.value)
       setFormattedText(panel.find('.newValue'), ascendValue())
+      
       basePaint.apply(this)
     }
     
