@@ -39,7 +39,11 @@ table {
 .panel-default.panel-wisdom >.panel-heading{
 background: #ca950f; color: #fff; }
 .panel-default.panel-readiness >.panel-heading{
-background: #3ab68b; color: #fff; }
+background: #3ab68b; color: #fff; 
+}
+.panel-default.panel-readiness {
+border-color: #3ab68b; 
+}
 .label-wisdom {
 background: #ca950f; color: #fff; }
 

@@ -1,4 +1,4 @@
-var createAscendResource = function(i, resources) {
+var createAscendResource = function(i, resources, getLevel) {
   var previous = resources[i-1]
   var name
   if (i == 0) {
@@ -22,6 +22,7 @@ var createAscendResource = function(i, resources) {
     panel.find('.ascend').toggle(false)
     var basePaint = result.paint
     result.paint = function() {
+      panel.toggle(i <= getLevel())
       setFormattedText(panel.find('.income'), "+"+income.get())
       
       basePaint.apply(this)
@@ -32,6 +33,7 @@ var createAscendResource = function(i, resources) {
   
     var basePaint = result.paint
     result.paint = function() {
+      panel.toggle(i <= getLevel())
       panel.find('.ascend').prop('disabled', ascendValue() <= result.value)
       setFormattedText(panel.find('.newValue'), ascendValue())
       

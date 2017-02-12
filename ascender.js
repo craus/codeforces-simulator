@@ -34,6 +34,8 @@ function createAscender(params) {
     location.reload()
   }
   
+  var level
+  
   resources = [
     
   ]
@@ -43,7 +45,7 @@ function createAscender(params) {
   
   for (var i = 0; i < 100; i++) {
 
-    var resource = createAscendResource(i, resources)
+    var resource = createAscendResource(i, resources, () => level)
     resources.push(resource)
     if (i > 0) {
       incomeMultipliers.push(resource)
@@ -55,12 +57,19 @@ function createAscender(params) {
   income = calculatable(() => {
     return incomeMultipliers.reduce((acc, im) => acc * im.get(), 1)
   })
-
+  
   ascender = {
     paint: function() {
       debug.profile('paint')
       
       resources.each('paint')
+      
+      for (var i = resources.length-1; i >= 0; i--) {
+        if (resources[i].get() > 1) {
+          level = i
+          break
+        }
+      }
       
       debug.unprofile('paint')
     },
