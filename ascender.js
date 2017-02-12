@@ -42,22 +42,8 @@ function createAscender(params) {
   var money
   
   for (var i = 0; i < 100; i++) {
-    var name
-    if (i == 0) {
-      name = "Money"
-    } else if (i == 1) {
-      name = "Income"
-    } else if (i == 2) {
-      name = "Income multiplier"
-    } else {
-      name = "Income multiplier #" + (i-1)
-    }
-    var id = "resource" + i
-    var panel = instantiate("resourcePanelSample")
-    panel.find('.value').addClass(id)
-    panel.find('.name').text(name)
-    $('.resources').append(panel)
-    var resource = variable(1, id, name)
+
+    var resource = createAscendResource(i, resources)
     resources.push(resource)
     if (i > 0) {
       incomeMultipliers.push(resource)
