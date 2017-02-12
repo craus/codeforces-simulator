@@ -52,7 +52,7 @@ function createAscender(params) {
     }
   }
   
-  var income = calculatable(() => {
+  income = calculatable(() => {
     return incomeMultipliers.reduce((acc, im) => acc * im.get(), 1)
   })
 

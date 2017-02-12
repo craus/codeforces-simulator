@@ -20,8 +20,14 @@ var createAscendResource = function(i, resources) {
   
   if (i == 0) {
     panel.find('.ascend').toggle(false)
+    var basePaint = result.paint
+    result.paint = function() {
+      setFormattedText(panel.find('.income'), "+"+income.get())
+      
+      basePaint.apply(this)
+    }    
   } else {
-    
+    panel.find('.income').remove()
     var ascendValue = () => Math.floor(Math.sqrt(previous.get()))
   
     var basePaint = result.paint
