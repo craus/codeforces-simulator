@@ -35,7 +35,7 @@ var createAscendResource = function(i, resources, getLevel) {
     result.paint = function() {
       panel.toggle(i <= getLevel()+1)
       panel.find('.ascend').prop('disabled', ascendValue() <= result.value)
-      setFormattedText(panel.find('.newValue'), ascendValue())
+      setFormattedText(panel.find('.newValue'), large(ascendValue()))
       
       basePaint.apply(this)
     }
