@@ -347,7 +347,33 @@ function createContestant(params) {
     'Egor',
     'Kirundel',
     'HellKitsune',
-    'MAXIMAN'
+    'MAXIMAN',
+    'Petrosian',
+    'anonymous',
+    'Ferlon',
+    'gkseni',
+    'Alex_KPR',
+    'MikhailRubinchik',
+    'ACRush',
+    'Shlakoblock',
+    'k-va',
+    'mihnevsev',
+    'snarknews',
+    'NikeNirzayanov',
+    'MikeMirzayanov',
+    'LeBron',
+    'lperovskaya',
+    'ilona',
+    'AlexanderBolshakov',
+    'KhaustovPavel',
+    'RodionGork',
+    'winger',
+    'ilya.raz',
+    'eatmore',
+    'yeputons',
+    'Um_nik',
+    'JaguarTurnik822',
+    
   ]
   members = []
   for (var i = 0; i < memberNames.length; i++) {
@@ -380,6 +406,8 @@ function createContestant(params) {
   contestant = {
     paint: function() {
       debug.profile('paint')
+      debug.unprofile('paintCycle')
+      debug.profile('paintCycle')
       setFormattedText($(".codeLinesPerSecond"), large(secondTicked.getReward(codeLines)))
       setFormattedText($(".experiencePerProblem"), large(problemSolved.getReward(experience)))
       setFormattedText($(".ideasPerProblem"), large(ideasPerProblem.get()))
@@ -401,6 +429,8 @@ function createContestant(params) {
     },
     tick: function() {
       debug.profile('tick')
+      debug.unprofile('tickCycle')
+      debug.profile('tickCycle')
       var currentTime = Date.now()
       var deltaTime = currentTime - savedata.realTime
       this.tickInternal(deltaTime/1000)

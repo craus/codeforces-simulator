@@ -1,5 +1,5 @@
 var problem = function(name, time, score, knowSpeed, contest) {
-  return {
+  var result = {
     name: name, 
     time: time.fixAnswer(),
     score: score,
@@ -8,6 +8,10 @@ var problem = function(name, time, score, knowSpeed, contest) {
     paint: function() {
     }
   }
+  if (result.time.fixedAnswer < 2.6) {
+    result.time.fixedAnswer = 2.6
+  }
+  return result
 }
 
 var loadProblem = function(problemRecord) {

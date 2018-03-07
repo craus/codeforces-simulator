@@ -12,30 +12,47 @@ debug = {
   pause: function() {
     this.paused = !this.paused
   },
+  profileInit: function(label) {      
+    debugData.profile[label] = {
+      min: Number.POSITIVE_INFINITY, 
+      max: 0,
+      cnt: 0,
+      sum: 0,
+      started: null,
+      total: 0,
+      average: function() {
+        return this.sum / Math.max(1, this.cnt)
+      }
+    }
+  },
   profile: function(label) {  
     if (debugData.profile[label] == undefined) {
-      debugData.profile[label] = {
-        min: Number.POSITIVE_INFINITY, 
-        max: 0,
-        cnt: 0,
-        sum: 0,
-        started: 0,
-        total: 0,
-        average: function() {
-          return this.sum / Math.max(1, this.cnt)
-        }
-      }
+      this.profileInit(label)
     }
     var d = debugData.profile[label]
     d.started = Date.now()
   }, 
-  profilePause: function(label) {
+  profilePause: function(label) {   
+    if (debugData.profile[label] == undefined) {
+      this.profileInit(label)
+    }
+
     var d = debugData.profile[label]
+    if (!d.started) {
+      return
+    }
     d.total += Date.now() - d.started
+    d.started = null
   },
   unprofile: function(label) {
-    this.profilePause(label)
+    if (debugData.profile[label] == undefined) {
+      this.profileInit(label)
+    }
     var d = debugData.profile[label]
+    if (!d.started) {
+      return
+    }
+    this.profilePause(label)
     var t = d.total
     d.total = 0
     d.max = Math.max(d.max, t)
