@@ -86,11 +86,11 @@ function createSpellcaster(params) {
   
     collectMana: createSpell({
       name: 'collectMana',
-      power: effectMultiplier,
+      power: calculatable(() => 10 * effectMultiplier.get()),
       action: function() {
         resources.mana.value += this.power.get()
       },
-      cost: {wisdom: calculatable(() => 0.1 * costMultiplier.get())},
+      cost: {wisdom: calculatable(() => 1 * costMultiplier.get())},
       hotkey: "2"
     }),
   
