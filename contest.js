@@ -98,7 +98,7 @@ createContest = function({record = null} = {}) {
       contest: contest
     }))
   } else {
-    var players = Math.clamp(Math.round(gaussianRandom(30, 3)), 2, members.length)
+    var players = Math.clamp(Math.round(gaussianRandom(10, 3)), 2, members.length)
     var membersParticipants = members.filter(m => !m.isHuman).rndSubset(players-1)
     membersParticipants.push(members.find(m => m.isHuman))
     console.log(members)

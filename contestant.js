@@ -336,7 +336,7 @@ function createContestant(params) {
     return ((event.type == linear) ? buyEvent : unlinearBuyEvent)(event)
   })
   
-  var memberNames = [
+  memberNames = [
     'you',
     'tourist',
     'Petr',
@@ -374,8 +374,8 @@ function createContestant(params) {
     'Um_nik',
     'JaguarTurnik822',
     'halyavin',
-	'uwi',
-	'Swistakk'
+		'uwi',
+		'Swistakk'
   ]
   members = []
   for (var i = 0; i < memberNames.length; i++) {
