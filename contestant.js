@@ -372,7 +372,6 @@ function createContestant(params) {
     'eatmore',
     'yeputons',
     'Um_nik',
-    'JaguarTurnik822',
     'halyavin',
 		'uwi',
 		'Swistakk'
