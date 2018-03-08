@@ -373,7 +373,9 @@ function createContestant(params) {
     'yeputons',
     'Um_nik',
     'JaguarTurnik822',
-    
+    'halyavin',
+	'uwi',
+	'Swistakk'
   ]
   members = []
   for (var i = 0; i < memberNames.length; i++) {
